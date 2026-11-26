@@ -1,7 +1,7 @@
 # Authoring helper: builds the MediNavi knowledge base JSON that is embedded in Newdiagnosis.html.
 import json, sys
 
-KB = {"version": "2026.11-1"}
+KB = {"version": "2026.11-2"}
 
 KB["ages"] = [
     {"id": "u20", "label": "20대 이하"},
@@ -519,6 +519,117 @@ KB["adjust"] = [
      "target": ["pneumonia", "pyelo", "biliary"], "add": 1,
      "reason": "고령 + 발열: 증상이 비전형적이어도 세균 감염 가능성 고려"},
 ]
+
+# ---------------- 정밀 문진(추가 질문) ----------------
+# 1차 문진 뒤, 지금 상위 후보들을 가장 잘 가르는 질문을 엔진이 하나씩 골라 묻는다.
+# 질문별 {질환: 가중치}. 예 → +가중치, 아니오 → 양수 가중치의 절반만큼 감점, 잘 모르겠어요 → 변화 없음.
+def f(id, q, w, hint=None, sex=None):
+    d = {"id": id, "q": q, "w": w}
+    if hint:
+        d["hint"] = hint
+    if sex:
+        d["sex"] = sex
+    return d
+
+FOLLOWUPS = [
+    # 숨 · 가슴 · 심장
+    f("r_nose", "콧물이나 목 아픔도 같이 있나요?", {"uri": 4, "uacs": 2, "pneumonia": -1, "copd": -1, "asthma_cva": -1, "tb": -1}),
+    f("r_walk_dyspnea", "평소처럼 걷기만 해도 숨이 차나요?", {"pneumonia": 3, "copd": 3, "heart_failure": 4, "asthma_cva": 1, "uri": -2, "uacs": -1, "gerd_cough": -1}),
+    f("r_pleuritic", "숨을 깊게 들이쉬면 가슴 옆쪽이 찌르듯 아픈가요?", {"pneumonia": 4, "uri": -1, "acs": -1}),
+    f("r_yellow_sputum", "가래가 누렇거나 초록색인가요?", {"pneumonia": 3, "uri": 1, "copd": 1, "tb": 1, "asthma_cva": -1, "gerd_cough": -1}),
+    f("r_trigger", "찬 공기, 운동, 먼지에 기침이 심해지나요?", {"asthma_cva": 5, "uacs": 1, "copd": 1, "uri": -1}),
+    f("r_allergy", "비염·아토피가 있거나 가족 중에 천식이 있나요?", {"asthma_cva": 4, "uacs": 2, "rhinitis": 3}),
+    f("r_throat_clear", "목에 뭔가 걸린 듯해서 자주 ‘흠흠’ 하나요?", {"uacs": 5, "gerd_cough": 1}),
+    f("r_meal_reflux", "밥 먹은 뒤나 누우면 신물이 올라오나요?", {"gerd_cough": 5, "gerd": 4, "uacs": -1}),
+    f("r_orthopnea", "누우면 숨이 더 차서 베개를 높이 베고 자나요?", {"heart_failure": 6, "copd": 1, "asthma_cva": 1}),
+    f("r_long_smoke", "담배를 10년 넘게 피웠나요? (지금 끊었어도요)", {"copd": 5, "lung_lesion": 3, "acs": 1}),
+    f("r_night_sweat", "밤에 옷이 젖을 만큼 식은땀이 나나요?", {"tb": 5, "lung_lesion": 1, "uri": -1}),
+    f("r_tb_contact", "주변에 결핵을 앓은 사람이 있었나요?", {"tb": 5}),
+    f("r_lesion_grow", "검진에서 크기가 커졌다거나 추가 검사를 권유받았나요?", {"lung_lesion": 6, "tb": 1}),
+    f("r_exertion_chest", "가슴 통증이 움직일 때 생기고 쉬면 나아지나요?", {"acs": 5, "pneumonia": -1, "gad": -1}),
+    f("r_radiate", "가슴 통증이 왼팔·턱·등으로 퍼지나요?", {"acs": 5, "gad": -1}),
+    f("r_irregular", "맥박이 불규칙하게 툭툭 건너뛰는 느낌인가요?", {"arrhythmia": 5, "gad": -1, "thyroid": 1}),
+    # 머리 · 어지럼 · 저림
+    f("n_throb", "머리 한쪽이 욱신욱신 맥박 뛰듯 아픈가요?", {"migraine": 5, "tension": -2}),
+    f("n_band", "머리 전체를 띠로 조이듯 묵직하게 아픈가요?", {"tension": 5, "migraine": -2}),
+    f("n_aura", "두통 전에 눈앞이 번쩍이거나 지그재그가 보이나요?", {"migraine": 5}),
+    f("n_move_worse", "움직이면 두통이 더 심해져서 눕고 싶나요?", {"migraine": 3, "tension": -1}),
+    f("n_stress", "스트레스를 받거나 오래 앉아 있으면 심해지나요?", {"tension": 3, "myalgia": 2, "migraine": 1}),
+    f("n_fever_head", "열이 나면서 머리가 아픈가요?", {"meningitis": 5, "sinusitis": 1, "tension": -1, "migraine": -1}),
+    f("n_head_turn", "고개를 돌리거나 눕고 일어날 때만 1분 안쪽으로 어지럽나요?", {"bppv": 6, "vestibular": -2, "orthostatic": 1}),
+    f("n_long_vertigo", "한 번 어지러우면 몇 시간 넘게 계속되나요?", {"vestibular": 4, "bppv": -3}),
+    f("n_ear_full", "귀가 먹먹하거나 ‘윙’ 하는 소리가 나나요?", {"vestibular": 4, "ssnhl": 3, "otitis": 1, "bppv": -1}),
+    f("n_standing", "앉았다 일어설 때만 핑 도나요?", {"orthostatic": 6, "bppv": -1, "arrhythmia": -1}),
+    f("n_palp_faint", "쓰러지기 전에 가슴이 두근거렸나요?", {"arrhythmia": 5, "orthostatic": -1}),
+    f("n_glove", "양쪽 손발 끝이 장갑·양말 모양으로 저린가요?", {"neuropathy": 5}),
+    f("n_neck_arm", "목을 움직이면 팔로 저림이 뻗치나요?", {"neuropathy": 4, "myalgia": 1}),
+    # 배 · 소화
+    f("g_after_meal", "밥 먹고 나면 명치가 더 아프거나 더부룩한가요?", {"gastritis": 4, "gerd": 1, "biliary": 1, "pud": -1}),
+    f("g_empty", "배고플 때나 새벽에 명치가 쓰리고, 먹으면 나아지나요?", {"pud": 5, "gastritis": 1}),
+    f("g_nsaid", "진통제(소염제)를 자주 드시나요?", {"pud": 4, "gastritis": 2}),
+    f("g_lying_reflux", "눕거나 허리를 숙이면 신물이 올라오나요?", {"gerd": 5, "gastritis": -1}),
+    f("g_migrate", "배꼽 주변이 아프다가 오른쪽 아랫배로 옮겨갔나요?", {"appendicitis": 7, "gastroenteritis": -2, "ibs": -2}),
+    f("g_jolt", "걷거나 기침할 때 배가 울려서 아픈가요?", {"appendicitis": 4, "preg_abd": 2, "ibs": -2, "gastroenteritis": -1}),
+    f("g_fatty", "기름진 음식을 먹은 뒤 오른쪽 윗배가 아팠나요?", {"biliary": 6, "gastritis": -1}),
+    f("g_shoulder", "배 통증이 오른쪽 어깨나 등으로 뻗치나요?", {"biliary": 3}),
+    f("g_food_group", "같이 먹은 사람도 탈이 났거나, 상한 음식을 먹었나요?", {"gastroenteritis": 6, "ibs": -2}),
+    f("g_watery", "하루 4번 넘게 물 같은 설사를 하나요?", {"gastroenteritis": 4, "ibs": -1}),
+    f("g_relief", "변을 보고 나면 배 아픈 게 나아지나요?", {"ibs": 5, "appendicitis": -2}),
+    f("g_stress_bowel", "스트레스를 받으면 배가 아프거나 변이 달라지나요?", {"ibs": 4, "gastritis": 1}),
+    f("g_black", "변이 짜장처럼 까맣게 나온 적이 있나요?", {"pud": 3, "gi_malig": 3}),
+    f("g_family_ca", "가족 중에 위암이나 대장암을 앓은 분이 있나요?", {"gi_malig": 4}),
+    f("g_period_late", "생리가 예정보다 늦어지고 있나요?", {"preg_abd": 6}, sex="f"),
+    # 허리 · 관절 · 근육
+    f("m_lift", "무거운 걸 들거나 무리한 뒤 아파졌나요?", {"lbp_mech": 5, "disc": 1, "myalgia": 2, "spine_red": -2}),
+    f("m_sit_leg", "오래 앉거나 허리를 숙이면 다리로 찌릿하게 뻗치나요?", {"disc": 5, "lbp_mech": 1}),
+    f("m_walk_rest", "걷다 보면 다리가 저려서 쉬었다 가야 하나요?", {"disc": 4}),
+    f("m_night_pain", "가만히 누워 쉬어도 밤에 더 아픈가요?", {"spine_red": 6, "lbp_mech": -2, "oa": -1}),
+    f("m_cancer_hx", "암 치료를 받은 적이 있나요?", {"spine_red": 6}),
+    f("m_use_pain", "관절을 많이 쓸수록 아프고 쉬면 나아지나요?", {"oa": 5, "ra": -2}),
+    f("m_many_joints", "양손 손가락 관절 여러 곳이 같이 붓나요?", {"ra": 6, "oa": -1, "gout": -2}),
+    f("m_big_toe", "엄지발가락이나 발목이 하룻밤 새 빨갛게 붓고 몹시 아팠나요?", {"gout": 7, "ra": -1}),
+    f("m_alcohol", "술이나 고기를 많이 먹은 뒤 심해지나요?", {"gout": 3}),
+    f("m_hot_joint", "열이 나면서 관절 한 곳만 뜨겁게 붓나요?", {"septic_arthritis": 6, "gout": 1}),
+    f("m_posture", "같은 자세(컴퓨터·휴대폰)로 오래 있으면 뭉치나요?", {"myalgia": 5, "tension": 1}),
+    f("m_cant_bear", "다친 곳에 힘을 주거나 걷기가 어렵나요?", {"fracture": 5}),
+    # 목 · 코 · 귀 · 피부 · 소변
+    f("e_swallow", "침 삼키기 힘들 만큼 목이 아프고 열이 나나요?", {"pharyngitis": 5, "uri": 1}),
+    f("e_no_cough", "기침은 거의 없나요?", {"pharyngitis": 2, "rhinitis": 1, "uri": -2}),
+    f("e_season", "특정 계절이나 먼지·꽃가루에 콧물·재채기가 심해지나요?", {"rhinitis": 6, "uri": -2, "sinusitis": -1}),
+    f("e_itch", "눈이나 코가 가렵나요?", {"rhinitis": 4, "sinusitis": -1}),
+    f("e_bend_face", "고개를 숙이면 얼굴이나 이마가 묵직하게 아픈가요?", {"sinusitis": 5}),
+    f("e_10days", "코 증상이 10일 넘게 낫지 않나요?", {"sinusitis": 4, "rhinitis": 1, "uri": -2}),
+    f("e_ear_fluid", "귀에서 진물이 나오나요?", {"otitis": 5}),
+    f("e_ear_pull", "귀를 잡아당기거나 누르면 아픈가요?", {"otitis": 4}),
+    f("e_contact", "새로 쓴 화장품·세제·금속이 닿은 곳에만 생겼나요?", {"derm": 6, "urticaria": -1}),
+    f("e_wheal_move", "부푼 자국이 몇 시간 뒤 사라지고 다른 곳에 또 생기나요?", {"urticaria": 6, "derm": -2}),
+    f("e_food_drug", "음식이나 약을 먹고 1~2시간 안에 생겼나요?", {"urticaria": 3, "anaphylaxis": 4}),
+    f("e_flank_fever", "열이 나면서 옆구리를 두드리면 아픈가요?", {"pyelo": 6, "stone": 1, "uti": -1}),
+    f("e_colic", "옆구리 통증이 파도처럼 왔다 갔다 하고, 가만히 있기 힘들 만큼인가요?", {"stone": 7, "pyelo": -1}),
+    f("e_freq", "소변을 자주 보는데 양은 적은가요?", {"uti": 4, "stone": -1}),
+    f("e_cloudy", "소변이 뿌옇거나 냄새가 심한가요?", {"uti": 3, "pyelo": 2}),
+    # 잠 · 마음 · 피로
+    f("s_apnea_seen", "자는 동안 숨이 멈춘다는 말을 들은 적 있나요?", {"osa": 6}),
+    f("s_day_sleepy", "낮에 운전하거나 회의할 때 졸음을 참기 힘든가요?", {"osa": 4, "insomnia_d": -1, "anemia": 1}),
+    f("s_fall_asleep", "누워서 30분 넘게 잠이 안 오는 날이 일주일에 3번 넘나요?", {"insomnia_d": 5, "osa": -1, "gad": 1}),
+    f("s_interest", "좋아하던 일에도 흥미가 없어진 지 2주가 넘었나요?", {"depression": 6, "gad": -1}),
+    f("s_worry", "걱정을 멈추기 어려워 늘 긴장된 상태인가요?", {"gad": 5, "depression": 1}),
+    f("s_attack", "갑자기 죽을 것 같은 공포가 왔다가 10~20분 안에 사라지나요?", {"gad": 5, "arrhythmia": -1}),
+    f("s_cold_gain", "추위를 많이 타고, 살이 찌거나 몸이 붓나요?", {"thyroid": 4, "anemia": -1}),
+    f("s_heat_tremor", "더위를 많이 타고 손이 떨리며 살이 빠지나요?", {"thyroid": 5, "gad": -1}),
+    f("s_pale", "얼굴이 창백하고 계단을 오르면 숨이 차거나 어지럽나요?", {"anemia": 5, "thyroid": -1}),
+    f("s_heavy_period", "생리량이 많은 편인가요?", {"anemia": 4}, sex="f"),
+]
+_cids = {c["id"] for c in KB["conditions"]}
+for q in FOLLOWUPS:
+    for cid in q["w"]:
+        assert cid in _cids, (q["id"], cid)
+for c in KB["conditions"]:
+    m = {q["id"]: q["w"][c["id"]] for q in FOLLOWUPS if c["id"] in q["w"]}
+    if m:
+        c["fu"] = m
+KB["followups"] = [{k: v for k, v in q.items() if k != "w"} for q in FOLLOWUPS]
+KB["fuConfig"] = {"min": 3, "max": 7, "temp": 3, "topK": 5, "minGain": 0.5, "stopShare": 92}
 
 out = json.dumps(KB, ensure_ascii=False, separators=(",", ":"))
 sys.stdout.write(out)

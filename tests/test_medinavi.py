@@ -69,6 +69,37 @@ class EngineTests(unittest.TestCase):
         self.assertIn("vitals.temp", self.e.validate(answers(vitals={"temp": 50})))
         self.assertIn("text", self.e.validate(answers(text="x" * 1001)))
 
+    def test_followups_narrow_down(self):  # 정밀 문진: 감기 vs 폐렴을 추가 질문으로 가른다
+        base = dict(age="30_40", symptoms=["cough", "sputum"], onset="sudden", duration="acute",
+                    vitals={"temp": 38.3, "hr": None, "spo2": None}, risks=["fever"])
+        r0 = self.dx(**base)
+        self.assertEqual({c["id"] for c in r0["candidates"][:2]}, {"uri", "pneumonia"})
+        a = answers(**base)
+        a["followups"] = {}
+        q = self.e.next_question(a)
+        self.assertIsNotNone(q)
+        cold = dict(a, followups={"r_nose": "yes", "r_walk_dyspnea": "no", "r_pleuritic": "no"})
+        pneu = dict(a, followups={"r_nose": "no", "r_walk_dyspnea": "yes", "r_pleuritic": "yes", "r_yellow_sputum": "yes"})
+        self.assertEqual(self.e.validate(cold), [])
+        rc, rp = self.e.diagnose(cold, "t"), self.e.diagnose(pneu, "t")
+        self.assertEqual(rc["candidates"][0]["id"], "uri")
+        self.assertGreater(rc["candidates"][0]["pct"], r0["candidates"][0]["pct"])
+        self.assertEqual(rp["candidates"][0]["id"], "pneumonia")
+        self.assertTrue(any("정밀 문진" in line for line in rp["note"].splitlines()))
+
+    def test_followup_loop_terminates(self):
+        a = answers(symptoms=["cough"], duration="subacute", followups={})
+        for _ in range(20):
+            q = self.e.next_question(a)
+            if not q:
+                break
+            self.assertNotIn(q["id"], a["followups"])
+            a["followups"][q["id"]] = "unsure"
+        self.assertLessEqual(len(a["followups"]), self.e.kb["fuConfig"]["max"])
+        self.assertIn("followups", self.e.validate(answers(followups={"nope": "yes"})))
+        self.assertIn("followups", self.e.validate(answers(followups={"r_nose": "maybe"})))
+        self.assertIn("followups", self.e.validate(answers(followups=["r_nose"])))
+
     def test_js_engine_parity(self):
         node = shutil.which("node")
         if not node:
@@ -79,14 +110,26 @@ class EngineTests(unittest.TestCase):
         cases = [answers(duration=d, finding=f, nrs=n, text=t, vitals={"temp": tp, "hr": None, "spo2": None})
                  for d in ("acute", "chronic") for f in ("ggo", "none") for n in (2, 9)
                  for t in ("", "새벽 기침, 결절") for tp in (None, 38.4)]
+        import random
+        rnd = random.Random(42)
+        kb = self.e.kb
+        fu_ids = [q["id"] for q in kb["followups"]]
+        for _ in range(600):  # 무작위 문진 + 무작위 정밀 문진 답변
+            region = rnd.choice([r["id"] for r in kb["regions"]])
+            syms = [x["id"] for x in kb["symptoms"][region]]
+            cases.append(answers(age=rnd.choice(["u20", "30_40", "50_60", "70p"]), sex=rnd.choice(["m", "f"]), region=region,
+                                 symptoms=rnd.sample(syms, rnd.randint(1, 3)), onset=rnd.choice(["sudden", "gradual"]),
+                                 duration=rnd.choice(["acute", "subacute", "chronic"]), course=rnd.choice(["worse", "same", "better", "waxing"]),
+                                 risks=rnd.sample(["fever", "smoking", "weight_loss", "night_sweats"], rnd.randint(0, 2)),
+                                 nrs=rnd.randint(0, 10), followups={k: rnd.choice(["yes", "no", "unsure"]) for k in rnd.sample(fu_ids, rnd.randint(0, 6))}))
         with tempfile.TemporaryDirectory() as d:
             open(os.path.join(d, "e.js"), "w", encoding="utf-8").write(js)
             open(os.path.join(d, "c.json"), "w", encoding="utf-8").write(json.dumps({"kb": self.e.kb, "cases": cases}, ensure_ascii=False))
             out = subprocess.check_output([node, "-e",
                 "const fs=require('fs');eval(fs.readFileSync('e.js','utf8'));const d=JSON.parse(fs.readFileSync('c.json','utf8'));"
-                "const E=globalThis.MediNaviEngine.create(d.kb);process.stdout.write(JSON.stringify(d.cases.map(c=>E.diagnose(c,'t'))))"], cwd=d)
+                "const E=globalThis.MediNaviEngine.create(d.kb);process.stdout.write(JSON.stringify(d.cases.map(c=>[E.diagnose(c,'t'),E.nextQuestion(c)])))"], cwd=d)
         js_res = json.loads(out)
-        py_res = [json.loads(json.dumps(self.e.diagnose(c, "t"))) for c in cases]
+        py_res = [json.loads(json.dumps([self.e.diagnose(c, "t"), self.e.next_question(c)])) for c in cases]
         self.assertEqual(py_res, js_res)
 
 

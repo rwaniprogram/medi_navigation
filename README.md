@@ -29,6 +29,15 @@ PORT=9000 python server.py       # 포트 지정 (Render 등 클라우드는 POR
 증상·질환·가중치·규칙을 바꾸려면 `tools/kb_gen.py` 를 고친 뒤 `python tools/build.py` 를 실행하세요.
 서버와 브라우저가 **같은 지식베이스 블록**(`<script id="medinavi-kb">`)을 읽으므로 규칙이 한 곳에서 관리됩니다.
 
+## 정밀 문진 (맞춤 질문)
+
+기본 문진이 끝나면 엔진이 지금 상위 후보들을 가장 잘 가르는 질문을 하나씩 골라 묻습니다(예 / 아니요 / 잘 모르겠어요, 최소 3개 · 최대 7개).
+
+- 질문 81개와 질환별 가중치는 `tools/kb_gen.py`의 `FOLLOWUPS`에 있습니다. 예 → 가중치만큼 가점, 아니요 → 양수 가중치의 절반 감점.
+- 다음 질문은 상위 5개 후보의 가능성 비율로 가중한 "답에 따른 점수 차이"가 가장 큰 질문입니다(`nextQuestion` / `next_question`).
+- 결과의 %는 후보끼리 비교한 상대 가능성(softmax)이며, 5% 미만 후보는 숨깁니다.
+- 답변은 `answers.followups = {"질문 id": "yes" | "no" | "unsure"}`로 `/api/diagnose`에 함께 보냅니다.
+
 ## API
 
 | 메서드 · 경로 | 설명 |

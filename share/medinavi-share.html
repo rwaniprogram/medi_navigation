@@ -1,202 +1,288 @@
 <title>메디내비 온라인 진료실</title>
 <style>
 :root{
-  --bg:#eaf4f3; --bg-2:#dcefed; --surface:#ffffff; --surface-2:#f2f8f8; --text:#13262d; --muted:#5f747b; --line:#d5e5e4;
-  --brand:#0a8079; --brand-2:#16a79c; --brand-3:#e0f3f1; --brand-ink:#ffffff; --navy:#16405a; --focus:#2563eb; --head-a:#0a8079; --head-b:#14506a;
-  --em:#d32f2f; --em-bg:#fdeceb; --ur:#c2620c; --ur-bg:#fff3e3; --soon:#1f5fbf; --soon-bg:#e9f1fd; --ok:#2e7d4f; --ok-bg:#e7f5ec;
-  --shadow:0 10px 30px rgba(10,60,70,.10); --shadow-sm:0 2px 8px rgba(10,60,70,.06); --radius:20px;
+  --bg:#eef2fb; --bg-2:#e3e9f8; --surface:rgba(255,255,255,.78); --surface-solid:#ffffff; --surface-2:rgba(236,242,252,.9); --text:#0d1733; --muted:#5b6788; --line:rgba(99,120,180,.22);
+  --brand:#0891b2; --brand-2:#6366f1; --brand-3:rgba(8,145,178,.10); --brand-ink:#ffffff; --navy:#4338ca; --focus:#6366f1; --head-a:#0b1636; --head-b:#24205f;
+  --glow:rgba(8,145,178,.28); --grid:rgba(67,56,202,.07); --orb-a:rgba(34,211,238,.35); --orb-b:rgba(129,140,248,.35);
+  --em:#e02d48; --em-bg:rgba(224,45,72,.10); --ur:#d26a06; --ur-bg:rgba(210,106,6,.11); --soon:#4f46e5; --soon-bg:rgba(79,70,229,.10); --ok:#0f8a5f; --ok-bg:rgba(15,138,95,.10);
+  --shadow:0 18px 50px rgba(30,40,90,.12); --shadow-sm:0 3px 12px rgba(30,40,90,.07); --radius:22px;
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){color-scheme:dark; --bg:#0c1719; --bg-2:#0f1e21; --surface:#152427; --surface-2:#1b2e32; --text:#e4eff0; --muted:#97adb2; --line:#28403f;
-    --brand:#2bb8ad; --brand-2:#4fd1c4; --brand-3:#163a38; --brand-ink:#03201e; --navy:#9ccbe6; --head-a:#0c5e59; --head-b:#123a4d;
-    --em:#ff6b6b; --em-bg:#3a1818; --ur:#f3a64d; --ur-bg:#3a2913; --soon:#8db7ff; --soon-bg:#172747; --ok:#7fd49d; --ok-bg:#14301f;
-    --shadow:0 10px 30px rgba(0,0,0,.4); --shadow-sm:0 2px 8px rgba(0,0,0,.3); }
+  :root:not([data-theme="light"]){color-scheme:dark; --bg:#050915; --bg-2:#0a1024; --surface:rgba(17,26,52,.72); --surface-solid:#111a34; --surface-2:rgba(25,36,70,.75); --text:#e7eeff; --muted:#93a1c6; --line:rgba(120,150,230,.20);
+    --brand:#22d3ee; --brand-2:#a78bfa; --brand-3:rgba(34,211,238,.12); --brand-ink:#04111c; --navy:#a5b4fc; --focus:#a78bfa; --head-a:#070d22; --head-b:#1a1648;
+    --glow:rgba(34,211,238,.35); --grid:rgba(120,150,255,.06); --orb-a:rgba(34,211,238,.22); --orb-b:rgba(167,139,250,.22);
+    --em:#ff5c74; --em-bg:rgba(255,92,116,.13); --ur:#ffad4d; --ur-bg:rgba(255,173,77,.12); --soon:#a5b4fc; --soon-bg:rgba(165,180,252,.12); --ok:#4ade9b; --ok-bg:rgba(74,222,155,.11);
+    --shadow:0 18px 50px rgba(0,0,0,.45); --shadow-sm:0 3px 12px rgba(0,0,0,.3); }
 }
-:root[data-theme="dark"]{color-scheme:dark; --bg:#0c1719; --bg-2:#0f1e21; --surface:#152427; --surface-2:#1b2e32; --text:#e4eff0; --muted:#97adb2; --line:#28403f;
-    --brand:#2bb8ad; --brand-2:#4fd1c4; --brand-3:#163a38; --brand-ink:#03201e; --navy:#9ccbe6; --head-a:#0c5e59; --head-b:#123a4d;
-    --em:#ff6b6b; --em-bg:#3a1818; --ur:#f3a64d; --ur-bg:#3a2913; --soon:#8db7ff; --soon-bg:#172747; --ok:#7fd49d; --ok-bg:#14301f;
-    --shadow:0 10px 30px rgba(0,0,0,.4); --shadow-sm:0 2px 8px rgba(0,0,0,.3); }
+:root[data-theme="dark"]{color-scheme:dark; --bg:#050915; --bg-2:#0a1024; --surface:rgba(17,26,52,.72); --surface-solid:#111a34; --surface-2:rgba(25,36,70,.75); --text:#e7eeff; --muted:#93a1c6; --line:rgba(120,150,230,.20);
+    --brand:#22d3ee; --brand-2:#a78bfa; --brand-3:rgba(34,211,238,.12); --brand-ink:#04111c; --navy:#a5b4fc; --focus:#a78bfa; --head-a:#070d22; --head-b:#1a1648;
+    --glow:rgba(34,211,238,.35); --grid:rgba(120,150,255,.06); --orb-a:rgba(34,211,238,.22); --orb-b:rgba(167,139,250,.22);
+    --em:#ff5c74; --em-bg:rgba(255,92,116,.13); --ur:#ffad4d; --ur-bg:rgba(255,173,77,.12); --soon:#a5b4fc; --soon-bg:rgba(165,180,252,.12); --ok:#4ade9b; --ok-bg:rgba(74,222,155,.11);
+    --shadow:0 18px 50px rgba(0,0,0,.45); --shadow-sm:0 3px 12px rgba(0,0,0,.3); }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{min-height:100vh;color:var(--text);font:16px/1.55 "Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased;
-  background:
-    radial-gradient(1200px 500px at 100% -10%, color-mix(in srgb,var(--brand-2) 18%,transparent), transparent 60%),
-    radial-gradient(900px 400px at -10% 110%, color-mix(in srgb,var(--navy) 12%,transparent), transparent 60%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M26 22h4v4h4v4h-4v4h-4v-4h-4v-4h4z' fill='%230a8079' fill-opacity='.05'/%3E%3C/svg%3E"),
-    var(--bg);}
+body{min-height:100vh;color:var(--text);background:var(--bg);font:16px/1.55 "Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--head-a)}
+/* living background: grid + drifting light orbs */
+.bg-fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;background:
+  linear-gradient(var(--grid) 1px,transparent 1px) 0 0/44px 44px,
+  linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/44px 44px,
+  radial-gradient(1000px 600px at 50% -20%,var(--bg-2),var(--bg) 70%)}
+.bg-fx i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.9;animation:drift 22s ease-in-out infinite alternate}
+.bg-fx i:nth-child(1){width:460px;height:460px;left:-120px;top:8%;background:var(--orb-a)}
+.bg-fx i:nth-child(2){width:520px;height:520px;right:-160px;top:40%;background:var(--orb-b);animation-duration:28s;animation-delay:-6s}
+.bg-fx i:nth-child(3){width:300px;height:300px;left:35%;bottom:-120px;background:var(--orb-a);animation-duration:25s;animation-delay:-12s;opacity:.6}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,-40px) scale(1.12)}100%{transform:translate(-40px,50px) scale(.95)}}
 button,input,textarea{font:inherit;color:inherit}
-button{cursor:pointer}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px}
-/* header: clinic sign */
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(90deg,var(--head-a),var(--head-b));color:#fff;box-shadow:0 4px 18px rgba(10,80,80,.18)}
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(90deg,color-mix(in srgb,var(--head-a) 88%,transparent),color-mix(in srgb,var(--head-b) 88%,transparent));color:#fff;backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid rgba(140,170,255,.18)}
+header.top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,#a78bfa,transparent);background-size:200% 100%;animation:sweep 6s linear infinite}
+@keyframes sweep{from{background-position:200% 0}to{background-position:-200% 0}}
 .topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto;line-height:1.15}
-.brand .logo{width:36px;height:36px;border-radius:11px;background:#fff;display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4)}
+.brand .logo{position:relative;width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#818cf8);display:grid;place-items:center;box-shadow:0 0 18px rgba(34,211,238,.55)}
+.brand .logo::after{content:"";position:absolute;inset:-4px;border-radius:15px;border:1.5px solid rgba(34,211,238,.6);animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.85);opacity:1}100%{transform:scale(1.35);opacity:0}}
 .brand b{display:block;font-size:17px;letter-spacing:-.02em}
-.brand small{font-size:11.5px;opacity:.85;letter-spacing:.04em}
+.brand small{font-size:10.5px;opacity:.7;letter-spacing:.22em}
 .uid{display:flex;align-items:center;gap:6px;font-size:12px;opacity:.95}
-.uid input{width:96px;padding:6px 9px;border:0;border-radius:10px;background:rgba(255,255,255,.18);color:#fff}
-.uid input::placeholder{color:rgba(255,255,255,.7)}
-.hbtn{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:10px;padding:7px 11px;font-size:13px;font-weight:700}
-.hbtn:hover{background:rgba(255,255,255,.28)}
-.status{font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.16);white-space:nowrap}
-.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:11px 16px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:transform .1s,border-color .15s}
-.btn:hover{border-color:var(--brand)}
-.btn:active{transform:scale(.98)}
-.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));border-color:transparent;color:var(--brand-ink);box-shadow:0 6px 16px color-mix(in srgb,var(--brand) 35%,transparent)}
-.btn.primary:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
-.btn.ghost{background:transparent;border-color:transparent;color:var(--muted);padding:6px 8px}
-.btn.ghost:hover{color:var(--brand)}
+.uid input{width:96px;padding:6px 9px;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(255,255,255,.08);color:#fff}
+.uid input::placeholder{color:rgba(255,255,255,.6)}
+.hbtn{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:7px 11px;font-size:13px;font-weight:700;transition:background .2s,box-shadow .2s}
+.hbtn:hover{background:rgba(255,255,255,.16);box-shadow:0 0 14px rgba(34,211,238,.35)}
+.status{font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);white-space:nowrap}
+.status.on{color:#7dfbe0}
+/* buttons */
+.btn{position:relative;overflow:hidden;border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:14px;padding:11px 16px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:transform .15s,border-color .2s,box-shadow .2s}
+.btn:hover{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-3)}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(120deg,var(--brand),var(--brand-2),var(--brand));background-size:200% 100%;border-color:transparent;color:#fff;box-shadow:0 8px 24px var(--glow);animation:flow 6s linear infinite}
+:root[data-theme="dark"] .btn.primary{color:#04111c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#04111c}}
+@keyframes flow{from{background-position:0 0}to{background-position:200% 0}}
+.btn.primary:disabled{opacity:.35;cursor:not-allowed;box-shadow:none;animation:none}
+.btn.ghost{background:transparent;backdrop-filter:none;border-color:transparent;color:var(--muted);padding:6px 8px}
+.btn.ghost:hover{color:var(--brand);box-shadow:none}
 .btn.ghost:disabled{opacity:.35}
 .btn.danger{color:var(--em)}
 .btn.sm{padding:7px 11px;font-size:13px;border-radius:11px}
 .btn.wide{flex:1}
+.ripple{position:absolute;border-radius:50%;transform:scale(0);background:currentColor;opacity:.22;pointer-events:none;animation:rip .6s ease-out forwards}
+@keyframes rip{to{transform:scale(4);opacity:0}}
 main{padding:22px 0 50px}
-.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;position:relative}
+.card{background:var(--surface);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;position:relative}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,color-mix(in srgb,var(--brand) 55%,transparent),transparent 40%,transparent 60%,color-mix(in srgb,var(--brand-2) 55%,transparent));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
 /* stage tracker */
 .stages{display:flex;gap:6px;margin:6px 0 12px;padding:0;list-style:none}
-.stages li{flex:1;text-align:center;font-size:12px;font-weight:700;color:var(--muted);padding:8px 4px 0;border-top:4px solid var(--line);border-radius:2px}
-.stages li.done{color:var(--brand);border-color:var(--brand)}
-.stages li.cur{color:var(--brand);border-color:var(--brand-2)}
+.stages li{flex:1;text-align:center;font-size:12px;font-weight:700;color:var(--muted);padding:8px 2px 0;position:relative}
+.stages li::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;border-radius:4px;background:var(--line)}
+.stages li.done{color:var(--brand)} .stages li.done::before{background:linear-gradient(90deg,var(--brand),var(--brand-2))}
+.stages li.cur{color:var(--text)} .stages li.cur::before{background:linear-gradient(90deg,var(--brand),var(--brand-2));box-shadow:0 0 12px var(--glow);animation:breathe 1.8s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.55}}
 .stages li span{display:block;font-size:16px;line-height:1.1;margin-bottom:2px}
 .navrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:13px;color:var(--muted)}
-.bar{height:6px;background:var(--surface);border-radius:999px;overflow:hidden;margin-bottom:16px;box-shadow:inset 0 0 0 1px var(--line)}
-.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand-2));transition:width .35s}
-/* doctor bubble */
-.ask{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px}
-.doc{flex:none;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--brand-3),var(--surface));display:grid;place-items:center;font-size:26px;box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--brand-3)}
-.bubble{flex:1;background:var(--brand-3);border-radius:4px 18px 18px 18px;padding:12px 16px}
-.bubble .who{font-size:12px;font-weight:800;color:var(--brand);margin-bottom:2px}
-.q-title{font-size:21px;line-height:1.35;margin:0;letter-spacing:-.025em}
+.bar{height:6px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin-bottom:16px;box-shadow:inset 0 0 0 1px var(--line)}
+.bar>i{position:relative;display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand-2));transition:width .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px var(--glow);overflow:hidden}
+.bar>i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);transform:translateX(-100%);animation:shine 2.2s ease-in-out infinite}
+@keyframes shine{to{transform:translateX(100%)}}
+/* AI nurse bubble */
+.ask{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px}
+.doc{position:relative;flex:none;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:25px;background:radial-gradient(circle at 30% 30%,var(--surface-solid),var(--brand-3))}
+.doc::before{content:"";position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(from 0deg,var(--brand),transparent 35%,var(--brand-2) 60%,transparent 85%,var(--brand));-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 2.5px),#000 calc(100% - 2px));animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bubble{flex:1;background:var(--brand-3);border:1px solid color-mix(in srgb,var(--brand) 22%,transparent);border-radius:4px 18px 18px 18px;padding:12px 16px}
+.bubble .who{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;color:var(--brand);margin-bottom:2px;letter-spacing:.04em}
+.bubble .who::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--brand);box-shadow:0 0 8px var(--brand);animation:breathe 1.4s ease-in-out infinite}
+.q-title{font-size:21px;line-height:1.38;margin:0;letter-spacing:-.025em}
+.q-title .w{display:inline-block;opacity:0;transform:translateY(6px);filter:blur(4px);animation:wordIn .45s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes wordIn{to{opacity:1;transform:none;filter:none}}
 .q-help{color:var(--muted);margin:4px 0 0;font-size:14px}
 .opts{display:grid;gap:10px}
 .opts.two{grid-template-columns:1fr 1fr}
 .opts.tiles{grid-template-columns:1fr 1fr}
-.opt{display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:16px;background:var(--surface);transition:border-color .15s,background .15s,transform .1s;box-shadow:var(--shadow-sm)}
-.opt:hover{border-color:var(--brand-2)}
+.opt{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);transition:border-color .2s,background .2s,transform .15s,box-shadow .2s;box-shadow:var(--shadow-sm)}
+.opt:hover{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-3),0 8px 24px var(--glow);transform:translateY(-1px)}
 .opt:active{transform:scale(.985)}
-.opt[aria-pressed="true"],.opt[aria-checked="true"]{border-color:var(--brand);background:var(--brand-3)}
-.opts.tiles .opt{flex-direction:column;align-items:flex-start;gap:6px;min-height:96px}
-.opt .ico{font-size:26px;line-height:1}
+.opt[aria-pressed="true"],.opt[aria-checked="true"]{border-color:var(--brand);background:linear-gradient(135deg,var(--brand-3),color-mix(in srgb,var(--brand-2) 12%,transparent));box-shadow:0 0 0 1px var(--brand),0 8px 26px var(--glow)}
+.opts.tiles .opt{flex-direction:column;align-items:flex-start;gap:6px;min-height:100px}
+.opt .ico{font-size:26px;line-height:1;transition:transform .3s}
+.opt:hover .ico{transform:scale(1.15) rotate(-6deg)}
 .opt .t{font-weight:700}
 .opt .d{display:block;font-size:12.5px;color:var(--muted);font-weight:500}
-.opt .chk{margin-left:auto;width:24px;height:24px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;font-size:14px;flex:none;color:transparent}
-.opt[aria-checked="true"] .chk{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
-.opt.red{border-left:4px solid var(--em)}
+.opt .chk{margin-left:auto;width:24px;height:24px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;font-size:14px;flex:none;color:transparent;transition:all .2s}
+.opt[aria-checked="true"] .chk{background:linear-gradient(135deg,var(--brand),var(--brand-2));border-color:transparent;color:#fff;transform:scale(1.08)}
+.opt.red{border-left:3px solid var(--em)}
 .opt.red .tag{display:inline-block;font-size:10.5px;font-weight:800;color:var(--em);background:var(--em-bg);padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.stagger>*{opacity:0;animation:rise .45s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i,0) * 45ms + 120ms)}
+@keyframes rise{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
 .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+/* deep questions */
+.deep-tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.06em;color:var(--brand-2);background:color-mix(in srgb,var(--brand-2) 12%,transparent);border:1px solid color-mix(in srgb,var(--brand-2) 30%,transparent);padding:3px 10px;border-radius:999px;margin-bottom:12px}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yn .opt{justify-content:center;flex-direction:column;gap:4px;min-height:92px;font-size:17px;text-align:center}
+.yn .opt .ico{font-size:24px}
+.yn .opt.unsure{grid-column:1/-1;min-height:0;flex-direction:row;padding:11px;font-size:15px;color:var(--muted)}
+.yn .opt.yes:hover{border-color:var(--ok);box-shadow:0 0 0 3px var(--ok-bg)}
+.yn .opt.no:hover{border-color:var(--em);box-shadow:0 0 0 3px var(--em-bg)}
+.leaders{margin-top:18px;padding:14px 16px;border-radius:16px;background:var(--surface-2);border:1px dashed var(--line)}
+.leaders h3{margin:0 0 10px;font-size:12px;letter-spacing:.06em;color:var(--muted);display:flex;align-items:center;gap:8px}
+.leaders h3 i{width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 10px var(--brand);animation:breathe 1s ease-in-out infinite}
+.lead{display:grid;grid-template-columns:1fr 46px;gap:4px 10px;align-items:center;font-size:13.5px;margin-top:8px}
+.lead span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lead b{text-align:right;color:var(--brand)}
+.lead .track{grid-column:1/-1;height:6px;border-radius:999px;background:color-mix(in srgb,var(--line) 70%,transparent);overflow:hidden}
+.lead .track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--brand),var(--brand-2));transition:width .8s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 10px var(--glow)}
+/* analysis scanner */
+.scan{text-align:center;padding:34px 20px 30px}
+.scanner{position:relative;width:150px;height:150px;margin:0 auto 22px}
+.scanner i{position:absolute;inset:0;border-radius:50%;border:2px solid transparent}
+.scanner i:nth-child(1){border-top-color:var(--brand);border-right-color:var(--brand);animation:spin 1.3s linear infinite;box-shadow:0 0 24px var(--glow)}
+.scanner i:nth-child(2){inset:16px;border-bottom-color:var(--brand-2);border-left-color:var(--brand-2);animation:spin 1.9s linear infinite reverse}
+.scanner i:nth-child(3){inset:34px;border:1px dashed color-mix(in srgb,var(--brand) 60%,transparent);animation:spin 7s linear infinite}
+.scanner b{position:absolute;inset:48px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:radial-gradient(circle,var(--brand-3),transparent 70%);animation:breathe 1.2s ease-in-out infinite}
+.scanner::after{content:"";position:absolute;left:8%;right:8%;height:2px;top:50%;background:linear-gradient(90deg,transparent,var(--brand),transparent);box-shadow:0 0 12px var(--brand);animation:scanY 1.6s ease-in-out infinite alternate}
+@keyframes scanY{from{transform:translateY(-60px)}to{transform:translateY(60px)}}
+.scan h2{margin:0 0 6px;font-size:20px;letter-spacing:-.02em}
+.scan-steps{list-style:none;padding:0;margin:16px auto 0;max-width:280px;text-align:left;display:grid;gap:8px;font-size:14px;color:var(--muted)}
+.scan-steps li{display:flex;gap:10px;align-items:center;opacity:.35;transition:opacity .3s,color .3s}
+.scan-steps li i{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:10px;font-style:normal;transition:all .3s}
+.scan-steps li.on{opacity:1;color:var(--text)}
+.scan-steps li.on i{border-color:var(--brand);border-top-color:transparent;animation:spin .8s linear infinite}
+.scan-steps li.ok{opacity:1;color:var(--text)}
+.scan-steps li.ok i{background:var(--brand);border-color:var(--brand);color:#fff;animation:none}
 /* vitals */
 .vitals{display:grid;gap:10px}
-.vital{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--surface-2)}
+.vital{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--surface-2);transition:border-color .2s,box-shadow .2s}
+.vital:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-3)}
 .vital .vi{font-size:26px;width:36px;text-align:center}
 .vital label{flex:1;font-weight:700;font-size:15px}
 .vital label small{display:block;font-weight:500;color:var(--muted);font-size:12px}
 .vital .in{display:flex;align-items:baseline;gap:4px}
-.vital input{width:88px;padding:9px 10px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);text-align:right;font-weight:700;font-size:17px}
+.vital input{width:88px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface-solid);text-align:right;font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
 .vital .u{color:var(--muted);font-size:13px;width:34px}
 .vital input::placeholder{font-weight:400;color:var(--muted);opacity:.55;font-size:14px}
 .err{color:var(--em);font-size:12.5px;margin:-4px 4px 0}
-/* NRS faces */
-.nrs-face{font-size:64px;text-align:center;line-height:1;margin-top:4px}
+/* NRS */
+.nrs-face{font-size:66px;text-align:center;line-height:1;margin-top:4px;transition:transform .25s}
+.nrs-face.pop{animation:pop .3s ease}
+@keyframes pop{50%{transform:scale(1.18)}}
 .nrs-val{font-size:15px;font-weight:800;text-align:center;margin-top:8px}
-.nrs-val b{font-size:30px;color:var(--brand)}
+.nrs-val b{font-size:34px;background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
 .nrs-lab{text-align:center;color:var(--muted);margin:2px 0 14px;min-height:1.5em}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:999px;background:linear-gradient(90deg,#3bb273,#f2c94c 50%,#e5534b);outline-offset:6px}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid var(--brand);box-shadow:var(--shadow-sm)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:999px;background:linear-gradient(90deg,#2dd4bf,#facc15 50%,#f43f5e);outline-offset:6px;box-shadow:0 0 16px var(--glow)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid var(--brand);box-shadow:0 0 0 6px var(--brand-3),0 0 18px var(--glow)}
 input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--brand)}
-.scale{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px}
-textarea{width:100%;min-height:130px;padding:14px;border:1.5px solid var(--line);border-radius:16px;background:var(--surface-2);resize:vertical;line-height:1.6}
+.scale{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
+textarea{width:100%;min-height:130px;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--surface-2);resize:vertical;line-height:1.6;transition:border-color .2s,box-shadow .2s}
+textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-3)}
 .kwrow{font-size:12.5px;color:var(--muted);margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.chip{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--brand-3);color:var(--brand);font-weight:700}
-.chip.off{background:var(--surface-2);color:var(--muted);font-weight:500}
+.chip{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--brand-3);color:var(--brand);font-weight:700;border:1px solid color-mix(in srgb,var(--brand) 25%,transparent);animation:rise .3s ease}
+.chip.off{background:var(--surface-2);color:var(--muted);font-weight:500;border-color:var(--line)}
 /* intro */
-.hero{background:linear-gradient(140deg,var(--head-a),var(--head-b));color:#fff;border-radius:var(--radius);padding:26px 22px 22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;right:-30px;top:-30px;width:180px;height:180px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 2h6v7h7v6h-7v7H9v-7H2V9h7z' fill='white' fill-opacity='.12'/%3E%3C/svg%3E") no-repeat center/contain}
-.hero .tagline{font-size:12px;font-weight:800;letter-spacing:.08em;opacity:.85}
-.hero h1{font-size:25px;line-height:1.3;margin:6px 0 8px;letter-spacing:-.03em}
-.hero p{margin:0;opacity:.92;font-size:15px}
-.journey{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 0}
-.journey div{background:rgba(255,255,255,.14);border-radius:14px;padding:10px;text-align:center;font-size:12.5px;font-weight:700}
-.journey span{display:block;font-size:22px;margin-bottom:2px}
+.hero{position:relative;overflow:hidden;color:#fff;border-radius:var(--radius);padding:28px 22px 22px;box-shadow:var(--shadow);background:linear-gradient(140deg,#0b1636,#24205f 60%,#0e3a5a);border:1px solid rgba(140,170,255,.2)}
+.hero .orb{position:absolute;right:-50px;top:-60px;width:230px;height:230px;border-radius:50%;background:conic-gradient(from 0deg,#22d3ee,#818cf8,#c084fc,#22d3ee);filter:blur(2px);opacity:.55;animation:spin 14s linear infinite;-webkit-mask:radial-gradient(circle,transparent 52%,#000 54%,#000 64%,transparent 66%);mask:radial-gradient(circle,transparent 52%,#000 54%,#000 64%,transparent 66%)}
+.hero .orb2{position:absolute;right:10px;top:0;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.9),rgba(34,211,238,.6) 30%,rgba(99,102,241,.2) 65%,transparent 70%);filter:blur(1px);animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(12px)}}
+.hero .tagline{position:relative;font-size:11px;font-weight:800;letter-spacing:.24em;color:#7dfbe0}
+.hero h1{position:relative;font-size:26px;line-height:1.3;margin:8px 0 8px;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#67e8f9,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{position:relative;margin:0;opacity:.85;font-size:15px;max-width:440px}
+.ecg{display:block;width:100%;height:42px;margin:14px 0 0}
+.ecg path{fill:none;stroke:#22d3ee;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:600;stroke-dashoffset:600;animation:ecg 3.2s linear infinite;filter:drop-shadow(0 0 4px #22d3ee)}
+@keyframes ecg{to{stroke-dashoffset:-600}}
+.journey{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 0}
+.journey div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:10px 4px;text-align:center;font-size:12px;font-weight:700;transition:transform .2s,background .2s}
+.journey div:hover{transform:translateY(-2px);background:rgba(255,255,255,.12)}
+.journey span{display:block;font-size:21px;margin-bottom:2px}
 .ticket{margin-top:14px}
 .ticket h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
 .checks{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:14.5px}
 .checks li{display:flex;gap:10px;align-items:flex-start}
-.checks li i{font-style:normal;flex:none;width:24px;height:24px;border-radius:8px;background:var(--brand-3);display:grid;place-items:center;font-size:13px}
-.sos{display:flex;align-items:center;gap:12px;background:var(--em-bg);border-radius:16px;padding:12px 14px;margin-top:14px;font-size:14px}
-.sos a{flex:none;background:var(--em);color:#fff;text-decoration:none;font-weight:800;border-radius:12px;padding:8px 12px}
+.checks li i{font-style:normal;flex:none;width:26px;height:26px;border-radius:9px;background:var(--brand-3);border:1px solid color-mix(in srgb,var(--brand) 25%,transparent);display:grid;place-items:center;font-size:13px}
+.sos{display:flex;align-items:center;gap:12px;background:var(--em-bg);border:1px solid color-mix(in srgb,var(--em) 30%,transparent);border-radius:16px;padding:12px 14px;margin-top:14px;font-size:14px}
+.sos a{flex:none;background:var(--em);color:#fff;text-decoration:none;font-weight:800;border-radius:12px;padding:8px 12px;box-shadow:0 0 16px color-mix(in srgb,var(--em) 45%,transparent)}
 .consent{display:flex;gap:10px;align-items:center;margin:16px 2px 0;font-size:14.5px;cursor:pointer}
 .consent input{width:22px;height:22px;accent-color:var(--brand);flex:none}
-/* result: 진료 결과지 */
-.sheet{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 20px;background:linear-gradient(90deg,var(--head-b),var(--head-a));color:#fff}
+/* result sheet */
+.sheet{background:var(--surface);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.sheet-head{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 20px;background:linear-gradient(100deg,#0b1636,#24205f 70%,#0e3a5a);color:#fff;overflow:hidden}
+.sheet-head::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%);transform:translateX(-100%);animation:shine 3.5s ease-in-out infinite}
 .sheet-head b{font-size:17px;letter-spacing:-.02em}
-.sheet-head small{display:block;font-size:12px;opacity:.85}
-.stamp{border:2px solid rgba(255,255,255,.8);border-radius:10px;padding:3px 8px;font-size:11px;font-weight:800;transform:rotate(-6deg);letter-spacing:.05em}
+.sheet-head small{display:block;font-size:12px;opacity:.75}
+.stamp{border:1.5px solid #67e8f9;color:#67e8f9;border-radius:10px;padding:3px 8px;font-size:10.5px;font-weight:800;letter-spacing:.14em;box-shadow:0 0 12px rgba(103,232,249,.4)}
 .patient{display:flex;flex-wrap:wrap;gap:6px 14px;padding:12px 20px;font-size:13px;color:var(--muted);border-bottom:1px dashed var(--line)}
 .patient b{color:var(--text)}
 .sheet-body{padding:18px 20px 22px}
-.triage{border-radius:16px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.triage{border-radius:16px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;border:1px solid transparent}
 .triage .ti{font-size:30px;line-height:1}
 .triage h2{margin:0 0 3px;font-size:18px;letter-spacing:-.02em}
 .triage p{margin:0;font-size:14.5px}
-.triage.emergency{background:var(--em-bg)} .triage.emergency h2{color:var(--em)}
-.triage.urgent{background:var(--ur-bg)} .triage.urgent h2{color:var(--ur)}
-.triage.soon{background:var(--soon-bg)} .triage.soon h2{color:var(--soon)}
-.triage.routine{background:var(--ok-bg)} .triage.routine h2{color:var(--ok)}
+.triage.emergency{background:var(--em-bg);border-color:color-mix(in srgb,var(--em) 40%,transparent);animation:alarm 1.6s ease-in-out infinite} .triage.emergency h2{color:var(--em)}
+@keyframes alarm{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--em) 15%,transparent)}}
+.triage.urgent{background:var(--ur-bg);border-color:color-mix(in srgb,var(--ur) 35%,transparent)} .triage.urgent h2{color:var(--ur)}
+.triage.soon{background:var(--soon-bg);border-color:color-mix(in srgb,var(--soon) 35%,transparent)} .triage.soon h2{color:var(--soon)}
+.triage.routine{background:var(--ok-bg);border-color:color-mix(in srgb,var(--ok) 35%,transparent)} .triage.routine h2{color:var(--ok)}
 .call{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.call a{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:12px;background:var(--em);color:#fff;font-weight:800;text-decoration:none}
+.call a{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:12px;background:var(--em);color:#fff;font-weight:800;text-decoration:none;box-shadow:0 0 16px color-mix(in srgb,var(--em) 45%,transparent)}
 .flags{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
-.flags li{background:var(--surface);border-radius:12px;padding:10px 12px;font-size:13.5px;box-shadow:var(--shadow-sm)}
+.flags li{background:var(--surface-solid);border-radius:12px;padding:10px 12px;font-size:13.5px;box-shadow:var(--shadow-sm);border:1px solid var(--line)}
 .flags li b{display:block;font-size:14.5px}
 .lvl{display:inline-block;font-size:10.5px;font-weight:800;padding:1px 8px;border-radius:999px;margin-right:6px;vertical-align:2px;color:#fff}
 .lvl.emergency{background:var(--em)} .lvl.urgent{background:var(--ur)}
-.sec-title{font-size:16px;margin:24px 0 10px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.sec-title{font-size:16px;margin:24px 0 10px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .sec-title small{font-weight:500;color:var(--muted);font-size:12px}
+.sec-title .chip{margin-left:auto}
 .cands{display:grid;gap:10px}
-.cand{border:1.5px solid var(--line);border-radius:16px;padding:16px}
-.cand.first{border-color:var(--brand);background:linear-gradient(180deg,var(--brand-3),var(--surface) 60%)}
+.cand{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--surface-2);transition:transform .2s,box-shadow .2s}
+.cand:hover{transform:translateY(-2px);box-shadow:0 10px 28px var(--glow)}
+.cand.first{border-color:var(--brand);background:linear-gradient(160deg,var(--brand-3),color-mix(in srgb,var(--brand-2) 8%,transparent) 60%);box-shadow:0 0 0 1px var(--brand),0 12px 34px var(--glow)}
 .cand .head{display:flex;gap:12px;align-items:center}
-.ring{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--brand) calc(var(--p)*1%),var(--surface-2) 0)}
-.ring b{width:42px;height:42px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-size:13.5px;color:var(--brand)}
+.ring{flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--brand),var(--brand-2) calc(var(--p)*1%),color-mix(in srgb,var(--line) 80%,transparent) 0);box-shadow:0 0 16px var(--glow)}
+.ring b{width:46px;height:46px;border-radius:50%;background:var(--surface-solid);display:grid;place-items:center;font-size:14px;color:var(--brand);font-variant-numeric:tabular-nums}
 .cand h3{margin:0;font-size:16px;line-height:1.35;letter-spacing:-.02em}
-.cand .rank{display:block;font-size:11.5px;color:var(--brand);font-weight:800}
+.cand .rank{display:block;font-size:11px;color:var(--brand);font-weight:800;letter-spacing:.06em}
 .cand p{margin:10px 0;font-size:14px;color:var(--muted)}
 .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.pill{font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line)}
-.pill.dept{background:var(--brand-3);border-color:transparent;color:var(--brand);font-weight:700}
+.pill{font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--surface-solid);border:1px solid var(--line)}
+.pill.dept{background:var(--brand-3);border-color:color-mix(in srgb,var(--brand) 30%,transparent);color:var(--brand);font-weight:700}
 .kvl{font-size:12px;color:var(--muted);font-weight:700;margin-top:10px}
 details{margin-top:10px;font-size:13.5px}
 details summary{cursor:pointer;color:var(--muted);font-weight:700}
 details ul{margin:6px 0 0;padding-left:18px;color:var(--muted)}
-.note{white-space:pre-wrap;background:var(--surface-2);border-radius:16px;padding:16px;font:13.5px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,"Noto Sans KR",monospace;margin:0;border-left:4px solid var(--navy)}
+.note{white-space:pre-wrap;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:16px;font:13.5px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,"Noto Sans KR",monospace;margin:0;border-left:3px solid var(--brand)}
 .disc{font-size:12px;color:var(--muted);margin-top:14px}
+.notice{border-radius:12px;padding:10px 12px;font-size:13px;background:var(--soon-bg);color:var(--text)}
 /* modal */
-.modal{position:fixed;inset:0;background:rgba(5,20,24,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
-.modal.open{display:flex}
+.modal{position:fixed;inset:0;background:rgba(3,8,22,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.open{display:flex;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}}
+.modal.open .box{animation:zoomIn .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes zoomIn{from{opacity:0;transform:scale(.94) translateY(10px)}}
 #askModal{z-index:55}
-.modal .box{background:var(--surface);border-radius:var(--radius);max-width:480px;width:100%;max-height:86vh;overflow:auto;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
-.modal .box.em{border-top:8px solid var(--em)}
-.modal .box.ur{border-top:8px solid var(--ur)}
+.modal .box{background:var(--surface-solid);border:1px solid var(--line);border-radius:var(--radius);max-width:480px;width:100%;max-height:86vh;overflow:auto;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.modal .box.em{border-top:6px solid var(--em);box-shadow:0 0 40px color-mix(in srgb,var(--em) 30%,transparent)}
+.modal .box.ur{border-top:6px solid var(--ur)}
 .modal h2{margin:0 0 6px;font-size:19px;letter-spacing:-.02em}
 .hist-list{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px}
-.hist-list li{display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px}
+.hist-list li{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--surface-2)}
 .hist-list .open{flex:1;text-align:left;background:none;border:0;padding:0}
 .hist-list .sub{display:block;font-size:12px;color:var(--muted)}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
 .dot.emergency{background:var(--em)} .dot.urgent{background:var(--ur)} .dot.soon{background:var(--soon)} .dot.routine{background:var(--ok)}
-.src{font-size:10.5px;padding:1px 7px;border-radius:999px;background:var(--surface-2);color:var(--muted);margin-left:4px}
+.src{font-size:10.5px;padding:1px 7px;border-radius:999px;background:var(--surface-solid);color:var(--muted);margin-left:4px}
 .empty{color:var(--muted);text-align:center;padding:22px 0}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--head-b);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:60;max-width:90vw}
-.toast.show{opacity:1}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,10px);background:linear-gradient(90deg,#0b1636,#24205f);border:1px solid rgba(140,170,255,.3);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:60;max-width:90vw;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-.fade{animation:fade .25s ease}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.fade{animation:none}.bar>i{transition:none}}
+.fade{animation:enter .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes enter{from{opacity:0;transform:translateY(14px) scale(.985);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
 footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}.stagger>*,.q-title .w{opacity:1;transform:none;filter:none}}
 @media (max-width:520px){
   .opts.two{grid-template-columns:1fr}
   .q-title{font-size:19px}
@@ -211,19 +297,24 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
   .hbtn{padding:7px 9px;white-space:nowrap}
   .status{display:none}
   .hero h1{font-size:22px}
-  .doc{width:40px;height:40px;font-size:22px}
+  .journey{grid-template-columns:repeat(4,1fr);gap:6px}
+  .journey div{font-size:11px}
+  .doc{width:42px;height:42px;font-size:21px}
+  .stages li{font-size:10.5px}
+  .bg-fx i{filter:blur(50px)}
 }
 @media print{
-  header.top,.stages,.navrow,.bar,.actions,.no-print,footer,.modal,.toast{display:none !important}
+  header.top,.stages,.navrow,.bar,.actions,.no-print,footer,.modal,.toast,.bg-fx{display:none !important}
   body{background:#fff;color:#000}
-  .sheet{box-shadow:none}
+  .sheet{box-shadow:none;backdrop-filter:none}
   .cand,.note,.triage{break-inside:avoid}
 }
 </style>
 <script>window.MEDINAVI_STATIC = true;</script>
+<div class="bg-fx" aria-hidden="true"><i></i><i></i><i></i></div>
 <header class="top">
   <div class="topbar wrap" style="padding-left:16px;padding-right:16px">
-    <div class="brand"><span class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M9 2h6v7h7v6h-7v7H9v-7H2V9h7z" fill="#0a8079"/></svg></span><span><b>메디내비 온라인 진료실</b><small>MEDINAVI · SMART CHECK-UP</small></span></div>
+    <div class="brand"><span class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M9 2h6v7h7v6h-7v7H9v-7H2V9h7z" fill="#ffffff"/></svg></span><span><b>메디내비 온라인 진료실</b><small>MEDINAVI · AI CHECK-UP</small></span></div>
     <span id="status" class="status" title="저장 방식">연결 확인 중…</span>
     <label class="uid"><span>ID</span><input id="uid" maxlength="32" autocomplete="off" spellcheck="false" aria-label="사용자 ID (한글, 영문, 숫자 1~32자)"></label>
     <button class="hbtn" id="btnHistory" type="button">🗂 기록함</button>
@@ -247,7 +338,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
 </div>
 <div class="toast" id="toast" role="status"></div>
 
-<script type="application/json" id="medinavi-kb">{"version":"2026.11-1","ages":[{"id":"u20","label":"20대 이하"},{"id":"30_40","label":"30~40대"},{"id":"50_60","label":"50~60대"},{"id":"70p","label":"70대 이상"}],"sexes":[{"id":"m","label":"남성"},{"id":"f","label":"여성"}],"regions":[{"id":"resp","label":"숨 · 가슴 · 심장","icon":"🫁"},{"id":"neuro","label":"머리 · 어지럼 · 저림","icon":"🧠"},{"id":"gi","label":"배 · 소화 · 속쓰림","icon":"🍽️"},{"id":"msk","label":"허리 · 관절 · 근육","icon":"🦴"},{"id":"ent","label":"목 · 코 · 귀 · 피부 · 소변","icon":"👂"},{"id":"mind","label":"잠 · 마음 · 피로","icon":"🌙"}],"symptoms":{"resp":[{"id":"cough","label":"기침"},{"id":"sputum","label":"가래"},{"id":"night_cough","label":"밤·새벽에 심해지는 기침"},{"id":"wheeze","label":"숨 쉴 때 쌕쌕 소리"},{"id":"postnasal","label":"콧물이 목 뒤로 넘어감"},{"id":"reflux_cough","label":"기침할 때 속쓰림·신물"},{"id":"palpitation","label":"가슴이 두근거림"},{"id":"edema","label":"다리·발목이 부음"},{"id":"hemoptysis","label":"피 섞인 가래(객혈)","flag":"urgent","flagReason":"객혈은 폐 질환(결핵·종양·기관지확장증 등) 감별이 필요한 우선 진료 신호입니다. 양이 많거나 숨이 차면 즉시 119에 연락하세요."},{"id":"chest_pain","label":"가슴 통증 · 조이는 느낌","flag":"emergency","flagReason":"가슴을 쥐어짜는 통증·압박감은 심근경색 등 심혈관 응급 신호일 수 있습니다."},{"id":"dyspnea","label":"숨이 많이 참","flag":"emergency","flagReason":"호흡곤란은 폐렴·천식 악화·심부전·폐색전증 등 응급 질환의 신호일 수 있습니다."}],"neuro":[{"id":"headache","label":"두통"},{"id":"photophobia","label":"빛·소리에 예민함"},{"id":"nausea_h","label":"메스꺼움 · 구토"},{"id":"dizziness_spin","label":"빙글빙글 도는 어지럼"},{"id":"lightheaded","label":"일어설 때 핑 돎 · 눈앞이 캄캄"},{"id":"numbness","label":"손발 저림"},{"id":"syncope","label":"잠깐 정신을 잃음(실신)","flag":"urgent","flagReason":"실신은 부정맥 등 심장 원인 감별이 필요해 당일 진료가 권장됩니다."},{"id":"neck_stiff","label":"목이 뻣뻣해 숙이기 힘듦","flag":"urgent","flagReason":"목 경직은 발열과 함께 있으면 뇌수막염 같은 응급 질환 신호일 수 있습니다."},{"id":"thunderclap","label":"벼락 치듯 갑자기 극심한 두통","flag":"emergency","flagReason":"갑작스러운 극심한 두통은 뇌출혈(지주막하출혈) 등 뇌혈관 응급 신호일 수 있습니다."},{"id":"weakness","label":"한쪽 팔다리 힘 빠짐 · 말 어눌 · 시야 이상","flag":"emergency","flagReason":"편측 마비·언어장애·시야 이상은 뇌졸중 의심 신호입니다. 발생 시각을 기억하고 즉시 119에 연락하세요."}],"gi":[{"id":"epigastric","label":"명치 통증 · 속쓰림"},{"id":"reflux","label":"신물이 올라옴"},{"id":"bloating","label":"더부룩함 · 체한 느낌"},{"id":"nausea","label":"메스꺼움 · 구토"},{"id":"diarrhea","label":"설사"},{"id":"constipation","label":"변비 · 배변 습관 변화"},{"id":"rlq","label":"오른쪽 아랫배 통증"},{"id":"ruq","label":"오른쪽 윗배 통증"},{"id":"jaundice","label":"눈·피부가 노래짐","flag":"urgent","flagReason":"황달은 담도 폐쇄·간 질환 감별이 필요한 우선 진료 신호입니다."},{"id":"severe_abd","label":"참기 힘든 복통 · 누르면 심하게 아픔","flag":"emergency","flagReason":"극심한 복통·압통은 복막염·장폐색·천공 등 응급 질환 신호일 수 있습니다."},{"id":"gi_bleed","label":"검은 변 · 피 섞인 변 · 피를 토함","flag":"emergency","flagReason":"흑색변·혈변·토혈은 위장관 출혈 신호입니다."}],"msk":[{"id":"low_back","label":"허리 통증"},{"id":"radiating","label":"엉덩이·다리로 뻗치는 통증"},{"id":"neck_shoulder","label":"목·어깨 결림"},{"id":"muscle","label":"근육통"},{"id":"joint_pain","label":"관절 통증"},{"id":"joint_swelling","label":"관절이 붓고 뜨거움"},{"id":"morning_stiff","label":"아침에 관절이 30분 넘게 뻣뻣"},{"id":"trauma","label":"넘어지거나 다친 뒤 통증","flag":"urgent","flagReason":"외상 후 통증은 골절·인대 손상 확인을 위해 당일 진료가 권장됩니다."},{"id":"saddle","label":"엉덩이 사이 감각 이상 · 대소변 조절 어려움","flag":"emergency","flagReason":"회음부 감각 저하·대소변 장애는 마미증후군(척수 신경 압박) 응급 신호입니다."}],"ent":[{"id":"sore_throat","label":"목 아픔"},{"id":"nasal","label":"콧물 · 코막힘 · 재채기"},{"id":"sinus_pain","label":"누런 콧물 · 얼굴 통증"},{"id":"ear_pain","label":"귀 통증 · 먹먹함"},{"id":"rash","label":"발진 · 가려움"},{"id":"hives","label":"두드러기"},{"id":"dysuria","label":"소변 볼 때 아픔 · 자주 마려움"},{"id":"hematuria","label":"소변에 피가 섞임"},{"id":"flank","label":"옆구리 통증"},{"id":"hearing","label":"갑자기 한쪽 귀가 안 들림","flag":"urgent","flagReason":"돌발성 난청은 72시간 이내 치료가 예후에 중요해 빠른 이비인후과 진료가 필요합니다."},{"id":"swelling_face","label":"입술·혀·목이 붓고 숨이 답답","flag":"emergency","flagReason":"입술·혀·목의 부종과 호흡 불편은 아나필락시스(중증 알레르기) 응급 신호입니다."}],"mind":[{"id":"insomnia","label":"잠들기 힘들거나 자주 깸"},{"id":"snoring","label":"심한 코골이 · 자다가 숨 멈춤"},{"id":"fatigue","label":"쉬어도 계속 피곤함"},{"id":"anxiety","label":"불안 · 걱정이 멈추지 않음"},{"id":"panic","label":"갑자기 심장이 뛰고 숨이 막힘"},{"id":"low_mood","label":"우울 · 의욕 없음"},{"id":"cold_intol","label":"추위·더위를 심하게 탐 · 체중 변화"},{"id":"suicidal","label":"죽고 싶거나 자해하고 싶은 생각","flag":"emergency","flagReason":"지금 혼자 견디지 않으셔도 됩니다. 자살예방상담전화 109(24시간) 또는 119로 바로 도움을 요청하세요."}]},"onsets":[{"id":"sudden","label":"갑자기 시작됐어요","desc":"시작된 때가 분명해요"},{"id":"gradual","label":"서서히 생겼어요","desc":"언제부터인지 애매해요"}],"durations":[{"id":"acute","label":"3주 안 됨","desc":"급성"},{"id":"subacute","label":"3주 ~ 2달","desc":"아급성"},{"id":"chronic","label":"2달 넘음","desc":"만성 · 8주 이상"}],"courses":[{"id":"worse","label":"점점 심해져요"},{"id":"same","label":"비슷해요"},{"id":"better","label":"나아지고 있어요"},{"id":"waxing","label":"좋아졌다 나빠졌다 해요"}],"findings":[{"id":"ggo","label":"간유리 음영(GGO)이 있대요"},{"id":"nodule","label":"폐 결절이 있대요"},{"id":"other_lung","label":"다른 폐 이상이 있대요"},{"id":"none","label":"이상 없음 · 검진 안 받음"}],"risks":[{"id":"fever","label":"38℃ 넘는 열 · 오한"},{"id":"smoking","label":"담배를 피움(피웠음) · 가족 폐질환"},{"id":"weight_loss","label":"살이 저절로 빠짐"},{"id":"night_sweats","label":"밤에 식은땀 · 심한 피로"}],"chronics":[{"id":"htn","label":"고혈압"},{"id":"dm","label":"당뇨"},{"id":"heart","label":"심장병"},{"id":"lung","label":"천식 · 폐질환"},{"id":"immuno","label":"항암·스테로이드 치료 중"},{"id":"anticoag","label":"피 묽게 하는 약(아스피린 등)"}],"pregnancy":[{"id":"yes","label":"임신 중이거나 가능성 있음"},{"id":"no","label":"가능성 없음"},{"id":"unknown","label":"잘 모르겠음"}],"nrs":[{"max":0,"label":"괜찮아요"},{"max":3,"label":"조금 불편해요"},{"max":6,"label":"꽤 아파서 일상에 지장 있어요"},{"max":8,"label":"많이 아파서 잠도 설쳐요"},{"max":10,"label":"참을 수 없을 만큼 아파요"}],"vitalLimits":{"temp":[30,45],"hr":[20,250],"spo2":[50,100]},"keywords":[{"words":["간유리","GGO","ggo"],"kind":"finding","id":"ggo"},{"words":["결절"],"kind":"finding","id":"nodule"},{"words":["기침"],"kind":"sym","id":"cough"},{"words":["가래"],"kind":"sym","id":"sputum"},{"words":["객혈","피가래","피 섞인 가래"],"kind":"sym","id":"hemoptysis"},{"words":["흉통","가슴 통증","가슴이 조","가슴이 쥐어"],"kind":"sym","id":"chest_pain"},{"words":["숨이 차","숨차","호흡곤란","숨쉬기 힘"],"kind":"sym","id":"dyspnea"},{"words":["쌕쌕"],"kind":"sym","id":"wheeze"},{"words":["두근"],"kind":"sym","id":"palpitation"},{"words":["두통","머리가 아"],"kind":"sym","id":"headache"},{"words":["어지러","어지럼"],"kind":"sym","id":"dizziness_spin"},{"words":["저림","저리"],"kind":"sym","id":"numbness"},{"words":["마비","발음이 어눌","말이 어눌"],"kind":"sym","id":"weakness"},{"words":["복통","배가 아","배 아"],"kind":"sym","id":"epigastric"},{"words":["속쓰림","속이 쓰"],"kind":"sym","id":"epigastric"},{"words":["신물","역류"],"kind":"sym","id":"reflux"},{"words":["설사"],"kind":"sym","id":"diarrhea"},{"words":["변비"],"kind":"sym","id":"constipation"},{"words":["구토","토할","메스꺼"],"kind":"sym","id":"nausea"},{"words":["혈변","흑색변","짜장","토혈","피를 토"],"kind":"sym","id":"gi_bleed"},{"words":["허리"],"kind":"sym","id":"low_back"},{"words":["관절"],"kind":"sym","id":"joint_pain"},{"words":["인후통","목이 아","목 아프"],"kind":"sym","id":"sore_throat"},{"words":["콧물","코막힘","재채기"],"kind":"sym","id":"nasal"},{"words":["발진","가려"],"kind":"sym","id":"rash"},{"words":["두드러기"],"kind":"sym","id":"hives"},{"words":["배뇨통","소변 볼 때","잔뇨"],"kind":"sym","id":"dysuria"},{"words":["불면","잠을 못","잠이 안"],"kind":"sym","id":"insomnia"},{"words":["코골"],"kind":"sym","id":"snoring"},{"words":["불안"],"kind":"sym","id":"anxiety"},{"words":["우울"],"kind":"sym","id":"low_mood"},{"words":["피곤","피로"],"kind":"sym","id":"fatigue"},{"words":["죽고 싶","자해","자살"],"kind":"sym","id":"suicidal"},{"words":["열이","발열","오한"],"kind":"risk","id":"fever"},{"words":["흡연","담배"],"kind":"risk","id":"smoking"},{"words":["체중 감소","살이 빠","체중이 줄"],"kind":"risk","id":"weight_loss"},{"words":["식은땀"],"kind":"risk","id":"night_sweats"}],"conditions":[{"id":"uri","name":"급성 상기도 감염(감기 · 급성 기관지염)","region":"resp","desc":"바이러스가 원인인 경우가 대부분이며 1~3주 안에 자연 호전되는 것이 일반적입니다.","dept":"가정의학과 · 내과 · 이비인후과","tests":["대부분 추가 검사 불필요","3주 이상 지속·고열 시 흉부 X-선"],"base":1,"sym":{"cough":3,"sputum":2,"nasal":3,"sore_throat":2},"urgency":"routine","dur":{"acute":4,"subacute":-2,"chronic":-6},"risk":{"fever":1},"course":{"better":1}},{"id":"pneumonia","name":"폐렴(하기도 감염)","region":"resp","desc":"기침·가래와 함께 발열, 숨참이 동반되면 의심합니다. 고령·기저질환자는 빠르게 악화할 수 있습니다.","dept":"호흡기내과 · 내과(숨참이 심하면 응급실)","tests":["흉부 X-선","혈액검사(CBC · CRP)","산소포화도 측정"],"base":0,"sym":{"cough":2,"sputum":2,"dyspnea":3,"chest_pain":1},"urgency":"urgent","dur":{"acute":3,"subacute":1,"chronic":-2},"risk":{"fever":3},"chronic":{"lung":2,"immuno":2},"age":{"70p":2},"course":{"worse":1}},{"id":"asthma_cva","name":"기침형 천식 · 기관지 천식","region":"resp","desc":"밤·새벽이나 찬 공기, 운동 후 심해지는 마른기침이 특징이며 만성 기침의 대표 원인입니다.","dept":"호흡기내과 · 알레르기내과","tests":["폐기능검사(기관지확장제 반응)","메타콜린 기관지 유발검사","호기산화질소(FeNO)"],"base":0,"sym":{"cough":3,"wheeze":5,"night_cough":4,"dyspnea":2},"urgency":"routine","dur":{"acute":-1,"subacute":3,"chronic":3},"chronic":{"lung":2},"course":{"waxing":2},"kw":{"찬 공기":2,"운동":1,"새벽":1}},{"id":"uacs","name":"상기도기침증후군(후비루 증후군)","region":"resp","desc":"비염·부비동염으로 콧물이 목 뒤로 넘어가며 기침을 유발합니다. 만성 기침의 흔한 원인입니다.","dept":"이비인후과 · 호흡기내과","tests":["비내시경","부비동 X-선 또는 CT","알레르기 검사"],"base":0,"sym":{"cough":3,"postnasal":5,"nasal":2},"urgency":"routine","dur":{"acute":-1,"subacute":3,"chronic":3},"kw":{"코":1,"목에 걸":2}},{"id":"gerd_cough","name":"위식도 역류성 기침","region":"resp","desc":"위산 역류가 기침 반사를 자극합니다. 식후·누울 때 악화되고 속쓰림이 동반되기도 합니다.","dept":"소화기내과 · 호흡기내과","tests":["위내시경","양성자펌프억제제(PPI) 경험적 치료 반응 평가"],"base":0,"sym":{"cough":3,"reflux_cough":5,"night_cough":1},"urgency":"routine","dur":{"acute":-1,"subacute":2,"chronic":3},"kw":{"식후":2,"누우면":2}},{"id":"lung_lesion","name":"폐 결절 · 간유리 음영 병변(만성 폐 병변) 감별","region":"resp","desc":"검진에서 발견된 간유리 음영·결절은 염증 흔적부터 조기 폐암까지 다양해, 크기·모양 변화를 추적 CT로 확인해야 합니다.","dept":"호흡기내과(필요 시 흉부외과)","tests":["저선량 흉부 CT 추적 검사(이전 영상과 비교)","필요 시 PET-CT · 조직검사","폐기능검사"],"base":0,"sym":{"hemoptysis":3},"urgency":"soon","dur":{"subacute":1,"chronic":3},"risk":{"smoking":3,"weight_loss":3,"night_sweats":1},"find":{"ggo":8,"nodule":8,"other_lung":4},"age":{"50_60":1,"70p":2}},{"id":"tb","name":"폐결핵 · 비결핵 항산균 등 만성 폐 감염","region":"resp","desc":"2~3주 이상 지속되는 기침에 야간 식은땀·체중 감소·미열이 동반되면 감별이 필요합니다.","dept":"호흡기내과 · 감염내과","tests":["흉부 X-선","객담 항산균 도말 · 배양 · PCR","인터페론감마 분비검사(IGRA)"],"base":0,"sym":{"cough":3,"sputum":2,"hemoptysis":3},"urgency":"soon","dur":{"acute":-4,"subacute":2,"chronic":3},"risk":{"night_sweats":4,"weight_loss":3,"fever":2},"find":{"other_lung":2,"nodule":1},"chronic":{"immuno":2}},{"id":"copd","name":"만성 폐쇄성 폐질환(COPD)","region":"resp","desc":"장기간 흡연과 관련된 만성 기도 질환으로 숨참·기침·가래가 서서히 진행합니다.","dept":"호흡기내과","tests":["폐기능검사","흉부 X-선 또는 CT"],"base":-2,"sym":{"cough":2,"sputum":2,"dyspnea":3,"wheeze":2},"urgency":"routine","dur":{"acute":-2,"subacute":1,"chronic":2},"risk":{"smoking":6},"chronic":{"lung":1},"age":{"u20":-3,"50_60":1,"70p":2},"onset":{"gradual":1}},{"id":"acs","name":"급성 관상동맥증후군(협심증 · 심근경색) 등 심장 원인 흉통","region":"resp","desc":"가슴 중앙을 짓누르거나 쥐어짜는 통증이 팔·턱으로 퍼지거나 식은땀이 동반되면 응급입니다.","dept":"응급의학과 · 순환기내과","tests":["심전도","심근효소(트로포닌) 검사","심장 초음파"],"base":0,"sym":{"chest_pain":6,"dyspnea":2,"palpitation":1},"urgency":"emergency","risk":{"smoking":1},"chronic":{"htn":2,"dm":2,"heart":3},"age":{"u20":-3,"50_60":2,"70p":3},"onset":{"sudden":2},"kw":{"식은땀":2,"왼팔":2,"턱":1,"짓누르":2},"requires":["chest_pain"]},{"id":"arrhythmia","name":"부정맥(심방세동 등)","region":"resp","desc":"맥박이 불규칙하거나 갑자기 빨라지는 증상으로, 어지러움·숨참이 동반되면 빠른 평가가 필요합니다.","dept":"순환기내과","tests":["심전도","24시간 홀터 검사","갑상선 기능검사"],"base":0,"sym":{"palpitation":5,"dyspnea":1},"urgency":"soon","chronic":{"heart":2,"htn":1},"age":{"70p":1},"course":{"waxing":1}},{"id":"heart_failure","name":"심부전","region":"resp","desc":"심장 기능 저하로 숨참(특히 누웠을 때)과 다리 부종이 생깁니다.","dept":"순환기내과","tests":["BNP(NT-proBNP) 검사","심장 초음파","흉부 X-선"],"base":0,"sym":{"dyspnea":4,"edema":5},"urgency":"urgent","chronic":{"heart":3,"htn":1},"age":{"u20":-3,"70p":2},"onset":{"gradual":1},"kw":{"누우면 숨":3,"베개":1}},{"id":"tension","name":"긴장형 두통","region":"neuro","desc":"머리를 띠로 조이는 듯한 양측성 두통으로 스트레스·자세·수면 부족과 관련됩니다.","dept":"신경과 · 가정의학과","tests":["대개 추가 검사 불필요","두통 일기 작성"],"base":0,"sym":{"headache":4},"urgency":"routine","dur":{"subacute":1,"chronic":2},"onset":{"gradual":1},"kw":{"조이":2,"스트레스":1,"뒷목":1}},{"id":"migraine","name":"편두통","region":"neuro","desc":"욱신거리는 박동성 두통이 구역·빛 과민과 함께 반복되며 일상생활에 지장을 줍니다.","dept":"신경과","tests":["신경학적 진찰","두통 일기","비전형적 양상 시 뇌 MRI"],"base":0,"sym":{"headache":4,"photophobia":4,"nausea_h":3},"urgency":"routine","age":{"70p":-2},"sex":{"f":1},"course":{"waxing":2},"kw":{"욱신":2,"박동":2,"한쪽 머리":2}},{"id":"sah","name":"지주막하출혈 등 뇌혈관 응급","region":"neuro","desc":"인생 최악의 두통이 갑자기 시작되면 뇌출혈 가능성을 반드시 배제해야 합니다.","dept":"응급의학과 · 신경외과","tests":["뇌 CT","CT 혈관조영술","필요 시 요추천자"],"base":0,"sym":{"thunderclap":8,"headache":1,"nausea_h":1,"neck_stiff":2},"urgency":"emergency","chronic":{"htn":1,"anticoag":1},"onset":{"sudden":3},"requires":["thunderclap"]},{"id":"stroke","name":"뇌졸중 · 일과성 허혈발작","region":"neuro","desc":"한쪽 마비·언어장애·시야 이상이 갑자기 생기면 증상이 사라져도 즉시 치료가 필요합니다.","dept":"응급의학과 · 신경과","tests":["뇌 CT · MRI","뇌혈관 영상","심전도"],"base":0,"sym":{"weakness":8,"numbness":2,"dizziness_spin":1,"lightheaded":1},"urgency":"emergency","chronic":{"htn":2,"dm":2,"heart":2},"age":{"50_60":2,"70p":3},"onset":{"sudden":3},"requires":["weakness"]},{"id":"bppv","name":"양성 돌발성 두위현훈(이석증)","region":"neuro","desc":"고개를 돌리거나 눕고 일어날 때 수십 초간 빙글빙글 도는 어지러움이 특징입니다.","dept":"이비인후과 · 신경과","tests":["두위 변환 검사(Dix-Hallpike)","안진 검사"],"base":0,"sym":{"dizziness_spin":5,"nausea_h":2},"urgency":"routine","age":{"50_60":1,"70p":1},"onset":{"sudden":1},"course":{"waxing":1},"kw":{"고개":3,"돌아누":3,"자세":2,"누울 때":2}},{"id":"vestibular","name":"전정신경염 · 메니에르병","region":"neuro","desc":"수 시간 이상 지속되는 심한 회전성 어지러움과 구토가 특징이며, 메니에르병은 이명·청력 저하가 동반됩니다.","dept":"이비인후과","tests":["청력검사","전정기능검사"],"base":0,"sym":{"dizziness_spin":4,"nausea_h":2,"hearing":3},"urgency":"routine","dur":{"acute":1},"kw":{"이명":3,"귀가 먹먹":2}},{"id":"orthostatic","name":"기립성 저혈압 · 미주신경성 실신","region":"neuro","desc":"일어설 때 핑 도는 어지러움, 눈앞이 캄캄해지는 증상으로 탈수·약물·빈혈과 관련될 수 있습니다.","dept":"내과 · 신경과 · 순환기내과","tests":["기립 혈압 측정","심전도","혈액검사(빈혈 · 전해질)"],"base":0,"sym":{"lightheaded":5,"syncope":3},"urgency":"routine","chronic":{"htn":1},"course":{"waxing":1},"kw":{"일어날 때":3,"일어서":3}},{"id":"meningitis","name":"뇌수막염","region":"neuro","desc":"발열·두통·목 경직이 함께 나타나면 의심하며 빠른 치료가 필요합니다.","dept":"응급의학과 · 감염내과","tests":["뇌척수액 검사(요추천자)","혈액배양","뇌 CT"],"base":0,"sym":{"headache":2,"neck_stiff":6,"photophobia":2,"nausea_h":1},"urgency":"emergency","dur":{"acute":2,"chronic":-3},"risk":{"fever":5},"chronic":{"immuno":2},"requires":["neck_stiff","photophobia"]},{"id":"neuropathy","name":"말초신경병증 · 경추 신경근병증","region":"neuro","desc":"당뇨·경추 디스크 등으로 신경이 손상되어 손발 저림, 감각 저하가 생깁니다.","dept":"신경과 · 재활의학과","tests":["신경전도·근전도 검사","당화혈색소 · 비타민 B12","필요 시 경추 MRI"],"base":0,"sym":{"numbness":5},"urgency":"routine","dur":{"subacute":1,"chronic":2},"chronic":{"dm":3},"onset":{"gradual":1}},{"id":"gerd","name":"위식도역류질환","region":"gi","desc":"위산이 식도로 역류해 가슴 쓰림·신물이 생기며, 식후나 누울 때 심해집니다.","dept":"소화기내과","tests":["위내시경","PPI 경험적 치료 반응 평가"],"base":0,"sym":{"reflux":5,"epigastric":3},"urgency":"routine","dur":{"subacute":1,"chronic":1},"kw":{"누우면":2,"식후":1,"야식":1}},{"id":"gastritis","name":"위염 · 기능성 소화불량","region":"gi","desc":"명치 불편감·더부룩함이 반복되며 스트레스·식습관·헬리코박터균과 관련됩니다.","dept":"소화기내과 · 내과","tests":["위내시경","헬리코박터 파일로리 검사"],"base":0,"sym":{"epigastric":4,"bloating":4,"nausea":1},"urgency":"routine","dur":{"subacute":1,"chronic":1}},{"id":"pud","name":"소화성 궤양(위 · 십이지장 궤양)","region":"gi","desc":"공복 또는 식후의 명치 통증이 특징이며 진통소염제·항혈소판제 복용 시 위험이 높습니다.","dept":"소화기내과","tests":["위내시경","헬리코박터 파일로리 검사","빈혈 검사"],"base":0,"sym":{"epigastric":4,"gi_bleed":4,"nausea":1},"urgency":"soon","risk":{"smoking":1},"chronic":{"anticoag":2},"kw":{"공복":3,"빈속":3,"진통제":2}},{"id":"gastroenteritis","name":"급성 장염(위장염)","region":"gi","desc":"설사·구토·복통이 갑자기 생기며 대부분 수일 내 호전됩니다. 탈수 예방이 중요합니다.","dept":"내과 · 가정의학과","tests":["대개 추가 검사 불필요","탈수·혈변 시 혈액 · 대변 검사"],"base":0,"sym":{"diarrhea":5,"nausea":3,"epigastric":1},"urgency":"routine","dur":{"acute":3,"subacute":-2,"chronic":-4},"risk":{"fever":2},"onset":{"sudden":1},"kw":{"상한":2,"회":1,"식중독":3}},{"id":"appendicitis","name":"급성 충수염(맹장염)","region":"gi","desc":"명치 주변에서 시작해 오른쪽 아랫배로 옮겨가는 통증이 전형적이며 수술이 필요할 수 있습니다.","dept":"응급의학과 · 외과","tests":["복부 CT 또는 초음파","혈액검사(CBC · CRP)"],"base":0,"sym":{"rlq":6,"nausea":2,"severe_abd":2},"urgency":"urgent","dur":{"acute":3,"chronic":-4},"risk":{"fever":2},"course":{"worse":2},"kw":{"옮겨":2,"걸을 때":1}},{"id":"biliary","name":"담석증 · 담낭염","region":"gi","desc":"기름진 식사 후 오른쪽 윗배나 명치 통증이 생기고, 발열·황달이 있으면 담낭염·담관염을 의심합니다.","dept":"소화기내과 · 외과","tests":["복부 초음파","간기능 혈액검사"],"base":0,"sym":{"ruq":6,"nausea":2,"jaundice":3,"epigastric":1},"urgency":"urgent","risk":{"fever":2},"age":{"u20":-1,"50_60":1},"kw":{"기름진":3,"고기":1}},{"id":"ibs","name":"과민성 장증후군","region":"gi","desc":"복통·더부룩함과 함께 설사·변비가 반복되며 배변 후 호전되는 기능성 질환입니다.","dept":"소화기내과","tests":["경고 증상이 없으면 임상 진단","50세 이상·경고 증상 시 대장내시경"],"base":0,"sym":{"diarrhea":2,"constipation":3,"bloating":3},"urgency":"routine","dur":{"acute":-2,"subacute":1,"chronic":4},"risk":{"weight_loss":-3},"course":{"waxing":2},"kw":{"스트레스":2,"배변 후":2}},{"id":"gi_malig","name":"위장관 출혈 · 종양성 질환 감별","region":"gi","desc":"혈변·흑색변, 원인 모를 체중 감소, 배변 습관 변화가 있으면 내시경으로 원인을 확인해야 합니다.","dept":"소화기내과","tests":["위 · 대장내시경","복부 CT","빈혈 · 철분 검사"],"base":0,"sym":{"gi_bleed":5,"constipation":1,"epigastric":1},"urgency":"soon","dur":{"subacute":2,"chronic":2},"risk":{"weight_loss":5,"night_sweats":1},"age":{"u20":-2,"50_60":2,"70p":3}},{"id":"preg_abd","name":"임신 관련 복통(자궁외 임신 등) 감별","region":"gi","desc":"가임기 여성의 복통은 임신 여부 확인이 우선이며, 자궁외 임신은 응급 상황이 될 수 있습니다.","dept":"산부인과 · 응급의학과","tests":["소변 임신 반응 · 혈중 β-hCG","골반 초음파"],"base":0,"sym":{"rlq":2,"severe_abd":3,"epigastric":1,"nausea":1},"urgency":"urgent","preg":{"yes":6,"unknown":2,"no":-6},"sexOnly":"f"},{"id":"lbp_mech","name":"비특이적 요통(근육 · 인대 염좌)","region":"msk","desc":"무리한 동작 후 생긴 허리 통증의 대부분은 수주 내 호전되며, 적절한 활동 유지가 회복에 도움이 됩니다.","dept":"정형외과 · 재활의학과","tests":["경고 증상이 없으면 영상검사 불필요","6주 이상 지속 시 X-선"],"base":0,"sym":{"low_back":5},"urgency":"routine","dur":{"acute":2,"chronic":-1},"kw":{"무거운":2,"삐끗":3,"들다가":2}},{"id":"disc","name":"요추 추간판 탈출증 · 척추관 협착증","region":"msk","desc":"허리에서 엉덩이·다리로 뻗치는 통증이나 저림이 특징이며, 협착증은 걸을 때 악화됩니다.","dept":"정형외과 · 신경외과 · 재활의학과","tests":["신경학적 진찰","신경 증상 지속 시 요추 MRI"],"base":0,"sym":{"low_back":3,"radiating":6},"urgency":"routine","age":{"50_60":1,"70p":1},"kw":{"걸으면":2,"기침할 때":1}},{"id":"cauda","name":"마미증후군 · 척수 압박","region":"msk","desc":"하지 마비, 회음부 감각 저하, 대소변 장애는 신경 손상을 막기 위해 즉시 수술적 평가가 필요합니다.","dept":"응급의학과 · 신경외과","tests":["응급 척추 MRI"],"base":0,"sym":{"saddle":9,"radiating":2,"low_back":1},"urgency":"emergency","requires":["saddle"]},{"id":"spine_red","name":"척추 감염 · 전이성 병변 감별","region":"msk","desc":"발열·체중 감소·야간 통증을 동반한 요통은 감염이나 종양 등 심각한 원인을 감별해야 합니다.","dept":"정형외과 · 감염내과","tests":["척추 MRI","혈액검사(CRP · ESR)"],"base":0,"sym":{"low_back":2},"urgency":"urgent","risk":{"fever":3,"weight_loss":4,"night_sweats":2},"chronic":{"immuno":2},"age":{"50_60":1,"70p":1},"kw":{"밤에":1,"누워도":2}},{"id":"oa","name":"퇴행성 관절염","region":"msk","desc":"관절 연골이 닳아 움직일 때 통증이 생기며 무릎·고관절·손가락에 흔합니다.","dept":"정형외과 · 재활의학과","tests":["관절 X-선"],"base":0,"sym":{"joint_pain":5,"joint_swelling":1},"urgency":"routine","dur":{"acute":-1,"chronic":3},"age":{"u20":-3,"50_60":2,"70p":3},"onset":{"gradual":1},"kw":{"계단":2,"무릎":1}},{"id":"ra","name":"류마티스 관절염 등 염증성 관절염","region":"msk","desc":"여러 관절이 대칭적으로 붓고 아침에 오래 뻣뻣한 것이 특징이며 조기 치료가 관절 손상을 줄입니다.","dept":"류마티스내과","tests":["류마티스 인자(RF) · 항CCP 항체","ESR · CRP","관절 X-선 · 초음파"],"base":0,"sym":{"joint_pain":3,"joint_swelling":4,"morning_stiff":5},"urgency":"soon","dur":{"acute":-1,"subacute":2,"chronic":2},"sex":{"f":1},"kw":{"손가락":1,"양쪽":2}},{"id":"gout","name":"통풍 · 결정성 관절염","region":"msk","desc":"엄지발가락 등 한 관절이 갑자기 붉게 붓고 극심하게 아픈 것이 특징입니다.","dept":"류마티스내과 · 정형외과","tests":["혈중 요산","관절액 결정 검사"],"base":0,"sym":{"joint_swelling":5,"joint_pain":3},"urgency":"routine","sex":{"m":2,"f":-1},"onset":{"sudden":3},"course":{"waxing":1},"kw":{"엄지발가락":4,"술":1,"맥주":1}},{"id":"septic_arthritis","name":"감염성(화농성) 관절염","region":"msk","desc":"발열과 함께 한 관절이 붓고 열나면 관절 감염을 배제해야 하며 응급 치료가 필요할 수 있습니다.","dept":"정형외과 · 응급의학과","tests":["관절액 검사 · 배양","혈액검사(CBC · CRP)"],"base":0,"sym":{"joint_swelling":4,"joint_pain":1},"urgency":"urgent","risk":{"fever":5},"chronic":{"immuno":2,"dm":1}},{"id":"myalgia","name":"근막통증증후군 · 근육 긴장","region":"msk","desc":"장시간 같은 자세나 과사용으로 근육이 뭉치고 누르면 아픈 부위가 생깁니다.","dept":"재활의학과 · 정형외과 · 가정의학과","tests":["대개 추가 검사 불필요"],"base":0,"sym":{"muscle":4,"neck_shoulder":4},"urgency":"routine","dur":{"subacute":1,"chronic":1},"kw":{"컴퓨터":2,"자세":1,"운동 후":2}},{"id":"fracture","name":"골절 · 인대 손상","region":"msk","desc":"외상 후 붓기·변형·체중 부하 어려움이 있으면 영상 검사로 골절을 확인해야 합니다.","dept":"정형외과 · 응급의학과","tests":["X-선","필요 시 CT · MRI"],"base":0,"sym":{"trauma":7,"joint_swelling":1},"urgency":"urgent","age":{"70p":2}},{"id":"pharyngitis","name":"급성 인두염 · 편도염","region":"ent","desc":"목 통증과 삼킬 때 통증이 주 증상이며, 고열·편도 삼출물이 있으면 세균성 감염을 확인합니다.","dept":"이비인후과 · 내과","tests":["신속 연쇄상구균 항원검사"],"base":0,"sym":{"sore_throat":5,"nasal":1},"urgency":"routine","dur":{"acute":3,"subacute":-1,"chronic":-3},"risk":{"fever":2}},{"id":"rhinitis","name":"알레르기 비염","region":"ent","desc":"맑은 콧물·코막힘·재채기가 계절이나 환경에 따라 반복됩니다.","dept":"이비인후과 · 알레르기내과","tests":["알레르기 피부반응 또는 혈액검사(MAST)"],"base":0,"sym":{"nasal":5,"postnasal":1},"urgency":"routine","dur":{"acute":-1,"chronic":2,"subacute":1},"risk":{"fever":-2},"course":{"waxing":2},"kw":{"재채기":2,"환절기":2,"먼지":1}},{"id":"sinusitis","name":"부비동염(축농증)","region":"ent","desc":"누런 콧물, 얼굴 통증·압박감이 10일 이상 지속되거나 좋아졌다 다시 나빠지면 의심합니다.","dept":"이비인후과","tests":["비내시경","부비동 X-선 또는 CT"],"base":0,"sym":{"sinus_pain":6,"nasal":3},"urgency":"routine","dur":{"subacute":2,"chronic":1},"risk":{"fever":1}},{"id":"otitis","name":"중이염 · 외이도염","region":"ent","desc":"귀 통증과 먹먹함, 분비물이 생기며 감기 후에 흔합니다.","dept":"이비인후과","tests":["이경 검사","필요 시 청력검사"],"base":0,"sym":{"ear_pain":6},"urgency":"routine","dur":{"acute":1},"risk":{"fever":1}},{"id":"ssnhl","name":"돌발성 감각신경성 난청","region":"ent","desc":"원인 없이 갑자기 한쪽 청력이 떨어지는 질환으로 빠른 스테로이드 치료가 회복에 중요합니다.","dept":"이비인후과(가능하면 72시간 이내)","tests":["순음청력검사","필요 시 내이도 MRI"],"base":0,"sym":{"hearing":8,"ear_pain":1},"urgency":"urgent","onset":{"sudden":3},"kw":{"이명":2}},{"id":"derm","name":"접촉 피부염 · 습진","region":"ent","desc":"가려운 발진이 특정 물질 접촉이나 피부 건조와 관련되어 반복됩니다.","dept":"피부과","tests":["필요 시 첩포검사"],"base":0,"sym":{"rash":5},"urgency":"routine","dur":{"subacute":1,"chronic":1}},{"id":"urticaria","name":"두드러기","region":"ent","desc":"가렵고 부풀어 오르는 팽진이 수 시간 내 사라졌다 다시 생깁니다. 6주 이상이면 만성으로 봅니다.","dept":"피부과 · 알레르기내과","tests":["대개 임상 진단","만성 시 혈액검사"],"base":0,"sym":{"hives":6,"rash":1,"swelling_face":2},"urgency":"routine","course":{"waxing":1}},{"id":"anaphylaxis","name":"아나필락시스 · 혈관부종","region":"ent","desc":"음식·약물·벌독 등 노출 후 입술·혀·목 부종, 호흡곤란이 생기면 즉시 에피네프린 치료가 필요합니다.","dept":"응급의학과","tests":["응급 평가 · 에피네프린 투여","회복 후 알레르기 원인 검사"],"base":0,"sym":{"swelling_face":8,"hives":2},"urgency":"emergency","onset":{"sudden":3},"kw":{"먹고":1,"약을":1,"벌":2},"requires":["swelling_face"]},{"id":"uti","name":"방광염(하부 요로감염)","region":"ent","desc":"배뇨통·빈뇨·잔뇨감이 특징이며 여성에게 흔합니다.","dept":"비뇨의학과 · 내과","tests":["소변검사","소변 배양검사"],"base":0,"sym":{"dysuria":6,"hematuria":2},"urgency":"routine","dur":{"acute":1,"chronic":-1},"sex":{"f":2}},{"id":"pyelo","name":"급성 신우신염(상부 요로감염)","region":"ent","desc":"배뇨 증상에 고열·오한·옆구리 통증이 동반되면 신장 감염을 의심합니다.","dept":"비뇨의학과 · 내과","tests":["소변검사 · 배양","혈액검사","신장 초음파 또는 CT"],"base":0,"sym":{"dysuria":3,"flank":5},"urgency":"urgent","dur":{"acute":1},"risk":{"fever":5},"sex":{"f":1}},{"id":"stone","name":"요로결석","region":"ent","desc":"옆구리에서 아랫배로 뻗치는 극심한 통증이 갑자기 생겼다 사라지기를 반복하며 혈뇨가 동반될 수 있습니다.","dept":"비뇨의학과 · 응급의학과","tests":["소변검사","복부 CT(조영제 없이)"],"base":0,"sym":{"flank":6,"hematuria":3},"urgency":"urgent","sex":{"m":1},"onset":{"sudden":2},"course":{"waxing":1}},{"id":"insomnia_d","name":"불면증","region":"mind","desc":"잠들기 어렵거나 자주 깨는 상태가 3개월 이상 주 3회 이상이면 만성 불면증으로 봅니다.","dept":"정신건강의학과 · 신경과(수면클리닉)","tests":["수면 일기","필요 시 수면다원검사"],"base":0,"sym":{"insomnia":6,"anxiety":1},"urgency":"routine","dur":{"subacute":2,"chronic":2}},{"id":"osa","name":"폐쇄성 수면무호흡증","region":"mind","desc":"심한 코골이와 수면 중 호흡 정지, 낮 졸림이 특징이며 고혈압·심혈관 질환 위험을 높입니다.","dept":"이비인후과 · 신경과 · 정신건강의학과(수면클리닉)","tests":["수면다원검사"],"base":0,"sym":{"snoring":7,"fatigue":2},"urgency":"routine","chronic":{"htn":1},"sex":{"m":1},"kw":{"낮에 졸":3,"졸음":2}},{"id":"gad","name":"범불안장애 · 공황장애","region":"mind","desc":"과도한 걱정이 지속되거나, 갑작스러운 두근거림·숨막힘 발작이 반복됩니다. 심장 원인은 먼저 배제합니다.","dept":"정신건강의학과","tests":["불안 척도 평가(GAD-7)","심전도 · 갑상선 기능검사로 신체 원인 배제"],"base":0,"sym":{"anxiety":5,"panic":5,"insomnia":1},"urgency":"routine","course":{"waxing":1}},{"id":"depression","name":"우울증","region":"mind","desc":"2주 이상 지속되는 우울감·흥미 저하와 수면·식욕 변화가 있으면 전문 평가가 필요합니다.","dept":"정신건강의학과","tests":["우울 척도 평가(PHQ-9)","갑상선 기능 등 신체 원인 확인"],"base":0,"sym":{"low_mood":6,"insomnia":2,"fatigue":2,"suicidal":3},"urgency":"routine","dur":{"subacute":2,"chronic":2}},{"id":"thyroid","name":"갑상선 기능 이상","region":"mind","desc":"갑상선 기능 저하·항진은 피로, 추위·더위 민감, 체중 변화, 두근거림을 일으킵니다.","dept":"내분비내과","tests":["갑상선 기능검사(TSH · free T4)"],"base":0,"sym":{"cold_intol":6,"fatigue":3,"panic":1},"urgency":"routine","risk":{"weight_loss":1},"sex":{"f":1}},{"id":"anemia","name":"빈혈 등 만성 피로의 내과적 원인","region":"mind","desc":"빈혈·간 기능 이상·당뇨 등 신체 질환이 피로의 원인일 수 있어 기본 혈액검사가 도움이 됩니다.","dept":"가정의학과 · 내과","tests":["혈액검사(CBC · 철분 · 간 · 신장 · 혈당)","갑상선 기능검사"],"base":0,"sym":{"fatigue":5},"urgency":"routine","dur":{"subacute":1,"chronic":1},"risk":{"weight_loss":2,"night_sweats":1},"sex":{"f":1}},{"id":"crisis","name":"자살 위기 · 정신건강 응급","region":"mind","desc":"죽고 싶은 생각은 도움을 받으면 나아질 수 있는 상태입니다. 지금 바로 전문 상담과 연결되는 것이 가장 중요합니다.","dept":"정신건강의학과 · 응급의학과","tests":["자살예방상담전화 109(24시간)","정신건강위기상담 1577-0199"],"base":0,"sym":{"suicidal":10},"urgency":"emergency","requires":["suicidal"]}],"adjust":[{"id":"chronic_finding_vs_uri","if":{"dur":["chronic"],"finding":["ggo","nodule"]},"target":["uri","pharyngitis","pneumonia"],"add":-4,"mult":0.2,"reason":"8주 이상 지속 + 검진 영상 이상 소견: 단순 급성 감염으로 설명하기 어려워 적합도를 크게 낮춤"},{"id":"chronic_finding_lesion","if":{"dur":["subacute","chronic"],"finding":["ggo","nodule","other_lung"]},"target":["lung_lesion"],"add":3,"reason":"지속 증상 + 검진 영상 소견: 이전 영상과 비교한 추적 CT가 필요"},{"id":"chronic_cough_triad","if":{"dur":["subacute","chronic"],"sym":["cough"]},"target":["asthma_cva","uacs","gerd_cough"],"add":2,"reason":"3주 이상 지속 기침: 만성 기침의 3대 원인(기침형 천식·상기도기침증후군·역류성 기침) 우선 감별"},{"id":"weight_loss_vs_functional","if":{"dur":["subacute","chronic"],"risk":["weight_loss"]},"target":["ibs","gastritis","tension","insomnia_d"],"mult":0.6,"reason":"의도치 않은 체중 감소 동반: 기능성 질환으로 단정하기 전 기질적 원인 감별이 필요"},{"id":"fever_low_spo2_pneumonia","if":{"vital":["spo2_low"],"risk":["fever"]},"target":["pneumonia"],"add":4,"reason":"발열 + 산소포화도 저하: 폐렴 가능성을 높게 평가"},{"id":"elderly_fever_infection","if":{"age":["70p"],"risk":["fever"]},"target":["pneumonia","pyelo","biliary"],"add":1,"reason":"고령 + 발열: 증상이 비전형적이어도 세균 감염 가능성 고려"}]}</script>
+<script type="application/json" id="medinavi-kb">{"version":"2026.11-2","ages":[{"id":"u20","label":"20대 이하"},{"id":"30_40","label":"30~40대"},{"id":"50_60","label":"50~60대"},{"id":"70p","label":"70대 이상"}],"sexes":[{"id":"m","label":"남성"},{"id":"f","label":"여성"}],"regions":[{"id":"resp","label":"숨 · 가슴 · 심장","icon":"🫁"},{"id":"neuro","label":"머리 · 어지럼 · 저림","icon":"🧠"},{"id":"gi","label":"배 · 소화 · 속쓰림","icon":"🍽️"},{"id":"msk","label":"허리 · 관절 · 근육","icon":"🦴"},{"id":"ent","label":"목 · 코 · 귀 · 피부 · 소변","icon":"👂"},{"id":"mind","label":"잠 · 마음 · 피로","icon":"🌙"}],"symptoms":{"resp":[{"id":"cough","label":"기침"},{"id":"sputum","label":"가래"},{"id":"night_cough","label":"밤·새벽에 심해지는 기침"},{"id":"wheeze","label":"숨 쉴 때 쌕쌕 소리"},{"id":"postnasal","label":"콧물이 목 뒤로 넘어감"},{"id":"reflux_cough","label":"기침할 때 속쓰림·신물"},{"id":"palpitation","label":"가슴이 두근거림"},{"id":"edema","label":"다리·발목이 부음"},{"id":"hemoptysis","label":"피 섞인 가래(객혈)","flag":"urgent","flagReason":"객혈은 폐 질환(결핵·종양·기관지확장증 등) 감별이 필요한 우선 진료 신호입니다. 양이 많거나 숨이 차면 즉시 119에 연락하세요."},{"id":"chest_pain","label":"가슴 통증 · 조이는 느낌","flag":"emergency","flagReason":"가슴을 쥐어짜는 통증·압박감은 심근경색 등 심혈관 응급 신호일 수 있습니다."},{"id":"dyspnea","label":"숨이 많이 참","flag":"emergency","flagReason":"호흡곤란은 폐렴·천식 악화·심부전·폐색전증 등 응급 질환의 신호일 수 있습니다."}],"neuro":[{"id":"headache","label":"두통"},{"id":"photophobia","label":"빛·소리에 예민함"},{"id":"nausea_h","label":"메스꺼움 · 구토"},{"id":"dizziness_spin","label":"빙글빙글 도는 어지럼"},{"id":"lightheaded","label":"일어설 때 핑 돎 · 눈앞이 캄캄"},{"id":"numbness","label":"손발 저림"},{"id":"syncope","label":"잠깐 정신을 잃음(실신)","flag":"urgent","flagReason":"실신은 부정맥 등 심장 원인 감별이 필요해 당일 진료가 권장됩니다."},{"id":"neck_stiff","label":"목이 뻣뻣해 숙이기 힘듦","flag":"urgent","flagReason":"목 경직은 발열과 함께 있으면 뇌수막염 같은 응급 질환 신호일 수 있습니다."},{"id":"thunderclap","label":"벼락 치듯 갑자기 극심한 두통","flag":"emergency","flagReason":"갑작스러운 극심한 두통은 뇌출혈(지주막하출혈) 등 뇌혈관 응급 신호일 수 있습니다."},{"id":"weakness","label":"한쪽 팔다리 힘 빠짐 · 말 어눌 · 시야 이상","flag":"emergency","flagReason":"편측 마비·언어장애·시야 이상은 뇌졸중 의심 신호입니다. 발생 시각을 기억하고 즉시 119에 연락하세요."}],"gi":[{"id":"epigastric","label":"명치 통증 · 속쓰림"},{"id":"reflux","label":"신물이 올라옴"},{"id":"bloating","label":"더부룩함 · 체한 느낌"},{"id":"nausea","label":"메스꺼움 · 구토"},{"id":"diarrhea","label":"설사"},{"id":"constipation","label":"변비 · 배변 습관 변화"},{"id":"rlq","label":"오른쪽 아랫배 통증"},{"id":"ruq","label":"오른쪽 윗배 통증"},{"id":"jaundice","label":"눈·피부가 노래짐","flag":"urgent","flagReason":"황달은 담도 폐쇄·간 질환 감별이 필요한 우선 진료 신호입니다."},{"id":"severe_abd","label":"참기 힘든 복통 · 누르면 심하게 아픔","flag":"emergency","flagReason":"극심한 복통·압통은 복막염·장폐색·천공 등 응급 질환 신호일 수 있습니다."},{"id":"gi_bleed","label":"검은 변 · 피 섞인 변 · 피를 토함","flag":"emergency","flagReason":"흑색변·혈변·토혈은 위장관 출혈 신호입니다."}],"msk":[{"id":"low_back","label":"허리 통증"},{"id":"radiating","label":"엉덩이·다리로 뻗치는 통증"},{"id":"neck_shoulder","label":"목·어깨 결림"},{"id":"muscle","label":"근육통"},{"id":"joint_pain","label":"관절 통증"},{"id":"joint_swelling","label":"관절이 붓고 뜨거움"},{"id":"morning_stiff","label":"아침에 관절이 30분 넘게 뻣뻣"},{"id":"trauma","label":"넘어지거나 다친 뒤 통증","flag":"urgent","flagReason":"외상 후 통증은 골절·인대 손상 확인을 위해 당일 진료가 권장됩니다."},{"id":"saddle","label":"엉덩이 사이 감각 이상 · 대소변 조절 어려움","flag":"emergency","flagReason":"회음부 감각 저하·대소변 장애는 마미증후군(척수 신경 압박) 응급 신호입니다."}],"ent":[{"id":"sore_throat","label":"목 아픔"},{"id":"nasal","label":"콧물 · 코막힘 · 재채기"},{"id":"sinus_pain","label":"누런 콧물 · 얼굴 통증"},{"id":"ear_pain","label":"귀 통증 · 먹먹함"},{"id":"rash","label":"발진 · 가려움"},{"id":"hives","label":"두드러기"},{"id":"dysuria","label":"소변 볼 때 아픔 · 자주 마려움"},{"id":"hematuria","label":"소변에 피가 섞임"},{"id":"flank","label":"옆구리 통증"},{"id":"hearing","label":"갑자기 한쪽 귀가 안 들림","flag":"urgent","flagReason":"돌발성 난청은 72시간 이내 치료가 예후에 중요해 빠른 이비인후과 진료가 필요합니다."},{"id":"swelling_face","label":"입술·혀·목이 붓고 숨이 답답","flag":"emergency","flagReason":"입술·혀·목의 부종과 호흡 불편은 아나필락시스(중증 알레르기) 응급 신호입니다."}],"mind":[{"id":"insomnia","label":"잠들기 힘들거나 자주 깸"},{"id":"snoring","label":"심한 코골이 · 자다가 숨 멈춤"},{"id":"fatigue","label":"쉬어도 계속 피곤함"},{"id":"anxiety","label":"불안 · 걱정이 멈추지 않음"},{"id":"panic","label":"갑자기 심장이 뛰고 숨이 막힘"},{"id":"low_mood","label":"우울 · 의욕 없음"},{"id":"cold_intol","label":"추위·더위를 심하게 탐 · 체중 변화"},{"id":"suicidal","label":"죽고 싶거나 자해하고 싶은 생각","flag":"emergency","flagReason":"지금 혼자 견디지 않으셔도 됩니다. 자살예방상담전화 109(24시간) 또는 119로 바로 도움을 요청하세요."}]},"onsets":[{"id":"sudden","label":"갑자기 시작됐어요","desc":"시작된 때가 분명해요"},{"id":"gradual","label":"서서히 생겼어요","desc":"언제부터인지 애매해요"}],"durations":[{"id":"acute","label":"3주 안 됨","desc":"급성"},{"id":"subacute","label":"3주 ~ 2달","desc":"아급성"},{"id":"chronic","label":"2달 넘음","desc":"만성 · 8주 이상"}],"courses":[{"id":"worse","label":"점점 심해져요"},{"id":"same","label":"비슷해요"},{"id":"better","label":"나아지고 있어요"},{"id":"waxing","label":"좋아졌다 나빠졌다 해요"}],"findings":[{"id":"ggo","label":"간유리 음영(GGO)이 있대요"},{"id":"nodule","label":"폐 결절이 있대요"},{"id":"other_lung","label":"다른 폐 이상이 있대요"},{"id":"none","label":"이상 없음 · 검진 안 받음"}],"risks":[{"id":"fever","label":"38℃ 넘는 열 · 오한"},{"id":"smoking","label":"담배를 피움(피웠음) · 가족 폐질환"},{"id":"weight_loss","label":"살이 저절로 빠짐"},{"id":"night_sweats","label":"밤에 식은땀 · 심한 피로"}],"chronics":[{"id":"htn","label":"고혈압"},{"id":"dm","label":"당뇨"},{"id":"heart","label":"심장병"},{"id":"lung","label":"천식 · 폐질환"},{"id":"immuno","label":"항암·스테로이드 치료 중"},{"id":"anticoag","label":"피 묽게 하는 약(아스피린 등)"}],"pregnancy":[{"id":"yes","label":"임신 중이거나 가능성 있음"},{"id":"no","label":"가능성 없음"},{"id":"unknown","label":"잘 모르겠음"}],"nrs":[{"max":0,"label":"괜찮아요"},{"max":3,"label":"조금 불편해요"},{"max":6,"label":"꽤 아파서 일상에 지장 있어요"},{"max":8,"label":"많이 아파서 잠도 설쳐요"},{"max":10,"label":"참을 수 없을 만큼 아파요"}],"vitalLimits":{"temp":[30,45],"hr":[20,250],"spo2":[50,100]},"keywords":[{"words":["간유리","GGO","ggo"],"kind":"finding","id":"ggo"},{"words":["결절"],"kind":"finding","id":"nodule"},{"words":["기침"],"kind":"sym","id":"cough"},{"words":["가래"],"kind":"sym","id":"sputum"},{"words":["객혈","피가래","피 섞인 가래"],"kind":"sym","id":"hemoptysis"},{"words":["흉통","가슴 통증","가슴이 조","가슴이 쥐어"],"kind":"sym","id":"chest_pain"},{"words":["숨이 차","숨차","호흡곤란","숨쉬기 힘"],"kind":"sym","id":"dyspnea"},{"words":["쌕쌕"],"kind":"sym","id":"wheeze"},{"words":["두근"],"kind":"sym","id":"palpitation"},{"words":["두통","머리가 아"],"kind":"sym","id":"headache"},{"words":["어지러","어지럼"],"kind":"sym","id":"dizziness_spin"},{"words":["저림","저리"],"kind":"sym","id":"numbness"},{"words":["마비","발음이 어눌","말이 어눌"],"kind":"sym","id":"weakness"},{"words":["복통","배가 아","배 아"],"kind":"sym","id":"epigastric"},{"words":["속쓰림","속이 쓰"],"kind":"sym","id":"epigastric"},{"words":["신물","역류"],"kind":"sym","id":"reflux"},{"words":["설사"],"kind":"sym","id":"diarrhea"},{"words":["변비"],"kind":"sym","id":"constipation"},{"words":["구토","토할","메스꺼"],"kind":"sym","id":"nausea"},{"words":["혈변","흑색변","짜장","토혈","피를 토"],"kind":"sym","id":"gi_bleed"},{"words":["허리"],"kind":"sym","id":"low_back"},{"words":["관절"],"kind":"sym","id":"joint_pain"},{"words":["인후통","목이 아","목 아프"],"kind":"sym","id":"sore_throat"},{"words":["콧물","코막힘","재채기"],"kind":"sym","id":"nasal"},{"words":["발진","가려"],"kind":"sym","id":"rash"},{"words":["두드러기"],"kind":"sym","id":"hives"},{"words":["배뇨통","소변 볼 때","잔뇨"],"kind":"sym","id":"dysuria"},{"words":["불면","잠을 못","잠이 안"],"kind":"sym","id":"insomnia"},{"words":["코골"],"kind":"sym","id":"snoring"},{"words":["불안"],"kind":"sym","id":"anxiety"},{"words":["우울"],"kind":"sym","id":"low_mood"},{"words":["피곤","피로"],"kind":"sym","id":"fatigue"},{"words":["죽고 싶","자해","자살"],"kind":"sym","id":"suicidal"},{"words":["열이","발열","오한"],"kind":"risk","id":"fever"},{"words":["흡연","담배"],"kind":"risk","id":"smoking"},{"words":["체중 감소","살이 빠","체중이 줄"],"kind":"risk","id":"weight_loss"},{"words":["식은땀"],"kind":"risk","id":"night_sweats"}],"conditions":[{"id":"uri","name":"급성 상기도 감염(감기 · 급성 기관지염)","region":"resp","desc":"바이러스가 원인인 경우가 대부분이며 1~3주 안에 자연 호전되는 것이 일반적입니다.","dept":"가정의학과 · 내과 · 이비인후과","tests":["대부분 추가 검사 불필요","3주 이상 지속·고열 시 흉부 X-선"],"base":1,"sym":{"cough":3,"sputum":2,"nasal":3,"sore_throat":2},"urgency":"routine","dur":{"acute":4,"subacute":-2,"chronic":-6},"risk":{"fever":1},"course":{"better":1},"fu":{"r_nose":4,"r_walk_dyspnea":-2,"r_pleuritic":-1,"r_yellow_sputum":1,"r_trigger":-1,"r_night_sweat":-1,"e_swallow":1,"e_no_cough":-2,"e_season":-2,"e_10days":-2}},{"id":"pneumonia","name":"폐렴(하기도 감염)","region":"resp","desc":"기침·가래와 함께 발열, 숨참이 동반되면 의심합니다. 고령·기저질환자는 빠르게 악화할 수 있습니다.","dept":"호흡기내과 · 내과(숨참이 심하면 응급실)","tests":["흉부 X-선","혈액검사(CBC · CRP)","산소포화도 측정"],"base":0,"sym":{"cough":2,"sputum":2,"dyspnea":3,"chest_pain":1},"urgency":"urgent","dur":{"acute":3,"subacute":1,"chronic":-2},"risk":{"fever":3},"chronic":{"lung":2,"immuno":2},"age":{"70p":2},"course":{"worse":1},"fu":{"r_nose":-1,"r_walk_dyspnea":3,"r_pleuritic":4,"r_yellow_sputum":3,"r_exertion_chest":-1}},{"id":"asthma_cva","name":"기침형 천식 · 기관지 천식","region":"resp","desc":"밤·새벽이나 찬 공기, 운동 후 심해지는 마른기침이 특징이며 만성 기침의 대표 원인입니다.","dept":"호흡기내과 · 알레르기내과","tests":["폐기능검사(기관지확장제 반응)","메타콜린 기관지 유발검사","호기산화질소(FeNO)"],"base":0,"sym":{"cough":3,"wheeze":5,"night_cough":4,"dyspnea":2},"urgency":"routine","dur":{"acute":-1,"subacute":3,"chronic":3},"chronic":{"lung":2},"course":{"waxing":2},"kw":{"찬 공기":2,"운동":1,"새벽":1},"fu":{"r_nose":-1,"r_walk_dyspnea":1,"r_yellow_sputum":-1,"r_trigger":5,"r_allergy":4,"r_orthopnea":1}},{"id":"uacs","name":"상기도기침증후군(후비루 증후군)","region":"resp","desc":"비염·부비동염으로 콧물이 목 뒤로 넘어가며 기침을 유발합니다. 만성 기침의 흔한 원인입니다.","dept":"이비인후과 · 호흡기내과","tests":["비내시경","부비동 X-선 또는 CT","알레르기 검사"],"base":0,"sym":{"cough":3,"postnasal":5,"nasal":2},"urgency":"routine","dur":{"acute":-1,"subacute":3,"chronic":3},"kw":{"코":1,"목에 걸":2},"fu":{"r_nose":2,"r_walk_dyspnea":-1,"r_trigger":1,"r_allergy":2,"r_throat_clear":5,"r_meal_reflux":-1}},{"id":"gerd_cough","name":"위식도 역류성 기침","region":"resp","desc":"위산 역류가 기침 반사를 자극합니다. 식후·누울 때 악화되고 속쓰림이 동반되기도 합니다.","dept":"소화기내과 · 호흡기내과","tests":["위내시경","양성자펌프억제제(PPI) 경험적 치료 반응 평가"],"base":0,"sym":{"cough":3,"reflux_cough":5,"night_cough":1},"urgency":"routine","dur":{"acute":-1,"subacute":2,"chronic":3},"kw":{"식후":2,"누우면":2},"fu":{"r_walk_dyspnea":-1,"r_yellow_sputum":-1,"r_throat_clear":1,"r_meal_reflux":5}},{"id":"lung_lesion","name":"폐 결절 · 간유리 음영 병변(만성 폐 병변) 감별","region":"resp","desc":"검진에서 발견된 간유리 음영·결절은 염증 흔적부터 조기 폐암까지 다양해, 크기·모양 변화를 추적 CT로 확인해야 합니다.","dept":"호흡기내과(필요 시 흉부외과)","tests":["저선량 흉부 CT 추적 검사(이전 영상과 비교)","필요 시 PET-CT · 조직검사","폐기능검사"],"base":0,"sym":{"hemoptysis":3},"urgency":"soon","dur":{"subacute":1,"chronic":3},"risk":{"smoking":3,"weight_loss":3,"night_sweats":1},"find":{"ggo":8,"nodule":8,"other_lung":4},"age":{"50_60":1,"70p":2},"fu":{"r_long_smoke":3,"r_night_sweat":1,"r_lesion_grow":6}},{"id":"tb","name":"폐결핵 · 비결핵 항산균 등 만성 폐 감염","region":"resp","desc":"2~3주 이상 지속되는 기침에 야간 식은땀·체중 감소·미열이 동반되면 감별이 필요합니다.","dept":"호흡기내과 · 감염내과","tests":["흉부 X-선","객담 항산균 도말 · 배양 · PCR","인터페론감마 분비검사(IGRA)"],"base":0,"sym":{"cough":3,"sputum":2,"hemoptysis":3},"urgency":"soon","dur":{"acute":-4,"subacute":2,"chronic":3},"risk":{"night_sweats":4,"weight_loss":3,"fever":2},"find":{"other_lung":2,"nodule":1},"chronic":{"immuno":2},"fu":{"r_nose":-1,"r_yellow_sputum":1,"r_night_sweat":5,"r_tb_contact":5,"r_lesion_grow":1}},{"id":"copd","name":"만성 폐쇄성 폐질환(COPD)","region":"resp","desc":"장기간 흡연과 관련된 만성 기도 질환으로 숨참·기침·가래가 서서히 진행합니다.","dept":"호흡기내과","tests":["폐기능검사","흉부 X-선 또는 CT"],"base":-2,"sym":{"cough":2,"sputum":2,"dyspnea":3,"wheeze":2},"urgency":"routine","dur":{"acute":-2,"subacute":1,"chronic":2},"risk":{"smoking":6},"chronic":{"lung":1},"age":{"u20":-3,"50_60":1,"70p":2},"onset":{"gradual":1},"fu":{"r_nose":-1,"r_walk_dyspnea":3,"r_yellow_sputum":1,"r_trigger":1,"r_orthopnea":1,"r_long_smoke":5}},{"id":"acs","name":"급성 관상동맥증후군(협심증 · 심근경색) 등 심장 원인 흉통","region":"resp","desc":"가슴 중앙을 짓누르거나 쥐어짜는 통증이 팔·턱으로 퍼지거나 식은땀이 동반되면 응급입니다.","dept":"응급의학과 · 순환기내과","tests":["심전도","심근효소(트로포닌) 검사","심장 초음파"],"base":0,"sym":{"chest_pain":6,"dyspnea":2,"palpitation":1},"urgency":"emergency","risk":{"smoking":1},"chronic":{"htn":2,"dm":2,"heart":3},"age":{"u20":-3,"50_60":2,"70p":3},"onset":{"sudden":2},"kw":{"식은땀":2,"왼팔":2,"턱":1,"짓누르":2},"requires":["chest_pain"],"fu":{"r_pleuritic":-1,"r_long_smoke":1,"r_exertion_chest":5,"r_radiate":5}},{"id":"arrhythmia","name":"부정맥(심방세동 등)","region":"resp","desc":"맥박이 불규칙하거나 갑자기 빨라지는 증상으로, 어지러움·숨참이 동반되면 빠른 평가가 필요합니다.","dept":"순환기내과","tests":["심전도","24시간 홀터 검사","갑상선 기능검사"],"base":0,"sym":{"palpitation":5,"dyspnea":1},"urgency":"soon","chronic":{"heart":2,"htn":1},"age":{"70p":1},"course":{"waxing":1},"fu":{"r_irregular":5,"n_standing":-1,"n_palp_faint":5,"s_attack":-1}},{"id":"heart_failure","name":"심부전","region":"resp","desc":"심장 기능 저하로 숨참(특히 누웠을 때)과 다리 부종이 생깁니다.","dept":"순환기내과","tests":["BNP(NT-proBNP) 검사","심장 초음파","흉부 X-선"],"base":0,"sym":{"dyspnea":4,"edema":5},"urgency":"urgent","chronic":{"heart":3,"htn":1},"age":{"u20":-3,"70p":2},"onset":{"gradual":1},"kw":{"누우면 숨":3,"베개":1},"fu":{"r_walk_dyspnea":4,"r_orthopnea":6}},{"id":"tension","name":"긴장형 두통","region":"neuro","desc":"머리를 띠로 조이는 듯한 양측성 두통으로 스트레스·자세·수면 부족과 관련됩니다.","dept":"신경과 · 가정의학과","tests":["대개 추가 검사 불필요","두통 일기 작성"],"base":0,"sym":{"headache":4},"urgency":"routine","dur":{"subacute":1,"chronic":2},"onset":{"gradual":1},"kw":{"조이":2,"스트레스":1,"뒷목":1},"fu":{"n_throb":-2,"n_band":5,"n_move_worse":-1,"n_stress":3,"n_fever_head":-1,"m_posture":1}},{"id":"migraine","name":"편두통","region":"neuro","desc":"욱신거리는 박동성 두통이 구역·빛 과민과 함께 반복되며 일상생활에 지장을 줍니다.","dept":"신경과","tests":["신경학적 진찰","두통 일기","비전형적 양상 시 뇌 MRI"],"base":0,"sym":{"headache":4,"photophobia":4,"nausea_h":3},"urgency":"routine","age":{"70p":-2},"sex":{"f":1},"course":{"waxing":2},"kw":{"욱신":2,"박동":2,"한쪽 머리":2},"fu":{"n_throb":5,"n_band":-2,"n_aura":5,"n_move_worse":3,"n_stress":1,"n_fever_head":-1}},{"id":"sah","name":"지주막하출혈 등 뇌혈관 응급","region":"neuro","desc":"인생 최악의 두통이 갑자기 시작되면 뇌출혈 가능성을 반드시 배제해야 합니다.","dept":"응급의학과 · 신경외과","tests":["뇌 CT","CT 혈관조영술","필요 시 요추천자"],"base":0,"sym":{"thunderclap":8,"headache":1,"nausea_h":1,"neck_stiff":2},"urgency":"emergency","chronic":{"htn":1,"anticoag":1},"onset":{"sudden":3},"requires":["thunderclap"]},{"id":"stroke","name":"뇌졸중 · 일과성 허혈발작","region":"neuro","desc":"한쪽 마비·언어장애·시야 이상이 갑자기 생기면 증상이 사라져도 즉시 치료가 필요합니다.","dept":"응급의학과 · 신경과","tests":["뇌 CT · MRI","뇌혈관 영상","심전도"],"base":0,"sym":{"weakness":8,"numbness":2,"dizziness_spin":1,"lightheaded":1},"urgency":"emergency","chronic":{"htn":2,"dm":2,"heart":2},"age":{"50_60":2,"70p":3},"onset":{"sudden":3},"requires":["weakness"]},{"id":"bppv","name":"양성 돌발성 두위현훈(이석증)","region":"neuro","desc":"고개를 돌리거나 눕고 일어날 때 수십 초간 빙글빙글 도는 어지러움이 특징입니다.","dept":"이비인후과 · 신경과","tests":["두위 변환 검사(Dix-Hallpike)","안진 검사"],"base":0,"sym":{"dizziness_spin":5,"nausea_h":2},"urgency":"routine","age":{"50_60":1,"70p":1},"onset":{"sudden":1},"course":{"waxing":1},"kw":{"고개":3,"돌아누":3,"자세":2,"누울 때":2},"fu":{"n_head_turn":6,"n_long_vertigo":-3,"n_ear_full":-1,"n_standing":-1}},{"id":"vestibular","name":"전정신경염 · 메니에르병","region":"neuro","desc":"수 시간 이상 지속되는 심한 회전성 어지러움과 구토가 특징이며, 메니에르병은 이명·청력 저하가 동반됩니다.","dept":"이비인후과","tests":["청력검사","전정기능검사"],"base":0,"sym":{"dizziness_spin":4,"nausea_h":2,"hearing":3},"urgency":"routine","dur":{"acute":1},"kw":{"이명":3,"귀가 먹먹":2},"fu":{"n_head_turn":-2,"n_long_vertigo":4,"n_ear_full":4}},{"id":"orthostatic","name":"기립성 저혈압 · 미주신경성 실신","region":"neuro","desc":"일어설 때 핑 도는 어지러움, 눈앞이 캄캄해지는 증상으로 탈수·약물·빈혈과 관련될 수 있습니다.","dept":"내과 · 신경과 · 순환기내과","tests":["기립 혈압 측정","심전도","혈액검사(빈혈 · 전해질)"],"base":0,"sym":{"lightheaded":5,"syncope":3},"urgency":"routine","chronic":{"htn":1},"course":{"waxing":1},"kw":{"일어날 때":3,"일어서":3},"fu":{"n_head_turn":1,"n_standing":6,"n_palp_faint":-1}},{"id":"meningitis","name":"뇌수막염","region":"neuro","desc":"발열·두통·목 경직이 함께 나타나면 의심하며 빠른 치료가 필요합니다.","dept":"응급의학과 · 감염내과","tests":["뇌척수액 검사(요추천자)","혈액배양","뇌 CT"],"base":0,"sym":{"headache":2,"neck_stiff":6,"photophobia":2,"nausea_h":1},"urgency":"emergency","dur":{"acute":2,"chronic":-3},"risk":{"fever":5},"chronic":{"immuno":2},"requires":["neck_stiff","photophobia"],"fu":{"n_fever_head":5}},{"id":"neuropathy","name":"말초신경병증 · 경추 신경근병증","region":"neuro","desc":"당뇨·경추 디스크 등으로 신경이 손상되어 손발 저림, 감각 저하가 생깁니다.","dept":"신경과 · 재활의학과","tests":["신경전도·근전도 검사","당화혈색소 · 비타민 B12","필요 시 경추 MRI"],"base":0,"sym":{"numbness":5},"urgency":"routine","dur":{"subacute":1,"chronic":2},"chronic":{"dm":3},"onset":{"gradual":1},"fu":{"n_glove":5,"n_neck_arm":4}},{"id":"gerd","name":"위식도역류질환","region":"gi","desc":"위산이 식도로 역류해 가슴 쓰림·신물이 생기며, 식후나 누울 때 심해집니다.","dept":"소화기내과","tests":["위내시경","PPI 경험적 치료 반응 평가"],"base":0,"sym":{"reflux":5,"epigastric":3},"urgency":"routine","dur":{"subacute":1,"chronic":1},"kw":{"누우면":2,"식후":1,"야식":1},"fu":{"r_meal_reflux":4,"g_after_meal":1,"g_lying_reflux":5}},{"id":"gastritis","name":"위염 · 기능성 소화불량","region":"gi","desc":"명치 불편감·더부룩함이 반복되며 스트레스·식습관·헬리코박터균과 관련됩니다.","dept":"소화기내과 · 내과","tests":["위내시경","헬리코박터 파일로리 검사"],"base":0,"sym":{"epigastric":4,"bloating":4,"nausea":1},"urgency":"routine","dur":{"subacute":1,"chronic":1},"fu":{"g_after_meal":4,"g_empty":1,"g_nsaid":2,"g_lying_reflux":-1,"g_fatty":-1,"g_stress_bowel":1}},{"id":"pud","name":"소화성 궤양(위 · 십이지장 궤양)","region":"gi","desc":"공복 또는 식후의 명치 통증이 특징이며 진통소염제·항혈소판제 복용 시 위험이 높습니다.","dept":"소화기내과","tests":["위내시경","헬리코박터 파일로리 검사","빈혈 검사"],"base":0,"sym":{"epigastric":4,"gi_bleed":4,"nausea":1},"urgency":"soon","risk":{"smoking":1},"chronic":{"anticoag":2},"kw":{"공복":3,"빈속":3,"진통제":2},"fu":{"g_after_meal":-1,"g_empty":5,"g_nsaid":4,"g_black":3}},{"id":"gastroenteritis","name":"급성 장염(위장염)","region":"gi","desc":"설사·구토·복통이 갑자기 생기며 대부분 수일 내 호전됩니다. 탈수 예방이 중요합니다.","dept":"내과 · 가정의학과","tests":["대개 추가 검사 불필요","탈수·혈변 시 혈액 · 대변 검사"],"base":0,"sym":{"diarrhea":5,"nausea":3,"epigastric":1},"urgency":"routine","dur":{"acute":3,"subacute":-2,"chronic":-4},"risk":{"fever":2},"onset":{"sudden":1},"kw":{"상한":2,"회":1,"식중독":3},"fu":{"g_migrate":-2,"g_jolt":-1,"g_food_group":6,"g_watery":4}},{"id":"appendicitis","name":"급성 충수염(맹장염)","region":"gi","desc":"명치 주변에서 시작해 오른쪽 아랫배로 옮겨가는 통증이 전형적이며 수술이 필요할 수 있습니다.","dept":"응급의학과 · 외과","tests":["복부 CT 또는 초음파","혈액검사(CBC · CRP)"],"base":0,"sym":{"rlq":6,"nausea":2,"severe_abd":2},"urgency":"urgent","dur":{"acute":3,"chronic":-4},"risk":{"fever":2},"course":{"worse":2},"kw":{"옮겨":2,"걸을 때":1},"fu":{"g_migrate":7,"g_jolt":4,"g_relief":-2}},{"id":"biliary","name":"담석증 · 담낭염","region":"gi","desc":"기름진 식사 후 오른쪽 윗배나 명치 통증이 생기고, 발열·황달이 있으면 담낭염·담관염을 의심합니다.","dept":"소화기내과 · 외과","tests":["복부 초음파","간기능 혈액검사"],"base":0,"sym":{"ruq":6,"nausea":2,"jaundice":3,"epigastric":1},"urgency":"urgent","risk":{"fever":2},"age":{"u20":-1,"50_60":1},"kw":{"기름진":3,"고기":1},"fu":{"g_after_meal":1,"g_fatty":6,"g_shoulder":3}},{"id":"ibs","name":"과민성 장증후군","region":"gi","desc":"복통·더부룩함과 함께 설사·변비가 반복되며 배변 후 호전되는 기능성 질환입니다.","dept":"소화기내과","tests":["경고 증상이 없으면 임상 진단","50세 이상·경고 증상 시 대장내시경"],"base":0,"sym":{"diarrhea":2,"constipation":3,"bloating":3},"urgency":"routine","dur":{"acute":-2,"subacute":1,"chronic":4},"risk":{"weight_loss":-3},"course":{"waxing":2},"kw":{"스트레스":2,"배변 후":2},"fu":{"g_migrate":-2,"g_jolt":-2,"g_food_group":-2,"g_watery":-1,"g_relief":5,"g_stress_bowel":4}},{"id":"gi_malig","name":"위장관 출혈 · 종양성 질환 감별","region":"gi","desc":"혈변·흑색변, 원인 모를 체중 감소, 배변 습관 변화가 있으면 내시경으로 원인을 확인해야 합니다.","dept":"소화기내과","tests":["위 · 대장내시경","복부 CT","빈혈 · 철분 검사"],"base":0,"sym":{"gi_bleed":5,"constipation":1,"epigastric":1},"urgency":"soon","dur":{"subacute":2,"chronic":2},"risk":{"weight_loss":5,"night_sweats":1},"age":{"u20":-2,"50_60":2,"70p":3},"fu":{"g_black":3,"g_family_ca":4}},{"id":"preg_abd","name":"임신 관련 복통(자궁외 임신 등) 감별","region":"gi","desc":"가임기 여성의 복통은 임신 여부 확인이 우선이며, 자궁외 임신은 응급 상황이 될 수 있습니다.","dept":"산부인과 · 응급의학과","tests":["소변 임신 반응 · 혈중 β-hCG","골반 초음파"],"base":0,"sym":{"rlq":2,"severe_abd":3,"epigastric":1,"nausea":1},"urgency":"urgent","preg":{"yes":6,"unknown":2,"no":-6},"sexOnly":"f","fu":{"g_jolt":2,"g_period_late":6}},{"id":"lbp_mech","name":"비특이적 요통(근육 · 인대 염좌)","region":"msk","desc":"무리한 동작 후 생긴 허리 통증의 대부분은 수주 내 호전되며, 적절한 활동 유지가 회복에 도움이 됩니다.","dept":"정형외과 · 재활의학과","tests":["경고 증상이 없으면 영상검사 불필요","6주 이상 지속 시 X-선"],"base":0,"sym":{"low_back":5},"urgency":"routine","dur":{"acute":2,"chronic":-1},"kw":{"무거운":2,"삐끗":3,"들다가":2},"fu":{"m_lift":5,"m_sit_leg":1,"m_night_pain":-2}},{"id":"disc","name":"요추 추간판 탈출증 · 척추관 협착증","region":"msk","desc":"허리에서 엉덩이·다리로 뻗치는 통증이나 저림이 특징이며, 협착증은 걸을 때 악화됩니다.","dept":"정형외과 · 신경외과 · 재활의학과","tests":["신경학적 진찰","신경 증상 지속 시 요추 MRI"],"base":0,"sym":{"low_back":3,"radiating":6},"urgency":"routine","age":{"50_60":1,"70p":1},"kw":{"걸으면":2,"기침할 때":1},"fu":{"m_lift":1,"m_sit_leg":5,"m_walk_rest":4}},{"id":"cauda","name":"마미증후군 · 척수 압박","region":"msk","desc":"하지 마비, 회음부 감각 저하, 대소변 장애는 신경 손상을 막기 위해 즉시 수술적 평가가 필요합니다.","dept":"응급의학과 · 신경외과","tests":["응급 척추 MRI"],"base":0,"sym":{"saddle":9,"radiating":2,"low_back":1},"urgency":"emergency","requires":["saddle"]},{"id":"spine_red","name":"척추 감염 · 전이성 병변 감별","region":"msk","desc":"발열·체중 감소·야간 통증을 동반한 요통은 감염이나 종양 등 심각한 원인을 감별해야 합니다.","dept":"정형외과 · 감염내과","tests":["척추 MRI","혈액검사(CRP · ESR)"],"base":0,"sym":{"low_back":2},"urgency":"urgent","risk":{"fever":3,"weight_loss":4,"night_sweats":2},"chronic":{"immuno":2},"age":{"50_60":1,"70p":1},"kw":{"밤에":1,"누워도":2},"fu":{"m_lift":-2,"m_night_pain":6,"m_cancer_hx":6}},{"id":"oa","name":"퇴행성 관절염","region":"msk","desc":"관절 연골이 닳아 움직일 때 통증이 생기며 무릎·고관절·손가락에 흔합니다.","dept":"정형외과 · 재활의학과","tests":["관절 X-선"],"base":0,"sym":{"joint_pain":5,"joint_swelling":1},"urgency":"routine","dur":{"acute":-1,"chronic":3},"age":{"u20":-3,"50_60":2,"70p":3},"onset":{"gradual":1},"kw":{"계단":2,"무릎":1},"fu":{"m_night_pain":-1,"m_use_pain":5,"m_many_joints":-1}},{"id":"ra","name":"류마티스 관절염 등 염증성 관절염","region":"msk","desc":"여러 관절이 대칭적으로 붓고 아침에 오래 뻣뻣한 것이 특징이며 조기 치료가 관절 손상을 줄입니다.","dept":"류마티스내과","tests":["류마티스 인자(RF) · 항CCP 항체","ESR · CRP","관절 X-선 · 초음파"],"base":0,"sym":{"joint_pain":3,"joint_swelling":4,"morning_stiff":5},"urgency":"soon","dur":{"acute":-1,"subacute":2,"chronic":2},"sex":{"f":1},"kw":{"손가락":1,"양쪽":2},"fu":{"m_use_pain":-2,"m_many_joints":6,"m_big_toe":-1}},{"id":"gout","name":"통풍 · 결정성 관절염","region":"msk","desc":"엄지발가락 등 한 관절이 갑자기 붉게 붓고 극심하게 아픈 것이 특징입니다.","dept":"류마티스내과 · 정형외과","tests":["혈중 요산","관절액 결정 검사"],"base":0,"sym":{"joint_swelling":5,"joint_pain":3},"urgency":"routine","sex":{"m":2,"f":-1},"onset":{"sudden":3},"course":{"waxing":1},"kw":{"엄지발가락":4,"술":1,"맥주":1},"fu":{"m_many_joints":-2,"m_big_toe":7,"m_alcohol":3,"m_hot_joint":1}},{"id":"septic_arthritis","name":"감염성(화농성) 관절염","region":"msk","desc":"발열과 함께 한 관절이 붓고 열나면 관절 감염을 배제해야 하며 응급 치료가 필요할 수 있습니다.","dept":"정형외과 · 응급의학과","tests":["관절액 검사 · 배양","혈액검사(CBC · CRP)"],"base":0,"sym":{"joint_swelling":4,"joint_pain":1},"urgency":"urgent","risk":{"fever":5},"chronic":{"immuno":2,"dm":1},"fu":{"m_hot_joint":6}},{"id":"myalgia","name":"근막통증증후군 · 근육 긴장","region":"msk","desc":"장시간 같은 자세나 과사용으로 근육이 뭉치고 누르면 아픈 부위가 생깁니다.","dept":"재활의학과 · 정형외과 · 가정의학과","tests":["대개 추가 검사 불필요"],"base":0,"sym":{"muscle":4,"neck_shoulder":4},"urgency":"routine","dur":{"subacute":1,"chronic":1},"kw":{"컴퓨터":2,"자세":1,"운동 후":2},"fu":{"n_stress":2,"n_neck_arm":1,"m_lift":2,"m_posture":5}},{"id":"fracture","name":"골절 · 인대 손상","region":"msk","desc":"외상 후 붓기·변형·체중 부하 어려움이 있으면 영상 검사로 골절을 확인해야 합니다.","dept":"정형외과 · 응급의학과","tests":["X-선","필요 시 CT · MRI"],"base":0,"sym":{"trauma":7,"joint_swelling":1},"urgency":"urgent","age":{"70p":2},"fu":{"m_cant_bear":5}},{"id":"pharyngitis","name":"급성 인두염 · 편도염","region":"ent","desc":"목 통증과 삼킬 때 통증이 주 증상이며, 고열·편도 삼출물이 있으면 세균성 감염을 확인합니다.","dept":"이비인후과 · 내과","tests":["신속 연쇄상구균 항원검사"],"base":0,"sym":{"sore_throat":5,"nasal":1},"urgency":"routine","dur":{"acute":3,"subacute":-1,"chronic":-3},"risk":{"fever":2},"fu":{"e_swallow":5,"e_no_cough":2}},{"id":"rhinitis","name":"알레르기 비염","region":"ent","desc":"맑은 콧물·코막힘·재채기가 계절이나 환경에 따라 반복됩니다.","dept":"이비인후과 · 알레르기내과","tests":["알레르기 피부반응 또는 혈액검사(MAST)"],"base":0,"sym":{"nasal":5,"postnasal":1},"urgency":"routine","dur":{"acute":-1,"chronic":2,"subacute":1},"risk":{"fever":-2},"course":{"waxing":2},"kw":{"재채기":2,"환절기":2,"먼지":1},"fu":{"r_allergy":3,"e_no_cough":1,"e_season":6,"e_itch":4,"e_10days":1}},{"id":"sinusitis","name":"부비동염(축농증)","region":"ent","desc":"누런 콧물, 얼굴 통증·압박감이 10일 이상 지속되거나 좋아졌다 다시 나빠지면 의심합니다.","dept":"이비인후과","tests":["비내시경","부비동 X-선 또는 CT"],"base":0,"sym":{"sinus_pain":6,"nasal":3},"urgency":"routine","dur":{"subacute":2,"chronic":1},"risk":{"fever":1},"fu":{"n_fever_head":1,"e_season":-1,"e_itch":-1,"e_bend_face":5,"e_10days":4}},{"id":"otitis","name":"중이염 · 외이도염","region":"ent","desc":"귀 통증과 먹먹함, 분비물이 생기며 감기 후에 흔합니다.","dept":"이비인후과","tests":["이경 검사","필요 시 청력검사"],"base":0,"sym":{"ear_pain":6},"urgency":"routine","dur":{"acute":1},"risk":{"fever":1},"fu":{"n_ear_full":1,"e_ear_fluid":5,"e_ear_pull":4}},{"id":"ssnhl","name":"돌발성 감각신경성 난청","region":"ent","desc":"원인 없이 갑자기 한쪽 청력이 떨어지는 질환으로 빠른 스테로이드 치료가 회복에 중요합니다.","dept":"이비인후과(가능하면 72시간 이내)","tests":["순음청력검사","필요 시 내이도 MRI"],"base":0,"sym":{"hearing":8,"ear_pain":1},"urgency":"urgent","onset":{"sudden":3},"kw":{"이명":2},"fu":{"n_ear_full":3}},{"id":"derm","name":"접촉 피부염 · 습진","region":"ent","desc":"가려운 발진이 특정 물질 접촉이나 피부 건조와 관련되어 반복됩니다.","dept":"피부과","tests":["필요 시 첩포검사"],"base":0,"sym":{"rash":5},"urgency":"routine","dur":{"subacute":1,"chronic":1},"fu":{"e_contact":6,"e_wheal_move":-2}},{"id":"urticaria","name":"두드러기","region":"ent","desc":"가렵고 부풀어 오르는 팽진이 수 시간 내 사라졌다 다시 생깁니다. 6주 이상이면 만성으로 봅니다.","dept":"피부과 · 알레르기내과","tests":["대개 임상 진단","만성 시 혈액검사"],"base":0,"sym":{"hives":6,"rash":1,"swelling_face":2},"urgency":"routine","course":{"waxing":1},"fu":{"e_contact":-1,"e_wheal_move":6,"e_food_drug":3}},{"id":"anaphylaxis","name":"아나필락시스 · 혈관부종","region":"ent","desc":"음식·약물·벌독 등 노출 후 입술·혀·목 부종, 호흡곤란이 생기면 즉시 에피네프린 치료가 필요합니다.","dept":"응급의학과","tests":["응급 평가 · 에피네프린 투여","회복 후 알레르기 원인 검사"],"base":0,"sym":{"swelling_face":8,"hives":2},"urgency":"emergency","onset":{"sudden":3},"kw":{"먹고":1,"약을":1,"벌":2},"requires":["swelling_face"],"fu":{"e_food_drug":4}},{"id":"uti","name":"방광염(하부 요로감염)","region":"ent","desc":"배뇨통·빈뇨·잔뇨감이 특징이며 여성에게 흔합니다.","dept":"비뇨의학과 · 내과","tests":["소변검사","소변 배양검사"],"base":0,"sym":{"dysuria":6,"hematuria":2},"urgency":"routine","dur":{"acute":1,"chronic":-1},"sex":{"f":2},"fu":{"e_flank_fever":-1,"e_freq":4,"e_cloudy":3}},{"id":"pyelo","name":"급성 신우신염(상부 요로감염)","region":"ent","desc":"배뇨 증상에 고열·오한·옆구리 통증이 동반되면 신장 감염을 의심합니다.","dept":"비뇨의학과 · 내과","tests":["소변검사 · 배양","혈액검사","신장 초음파 또는 CT"],"base":0,"sym":{"dysuria":3,"flank":5},"urgency":"urgent","dur":{"acute":1},"risk":{"fever":5},"sex":{"f":1},"fu":{"e_flank_fever":6,"e_colic":-1,"e_cloudy":2}},{"id":"stone","name":"요로결석","region":"ent","desc":"옆구리에서 아랫배로 뻗치는 극심한 통증이 갑자기 생겼다 사라지기를 반복하며 혈뇨가 동반될 수 있습니다.","dept":"비뇨의학과 · 응급의학과","tests":["소변검사","복부 CT(조영제 없이)"],"base":0,"sym":{"flank":6,"hematuria":3},"urgency":"urgent","sex":{"m":1},"onset":{"sudden":2},"course":{"waxing":1},"fu":{"e_flank_fever":1,"e_colic":7,"e_freq":-1}},{"id":"insomnia_d","name":"불면증","region":"mind","desc":"잠들기 어렵거나 자주 깨는 상태가 3개월 이상 주 3회 이상이면 만성 불면증으로 봅니다.","dept":"정신건강의학과 · 신경과(수면클리닉)","tests":["수면 일기","필요 시 수면다원검사"],"base":0,"sym":{"insomnia":6,"anxiety":1},"urgency":"routine","dur":{"subacute":2,"chronic":2},"fu":{"s_day_sleepy":-1,"s_fall_asleep":5}},{"id":"osa","name":"폐쇄성 수면무호흡증","region":"mind","desc":"심한 코골이와 수면 중 호흡 정지, 낮 졸림이 특징이며 고혈압·심혈관 질환 위험을 높입니다.","dept":"이비인후과 · 신경과 · 정신건강의학과(수면클리닉)","tests":["수면다원검사"],"base":0,"sym":{"snoring":7,"fatigue":2},"urgency":"routine","chronic":{"htn":1},"sex":{"m":1},"kw":{"낮에 졸":3,"졸음":2},"fu":{"s_apnea_seen":6,"s_day_sleepy":4,"s_fall_asleep":-1}},{"id":"gad","name":"범불안장애 · 공황장애","region":"mind","desc":"과도한 걱정이 지속되거나, 갑작스러운 두근거림·숨막힘 발작이 반복됩니다. 심장 원인은 먼저 배제합니다.","dept":"정신건강의학과","tests":["불안 척도 평가(GAD-7)","심전도 · 갑상선 기능검사로 신체 원인 배제"],"base":0,"sym":{"anxiety":5,"panic":5,"insomnia":1},"urgency":"routine","course":{"waxing":1},"fu":{"r_exertion_chest":-1,"r_radiate":-1,"r_irregular":-1,"s_fall_asleep":1,"s_interest":-1,"s_worry":5,"s_attack":5,"s_heat_tremor":-1}},{"id":"depression","name":"우울증","region":"mind","desc":"2주 이상 지속되는 우울감·흥미 저하와 수면·식욕 변화가 있으면 전문 평가가 필요합니다.","dept":"정신건강의학과","tests":["우울 척도 평가(PHQ-9)","갑상선 기능 등 신체 원인 확인"],"base":0,"sym":{"low_mood":6,"insomnia":2,"fatigue":2,"suicidal":3},"urgency":"routine","dur":{"subacute":2,"chronic":2},"fu":{"s_interest":6,"s_worry":1}},{"id":"thyroid","name":"갑상선 기능 이상","region":"mind","desc":"갑상선 기능 저하·항진은 피로, 추위·더위 민감, 체중 변화, 두근거림을 일으킵니다.","dept":"내분비내과","tests":["갑상선 기능검사(TSH · free T4)"],"base":0,"sym":{"cold_intol":6,"fatigue":3,"panic":1},"urgency":"routine","risk":{"weight_loss":1},"sex":{"f":1},"fu":{"r_irregular":1,"s_cold_gain":4,"s_heat_tremor":5,"s_pale":-1}},{"id":"anemia","name":"빈혈 등 만성 피로의 내과적 원인","region":"mind","desc":"빈혈·간 기능 이상·당뇨 등 신체 질환이 피로의 원인일 수 있어 기본 혈액검사가 도움이 됩니다.","dept":"가정의학과 · 내과","tests":["혈액검사(CBC · 철분 · 간 · 신장 · 혈당)","갑상선 기능검사"],"base":0,"sym":{"fatigue":5},"urgency":"routine","dur":{"subacute":1,"chronic":1},"risk":{"weight_loss":2,"night_sweats":1},"sex":{"f":1},"fu":{"s_day_sleepy":1,"s_cold_gain":-1,"s_pale":5,"s_heavy_period":4}},{"id":"crisis","name":"자살 위기 · 정신건강 응급","region":"mind","desc":"죽고 싶은 생각은 도움을 받으면 나아질 수 있는 상태입니다. 지금 바로 전문 상담과 연결되는 것이 가장 중요합니다.","dept":"정신건강의학과 · 응급의학과","tests":["자살예방상담전화 109(24시간)","정신건강위기상담 1577-0199"],"base":0,"sym":{"suicidal":10},"urgency":"emergency","requires":["suicidal"]}],"adjust":[{"id":"chronic_finding_vs_uri","if":{"dur":["chronic"],"finding":["ggo","nodule"]},"target":["uri","pharyngitis","pneumonia"],"add":-4,"mult":0.2,"reason":"8주 이상 지속 + 검진 영상 이상 소견: 단순 급성 감염으로 설명하기 어려워 적합도를 크게 낮춤"},{"id":"chronic_finding_lesion","if":{"dur":["subacute","chronic"],"finding":["ggo","nodule","other_lung"]},"target":["lung_lesion"],"add":3,"reason":"지속 증상 + 검진 영상 소견: 이전 영상과 비교한 추적 CT가 필요"},{"id":"chronic_cough_triad","if":{"dur":["subacute","chronic"],"sym":["cough"]},"target":["asthma_cva","uacs","gerd_cough"],"add":2,"reason":"3주 이상 지속 기침: 만성 기침의 3대 원인(기침형 천식·상기도기침증후군·역류성 기침) 우선 감별"},{"id":"weight_loss_vs_functional","if":{"dur":["subacute","chronic"],"risk":["weight_loss"]},"target":["ibs","gastritis","tension","insomnia_d"],"mult":0.6,"reason":"의도치 않은 체중 감소 동반: 기능성 질환으로 단정하기 전 기질적 원인 감별이 필요"},{"id":"fever_low_spo2_pneumonia","if":{"vital":["spo2_low"],"risk":["fever"]},"target":["pneumonia"],"add":4,"reason":"발열 + 산소포화도 저하: 폐렴 가능성을 높게 평가"},{"id":"elderly_fever_infection","if":{"age":["70p"],"risk":["fever"]},"target":["pneumonia","pyelo","biliary"],"add":1,"reason":"고령 + 발열: 증상이 비전형적이어도 세균 감염 가능성 고려"}],"followups":[{"id":"r_nose","q":"콧물이나 목 아픔도 같이 있나요?"},{"id":"r_walk_dyspnea","q":"평소처럼 걷기만 해도 숨이 차나요?"},{"id":"r_pleuritic","q":"숨을 깊게 들이쉬면 가슴 옆쪽이 찌르듯 아픈가요?"},{"id":"r_yellow_sputum","q":"가래가 누렇거나 초록색인가요?"},{"id":"r_trigger","q":"찬 공기, 운동, 먼지에 기침이 심해지나요?"},{"id":"r_allergy","q":"비염·아토피가 있거나 가족 중에 천식이 있나요?"},{"id":"r_throat_clear","q":"목에 뭔가 걸린 듯해서 자주 ‘흠흠’ 하나요?"},{"id":"r_meal_reflux","q":"밥 먹은 뒤나 누우면 신물이 올라오나요?"},{"id":"r_orthopnea","q":"누우면 숨이 더 차서 베개를 높이 베고 자나요?"},{"id":"r_long_smoke","q":"담배를 10년 넘게 피웠나요? (지금 끊었어도요)"},{"id":"r_night_sweat","q":"밤에 옷이 젖을 만큼 식은땀이 나나요?"},{"id":"r_tb_contact","q":"주변에 결핵을 앓은 사람이 있었나요?"},{"id":"r_lesion_grow","q":"검진에서 크기가 커졌다거나 추가 검사를 권유받았나요?"},{"id":"r_exertion_chest","q":"가슴 통증이 움직일 때 생기고 쉬면 나아지나요?"},{"id":"r_radiate","q":"가슴 통증이 왼팔·턱·등으로 퍼지나요?"},{"id":"r_irregular","q":"맥박이 불규칙하게 툭툭 건너뛰는 느낌인가요?"},{"id":"n_throb","q":"머리 한쪽이 욱신욱신 맥박 뛰듯 아픈가요?"},{"id":"n_band","q":"머리 전체를 띠로 조이듯 묵직하게 아픈가요?"},{"id":"n_aura","q":"두통 전에 눈앞이 번쩍이거나 지그재그가 보이나요?"},{"id":"n_move_worse","q":"움직이면 두통이 더 심해져서 눕고 싶나요?"},{"id":"n_stress","q":"스트레스를 받거나 오래 앉아 있으면 심해지나요?"},{"id":"n_fever_head","q":"열이 나면서 머리가 아픈가요?"},{"id":"n_head_turn","q":"고개를 돌리거나 눕고 일어날 때만 1분 안쪽으로 어지럽나요?"},{"id":"n_long_vertigo","q":"한 번 어지러우면 몇 시간 넘게 계속되나요?"},{"id":"n_ear_full","q":"귀가 먹먹하거나 ‘윙’ 하는 소리가 나나요?"},{"id":"n_standing","q":"앉았다 일어설 때만 핑 도나요?"},{"id":"n_palp_faint","q":"쓰러지기 전에 가슴이 두근거렸나요?"},{"id":"n_glove","q":"양쪽 손발 끝이 장갑·양말 모양으로 저린가요?"},{"id":"n_neck_arm","q":"목을 움직이면 팔로 저림이 뻗치나요?"},{"id":"g_after_meal","q":"밥 먹고 나면 명치가 더 아프거나 더부룩한가요?"},{"id":"g_empty","q":"배고플 때나 새벽에 명치가 쓰리고, 먹으면 나아지나요?"},{"id":"g_nsaid","q":"진통제(소염제)를 자주 드시나요?"},{"id":"g_lying_reflux","q":"눕거나 허리를 숙이면 신물이 올라오나요?"},{"id":"g_migrate","q":"배꼽 주변이 아프다가 오른쪽 아랫배로 옮겨갔나요?"},{"id":"g_jolt","q":"걷거나 기침할 때 배가 울려서 아픈가요?"},{"id":"g_fatty","q":"기름진 음식을 먹은 뒤 오른쪽 윗배가 아팠나요?"},{"id":"g_shoulder","q":"배 통증이 오른쪽 어깨나 등으로 뻗치나요?"},{"id":"g_food_group","q":"같이 먹은 사람도 탈이 났거나, 상한 음식을 먹었나요?"},{"id":"g_watery","q":"하루 4번 넘게 물 같은 설사를 하나요?"},{"id":"g_relief","q":"변을 보고 나면 배 아픈 게 나아지나요?"},{"id":"g_stress_bowel","q":"스트레스를 받으면 배가 아프거나 변이 달라지나요?"},{"id":"g_black","q":"변이 짜장처럼 까맣게 나온 적이 있나요?"},{"id":"g_family_ca","q":"가족 중에 위암이나 대장암을 앓은 분이 있나요?"},{"id":"g_period_late","q":"생리가 예정보다 늦어지고 있나요?","sex":"f"},{"id":"m_lift","q":"무거운 걸 들거나 무리한 뒤 아파졌나요?"},{"id":"m_sit_leg","q":"오래 앉거나 허리를 숙이면 다리로 찌릿하게 뻗치나요?"},{"id":"m_walk_rest","q":"걷다 보면 다리가 저려서 쉬었다 가야 하나요?"},{"id":"m_night_pain","q":"가만히 누워 쉬어도 밤에 더 아픈가요?"},{"id":"m_cancer_hx","q":"암 치료를 받은 적이 있나요?"},{"id":"m_use_pain","q":"관절을 많이 쓸수록 아프고 쉬면 나아지나요?"},{"id":"m_many_joints","q":"양손 손가락 관절 여러 곳이 같이 붓나요?"},{"id":"m_big_toe","q":"엄지발가락이나 발목이 하룻밤 새 빨갛게 붓고 몹시 아팠나요?"},{"id":"m_alcohol","q":"술이나 고기를 많이 먹은 뒤 심해지나요?"},{"id":"m_hot_joint","q":"열이 나면서 관절 한 곳만 뜨겁게 붓나요?"},{"id":"m_posture","q":"같은 자세(컴퓨터·휴대폰)로 오래 있으면 뭉치나요?"},{"id":"m_cant_bear","q":"다친 곳에 힘을 주거나 걷기가 어렵나요?"},{"id":"e_swallow","q":"침 삼키기 힘들 만큼 목이 아프고 열이 나나요?"},{"id":"e_no_cough","q":"기침은 거의 없나요?"},{"id":"e_season","q":"특정 계절이나 먼지·꽃가루에 콧물·재채기가 심해지나요?"},{"id":"e_itch","q":"눈이나 코가 가렵나요?"},{"id":"e_bend_face","q":"고개를 숙이면 얼굴이나 이마가 묵직하게 아픈가요?"},{"id":"e_10days","q":"코 증상이 10일 넘게 낫지 않나요?"},{"id":"e_ear_fluid","q":"귀에서 진물이 나오나요?"},{"id":"e_ear_pull","q":"귀를 잡아당기거나 누르면 아픈가요?"},{"id":"e_contact","q":"새로 쓴 화장품·세제·금속이 닿은 곳에만 생겼나요?"},{"id":"e_wheal_move","q":"부푼 자국이 몇 시간 뒤 사라지고 다른 곳에 또 생기나요?"},{"id":"e_food_drug","q":"음식이나 약을 먹고 1~2시간 안에 생겼나요?"},{"id":"e_flank_fever","q":"열이 나면서 옆구리를 두드리면 아픈가요?"},{"id":"e_colic","q":"옆구리 통증이 파도처럼 왔다 갔다 하고, 가만히 있기 힘들 만큼인가요?"},{"id":"e_freq","q":"소변을 자주 보는데 양은 적은가요?"},{"id":"e_cloudy","q":"소변이 뿌옇거나 냄새가 심한가요?"},{"id":"s_apnea_seen","q":"자는 동안 숨이 멈춘다는 말을 들은 적 있나요?"},{"id":"s_day_sleepy","q":"낮에 운전하거나 회의할 때 졸음을 참기 힘든가요?"},{"id":"s_fall_asleep","q":"누워서 30분 넘게 잠이 안 오는 날이 일주일에 3번 넘나요?"},{"id":"s_interest","q":"좋아하던 일에도 흥미가 없어진 지 2주가 넘었나요?"},{"id":"s_worry","q":"걱정을 멈추기 어려워 늘 긴장된 상태인가요?"},{"id":"s_attack","q":"갑자기 죽을 것 같은 공포가 왔다가 10~20분 안에 사라지나요?"},{"id":"s_cold_gain","q":"추위를 많이 타고, 살이 찌거나 몸이 붓나요?"},{"id":"s_heat_tremor","q":"더위를 많이 타고 손이 떨리며 살이 빠지나요?"},{"id":"s_pale","q":"얼굴이 창백하고 계단을 오르면 숨이 차거나 어지럽나요?"},{"id":"s_heavy_period","q":"생리량이 많은 편인가요?","sex":"f"}],"fuConfig":{"min":3,"max":7,"temp":3,"topK":5,"minGain":0.5,"stopShare":92}}</script>
 <script id="medinavi-engine">
 /* MediNavi 감별진단 엔진 (브라우저 내장판). server.py 의 Python 엔진과 같은 규칙·같은 결과를 내도록 유지한다. */
 (function (root) {
@@ -260,6 +351,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
     routine: { title: "경과 관찰 · 필요 시 외래", message: "증상이 가볍다면 휴식하며 경과를 지켜보세요. 악화되거나 새로운 증상이 생기면 진료를 받으세요." }
   };
   var DISCLAIMER = "본 결과는 의학적 진단이 아니라 진료 전 참고용 정보입니다. 최종 진단과 치료는 반드시 의료진의 진찰을 통해 결정하세요.";
+  var FU_ANS = ["yes", "no", "unsure"], FU_KO = { yes: "예", no: "아니오", unsure: "잘 모르겠어요" };
   var NEG_RE = /^[^.,!?\n]{0,6}?(없|아니|않|안 )/;
 
   function inArr(arr, v) { return !!arr && arr.indexOf(v) !== -1; }
@@ -273,6 +365,8 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
     function lab(list, id) { for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i].label; return id; }
     function durLabel(id) { for (var i = 0; i < KB.durations.length; i++) if (KB.durations[i].id === id) return KB.durations[i].label + "(" + KB.durations[i].desc + ")"; return id; }
     function idsOf(list) { return list.map(function (x) { return x.id; }); }
+    var FU = KB.followups || [], FUC = KB.fuConfig || { min: 3, max: 7, temp: 3, topK: 5, minGain: 0.5, stopShare: 92 }, fuById = {};
+    FU.forEach(function (q) { fuById[q.id] = q; });
 
     function textHas(text, word) {
       var w = word.toLowerCase(), from = 0, i;
@@ -321,10 +415,15 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
         var lim = KB.vitalLimits[k];
         if (typeof x !== "number" || !isFinite(x) || x < lim[0] || x > lim[1]) errs.push("vitals." + k);
       });
+      if (a.followups !== null && a.followups !== undefined) {
+        var fu = a.followups;
+        if (typeof fu !== "object" || Array.isArray(fu) || Object.keys(fu).length > 20 ||
+            Object.keys(fu).some(function (k) { return !fuById[k] || !inArr(FU_ANS, fu[k]); })) errs.push("followups");
+      }
       return errs;
     }
 
-    function diagnose(a, now) {
+    function analyze(a) {
       var v = a.vitals || {}, temp = v.temp, hr = v.hr, spo2 = v.spo2;
       var hits = extract(a.text);
       var sym = a.symptoms.slice(), textSym = [], finding = [], risks = a.risks.slice(), autoRisks = [];
@@ -371,7 +470,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
       function ruleMatch(cond) {
         return Object.keys(cond).every(function (k) { return cond[k].some(function (x) { return inArr(ctx[k], x); }); });
       }
-      var text = (a.text || "").toLowerCase();
+      var text = (a.text || "").toLowerCase(), fua = answersOf(a);
       var cands = [];
       KB.conditions.forEach(function (c, idx) {
         if (c.sexOnly && c.sexOnly !== a.sex) return;
@@ -406,6 +505,11 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
         if (c.kw) Object.keys(c.kw).forEach(function (word) {
           if (textHas(text, word)) { score += c.kw[word]; reasons.push("자유 서술 키워드: '" + word + "'"); }
         });
+        if (c.fu) Object.keys(c.fu).forEach(function (qid) {
+          var w = c.fu[qid], ans = fua[qid];
+          if (ans === "yes") { score += w; reasons.push("정밀 문진: " + fuById[qid].q + " → 예" + (w < 0 ? " (불일치 · 감점)" : "")); }
+          else if (ans === "no" && w > 0) { score -= w * 0.5; reasons.push("정밀 문진: " + fuById[qid].q + " → 아니오 (감점)"); }
+        });
         if (c.region === a.region) score += 1;
         KB.adjust.forEach(function (r) {
           if (!inArr(r.target, c.id) || !ruleMatch(r["if"])) return;
@@ -415,18 +519,66 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
         });
         score = round2(score);
         if (score <= 0) return;
-        cands.push({ idx: idx, id: c.id, name: c.name, score: score, pct: Math.floor(95 * (1 - Math.exp(-score / 9)) + 0.5),
-          desc: c.desc, dept: c.dept, tests: c.tests.slice(), reasons: reasons, urgency: c.urgency });
+        cands.push({ idx: idx, c: c, score: score, reasons: reasons });
       });
       cands.sort(function (x, y) { return (y.score - x.score) || (x.idx - y.idx); });
-      cands = cands.slice(0, 4);
-      cands.forEach(function (c) { delete c.idx; });
+      var ex = expShares(cands);
+      cands.forEach(function (x, i) { x.e = ex.e[i]; x.pct = Math.floor(100 * ex.e[i] / ex.sum + 0.5); });
+      return { sym: sym, textSym: textSym, finding: finding, risks: risks, autoRisks: autoRisks, hits: hits, flags: flags,
+        temp: temp, hr: hr, spo2: spo2, fua: fua, scored: cands };
+    }
+
+    function answersOf(a) {
+      var fu = (a.followups && typeof a.followups === "object") ? a.followups : {}, out = {};
+      Object.keys(fu).forEach(function (k) { if (fuById[k] && inArr(FU_ANS, fu[k])) out[k] = fu[k]; });
+      return out;
+    }
+    function expShares(list) {
+      var e = [], sum = 0;
+      if (!list.length) return { e: e, sum: 1 };
+      var mx = list[0].score;
+      for (var i = 0; i < list.length; i++) { var v = Math.exp((list[i].score - mx) / FUC.temp); e.push(v); sum += v; }
+      return { e: e, sum: sum };
+    }
+
+    function nextQuestion(a) {
+      var an = analyze(a), list = an.scored, asked = Object.keys(an.fua).length;
+      if (!list.length || asked >= FUC.max || (asked >= FUC.min && list[0].pct >= FUC.stopShare)) return null;
+      var top = list.slice(0, FUC.topK), tsum = 0;
+      top.forEach(function (x) { tsum += x.e; });
+      var best = null, bestGain = 0;
+      FU.forEach(function (q) {
+        if (q.id in an.fua) return;
+        if (q.sex && q.sex !== a.sex) return;
+        var ws = top.map(function (x) { return (x.c.fu && x.c.fu[q.id]) || 0; });
+        if (!ws.some(function (w) { return w !== 0; })) return;
+        var mean = 0, gain = 0, i;
+        for (i = 0; i < top.length; i++) mean += top[i].e / tsum * ws[i];
+        for (i = 0; i < top.length; i++) gain += top[i].e / tsum * Math.abs(ws[i] - mean);
+        gain = Math.floor(gain * 10000 + 0.5) / 10000;
+        if (gain > bestGain) { bestGain = gain; best = q; }
+      });
+      if (!best || bestGain < FUC.minGain) return null;
+      return { id: best.id, q: best.q, hint: best.hint || null, asked: asked, max: FUC.max,
+        leaders: top.slice(0, 3).map(function (x) { return { id: x.c.id, name: x.c.name, pct: x.pct }; }) };
+    }
+
+    function diagnose(a, now) {
+      var an = analyze(a), sym = an.sym, textSym = an.textSym, finding = an.finding, risks = an.risks, autoRisks = an.autoRisks,
+        hits = an.hits, flags = an.flags, temp = an.temp, hr = an.hr, spo2 = an.spo2;
+      var cands = [];
+      an.scored.slice(0, 4).forEach(function (x, i) {
+        if (i > 0 && x.pct < 5) return;
+        var c = x.c;
+        cands.push({ id: c.id, name: c.name, score: x.score, pct: x.pct, fit: Math.floor(95 * (1 - Math.exp(-x.score / 9)) + 0.5),
+          desc: c.desc, dept: c.dept, tests: c.tests.slice(), reasons: x.reasons, urgency: c.urgency });
+      });
 
       // ---- Triage ----
       var level = "routine";
       function raise(l) { if (LEVEL_RANK[l] > LEVEL_RANK[level]) level = l; }
       flags.forEach(function (f) { raise(f.level); });
-      if (cands.length && cands[0].pct >= 60) raise(cands[0].urgency === "emergency" ? "urgent" : cands[0].urgency);
+      if (cands.length && cands[0].fit >= 60) raise(cands[0].urgency === "emergency" ? "urgent" : cands[0].urgency);
       if (a.duration === "chronic" || a.nrs >= 7 || finding.length > 0 || inArr(risks, "weight_loss")) raise("soon");
       var triage = { level: level, title: TRIAGE[level].title, message: TRIAGE[level].message };
 
@@ -443,7 +595,8 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
         chronics: a.chronics.map(function (id) { return lab(KB.chronics, id); }),
         pregnancy: a.pregnancy ? lab(KB.pregnancy, a.pregnancy) : null,
         vitals: { temp: (typeof temp === "number") ? temp : null, hr: (typeof hr === "number") ? hr : null, spo2: (typeof spo2 === "number") ? spo2 : null },
-        nrs: a.nrs, text: a.text || "", keywords: hits.map(function (h) { return h.word; })
+        nrs: a.nrs, text: a.text || "", keywords: hits.map(function (h) { return h.word; }),
+        followups: FU.filter(function (q) { return q.id in an.fua; }).map(function (q) { return { q: q.q, a: FU_KO[an.fua[q.id]] }; })
       };
       var result = { kb_version: KB.version, created_at: now, triage: triage, red_flags: flags, candidates: cands, summary: summary, disclaimer: DISCLAIMER };
       result.note = buildNote(result);
@@ -473,12 +626,13 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
       L.push("■ 동반 위험 인자: " + list(s.risks));
       L.push("■ 기저질환 · 복용약: " + list(s.chronics));
       L.push("■ 추가 서술: " + (s.text ? s.text : "없음"));
+      if (s.followups.length) { L.push("■ 정밀 문진:"); s.followups.forEach(function (f) { L.push("  - " + f.q + " → " + f.a); }); }
       L.push("");
       L.push("■ 응급 징후 선별: " + (r.red_flags.length ? r.red_flags.map(function (f) { return "[" + (f.level === "emergency" ? "응급" : "우선") + "] " + f.title; }).join("; ") : "해당 없음"));
       L.push("■ 권장 대응: " + r.triage.title);
       if (r.candidates.length) {
         var c = r.candidates[0];
-        L.push("■ 1순위 감별 후보: " + c.name + " (적합도 " + c.pct + "%)");
+        L.push("■ 1순위 감별 후보: " + c.name + " (상대 가능성 " + c.pct + "%)");
         L.push("■ 권장 진료과: " + c.dept);
         L.push("■ 참고 검사: " + c.tests.join(", "));
         if (r.candidates.length > 1) L.push("■ 기타 감별 후보: " + r.candidates.slice(1).map(function (x) { return x.name + " " + x.pct + "%"; }).join(", "));
@@ -490,7 +644,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
       return L.join("\n");
     }
 
-    return { validate: validate, diagnose: diagnose, extract: extract, version: KB.version };
+    return { validate: validate, diagnose: diagnose, nextQuestion: nextQuestion, extract: extract, version: KB.version };
   }
 
   root.MediNaviEngine = { create: create };
@@ -508,7 +662,8 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
     set: function (k, v) { memStore[k] = v; try { localStorage.setItem(k, v); return true; } catch (e) { return false; } },
     del: function (k) { delete memStore[k]; try { localStorage.removeItem(k); } catch (e) {} }
   };
-  var state = { server: false, answers: null, cur: null, trail: [], view: "intro", lastResult: null };
+  var state = { server: false, answers: null, cur: null, trail: [], view: "intro", lastResult: null, fuTrail: [], leaders: {} };
+  var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (id) { return document.getElementById(id); };
 
   function esc(s) {
@@ -538,13 +693,13 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
 
   function freshAnswers() {
     return { age: null, sex: null, region: null, symptoms: [], onset: null, duration: null, course: null, finding: null,
-      vitals: { temp: null, hr: null, spo2: null }, risks: [], chronics: [], pregnancy: null, nrs: 0, text: "" };
+      vitals: { temp: null, hr: null, spo2: null }, risks: [], chronics: [], pregnancy: null, nrs: 0, text: "", followups: {} };
   }
 
   // ---------------- Steps ----------------
   function needsFinding(a) { return a.region === "resp" || a.symptoms.indexOf("cough") !== -1 || a.symptoms.indexOf("hemoptysis") !== -1; }
   function needsPreg(a) { return a.sex === "f" && (a.age === "u20" || a.age === "30_40"); }
-  var STAGES = [{ id: "reg", ico: "🪪", label: "접수" }, { id: "sym", ico: "🩺", label: "증상" }, { id: "vit", ico: "🌡️", label: "측정" }, { id: "fin", ico: "📝", label: "마무리" }];
+  var STAGES = [{ id: "reg", ico: "🪪", label: "접수" }, { id: "sym", ico: "🩺", label: "증상" }, { id: "vit", ico: "🌡️", label: "측정" }, { id: "fin", ico: "📝", label: "마무리" }, { id: "deep", ico: "🔬", label: "정밀 문진" }];
   var STEPS = [
     { id: "age", stage: "reg", title: "나이대가 어떻게 되세요?", type: "single", key: "age", opts: function () { return KB.ages; }, cols: 2 },
     { id: "sex", stage: "reg", title: "성별을 알려 주세요", type: "single", key: "sex", opts: function () { return KB.sexes; }, cols: 2 },
@@ -576,14 +731,15 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
   function renderIntro() {
     state.view = "intro";
     $("app").innerHTML =
-      '<section class="hero fade"><div class="tagline">ONLINE CHECK-UP</div>' +
-      '<h1>진료실에서처럼,<br>차근차근 여쭤볼게요</h1>' +
-      '<p>증상을 정리해 가능성 있는 질환, 가야 할 진료과, 의사에게 보여줄 요약지를 만들어 드려요.</p>' +
-      '<div class="journey"><div><span>🪪</span>접수</div><div><span>🩺</span>증상 문진</div><div><span>📋</span>결과지</div></div></section>' +
-      '<section class="card ticket fade"><h2>📌 시작 전에 확인해 주세요</h2><ul class="checks">' +
-      '<li><i>⏱</i><span>약 2~3분, 질문은 12~14개예요.</span></li>' +
-      '<li><i>🩺</i><span>결과는 진단이 아닌 <b>진료 전 참고용</b>이에요.</span></li>' +
-      '<li><i>🔒</i><span>기록은 이 기기에서만 다시 볼 수 있어요.</span></li></ul>' +
+      '<section class="hero fade"><span class="orb" aria-hidden="true"></span><span class="orb2" aria-hidden="true"></span><div class="tagline">AI CHECK-UP ROOM</div>' +
+      '<h1>진료실에서처럼,<br><em>차근차근 여쭤볼게요</em></h1>' +
+      '<p>답에 따라 질문이 달라져요. 가능성 높은 질환과 가야 할 진료과, 의사에게 보여줄 요약지를 만들어 드려요.</p>' +
+      '<svg class="ecg" viewBox="0 0 600 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 24h150l10-14 12 28 10-30 12 16h120l8-10 10 18 8-8h260"/></svg>' +
+      '<div class="journey"><div><span>🪪</span>접수</div><div><span>🩺</span>증상</div><div><span>🔬</span>정밀 문진</div><div><span>📋</span>결과지</div></div></section>' +
+      '<section class="card ticket fade"><h2>📌 시작 전에 확인해 주세요</h2><ul class="checks stagger">' +
+      '<li style="--i:0"><i>⏱</i><span>약 3분이에요. 기본 질문 뒤에 <b>맞춤 질문</b>이 몇 개 더 나와요.</span></li>' +
+      '<li style="--i:1"><i>🩺</i><span>결과는 진단이 아닌 <b>진료 전 참고용</b>이에요.</span></li>' +
+      '<li style="--i:2"><i>🔒</i><span>기록은 이 기기에서만 다시 볼 수 있어요.</span></li></ul>' +
       '<div class="sos"><span>가슴 통증, 심한 숨참, 갑작스러운 마비가 있다면 문진보다 119가 먼저예요.</span><a href="tel:119">📞 119</a></div>' +
       '<label class="consent"><input type="checkbox" id="agree"> <span>확인했어요</span></label>' +
       '<div class="actions"><button class="btn primary wide" id="btnStart" type="button" disabled>진료 접수하기</button></div></section>';
@@ -599,26 +755,33 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
     renderStep();
   }
 
-  function progressHtml() {
-    var vis = visibleSteps(), idx = 0;
-    for (var i = 0; i < vis.length; i++) if (vis[i].id === state.cur) idx = i;
-    var pct = Math.round(idx / vis.length * 100), curStage = stepById(state.cur).stage, passed = true;
-    var stages = STAGES.map(function (sg) {
+  function stagesHtml(curStage) {
+    var passed = true;
+    return '<ol class="stages" aria-label="진행 단계">' + STAGES.map(function (sg) {
       var cls = sg.id === curStage ? "cur" : (passed ? "done" : "");
       if (sg.id === curStage) passed = false;
       return '<li class="' + cls + '"><span aria-hidden="true">' + sg.ico + '</span>' + sg.label + '</li>';
-    }).join("");
-    return '<ol class="stages" aria-label="진행 단계">' + stages + '</ol>' +
+    }).join("") + '</ol>';
+  }
+  function titleHtml(t) {
+    if (REDUCED) return esc(t);
+    return t.split(" ").map(function (w, i) { return '<span class="w" style="animation-delay:' + (i * 35) + 'ms">' + esc(w) + '</span>'; }).join(" ");
+  }
+  function progressHtml() {
+    var vis = visibleSteps(), idx = 0;
+    for (var i = 0; i < vis.length; i++) if (vis[i].id === state.cur) idx = i;
+    var pct = Math.round(idx / vis.length * 85);
+    return stagesHtml(stepById(state.cur).stage) +
       '<div class="navrow"><button class="btn ghost" id="btnPrev" type="button"' + (state.trail.length ? "" : " disabled") + '>← 이전 질문</button>' +
       '<span>질문 <b>' + (idx + 1) + '</b> / ' + vis.length + '</span>' +
       '<button class="btn ghost" id="btnRestart" type="button">처음부터 ↺</button></div>' +
       '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + pct + '%"></i></div>';
   }
 
-  function optButton(o, selected, multi, extraCls) {
+  function optButton(o, selected, multi, extraCls, i) {
     var red = o.flag ? '<span class="tag">' + (o.flag === "emergency" ? "응급" : "우선 진료") + '</span>' : "";
     var attr = multi ? 'role="checkbox" aria-checked="' + selected + '"' : 'aria-pressed="' + selected + '"';
-    return '<button type="button" class="opt' + (o.flag ? " red" : "") + (extraCls || "") + '" data-id="' + esc(o.id) + '" ' + attr + '>' +
+    return '<button type="button" class="opt' + (o.flag ? " red" : "") + (extraCls || "") + '" style="--i:' + (i || 0) + '" data-id="' + esc(o.id) + '" ' + attr + '>' +
       (o.icon ? '<span class="ico" aria-hidden="true">' + o.icon + '</span>' : "") +
       '<span><span class="t">' + esc(o.label) + '</span>' + red + (o.desc ? '<span class="d">' + esc(o.desc) + '</span>' : "") + '</span>' +
       (multi ? '<span class="chk" aria-hidden="true">' + (selected ? "✓" : "") + '</span>' : "") + '</button>';
@@ -626,14 +789,14 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
 
   function renderStep() {
     var st = stepById(state.cur), a = state.answers;
-    var html = progressHtml() + '<section class="card fade" aria-labelledby="qTitle"><div class="ask"><div class="doc" aria-hidden="true">👩‍⚕️</div><div class="bubble"><div class="who">문진 간호사</div>' +
-      '<h2 class="q-title" id="qTitle" tabindex="-1">' + esc(st.title) + '</h2>' + (st.help ? '<p class="q-help">' + esc(st.help) + '</p>' : "") + '</div></div>';
+    var html = progressHtml() + '<section class="card fade" aria-labelledby="qTitle"><div class="ask"><div class="doc" aria-hidden="true">👩‍⚕️</div><div class="bubble"><div class="who">AI 문진 간호사</div>' +
+      '<h2 class="q-title" id="qTitle" tabindex="-1" aria-label="' + esc(st.title) + '">' + titleHtml(st.title) + '</h2>' + (st.help ? '<p class="q-help">' + esc(st.help) + '</p>' : "") + '</div></div>';
     if (st.type === "single" || st.type === "multi") {
       var opts = st.opts(a), multi = st.type === "multi";
-      html += '<div class="opts' + (st.tiles ? " tiles" : st.cols === 2 ? " two" : "") + '" role="' + (multi ? "group" : "radiogroup") + '" aria-labelledby="qTitle">';
-      opts.forEach(function (o) {
+      html += '<div class="opts stagger' + (st.tiles ? " tiles" : st.cols === 2 ? " two" : "") + '" role="' + (multi ? "group" : "radiogroup") + '" aria-labelledby="qTitle">';
+      opts.forEach(function (o, i) {
         var sel = multi ? a[st.key].indexOf(o.id) !== -1 : a[st.key] === o.id;
-        html += optButton(o, sel, multi);
+        html += optButton(o, sel, multi, "", i);
       });
       html += '</div>';
       if (multi) {
@@ -642,7 +805,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
       }
     } else if (st.type === "vitals") {
       var v = a.vitals;
-      html += '<div class="vitals">' + vitalField("temp", "🌡️", "체온", "체온계로 잰 값", "℃", "예 36.5", "0.1", v.temp) +
+      html += '<div class="vitals stagger">' + vitalField("temp", "🌡️", "체온", "체온계로 잰 값", "℃", "예 36.5", "0.1", v.temp) +
         vitalField("hr", "💓", "맥박", "가만히 있을 때 · 스마트워치 OK", "회/분", "예 80", "1", v.hr) +
         vitalField("spo2", "🫧", "산소포화도", "손가락 측정기가 있을 때만", "%", "예 98", "1", v.spo2) + '</div>' +
         '<div class="actions"><button class="btn" type="button" id="btnSkip">못 쟀어요</button><button class="btn primary" type="button" id="btnNext">다음</button></div>';
@@ -654,7 +817,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
     } else if (st.type === "text") {
       html += '<textarea id="freeText" maxlength="1000" placeholder="예) 기침이 3달째예요. 새벽에 특히 심하고, 검진 CT에서 간유리 음영이 있다고 들었어요.">' + esc(a.text) + '</textarea>' +
         '<div class="kwrow"><span>알아들은 말</span><span id="kwChips"></span><span style="margin-left:auto"><span id="txtCount">0</span>/1000</span></div>' +
-        '<div class="actions"><button class="btn primary wide" type="button" id="btnSubmit">📋 결과지 받기</button></div>';
+        '<div class="actions"><button class="btn primary wide" type="button" id="btnSubmit">🔬 맞춤 질문으로 넘어가기</button></div>';
     }
     html += '</section>';
     $("app").innerHTML = html;
@@ -665,7 +828,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
 
   function vitalField(k, ico, label, sub, unit, ph, stepv, val) {
     var lim = KB.vitalLimits[k];
-    return '<div class="vital"><span class="vi" aria-hidden="true">' + ico + '</span><label for="v_' + k + '">' + esc(label) + '<small>' + esc(sub) + '</small></label>' +
+    return '<div class="vital" style="--i:' + ({ temp: 0, hr: 1, spo2: 2 })[k] + '"><span class="vi" aria-hidden="true">' + ico + '</span><label for="v_' + k + '">' + esc(label) + '<small>' + esc(sub) + '</small></label>' +
       '<span class="in"><input type="number" inputmode="decimal" id="v_' + k + '" min="' + lim[0] + '" max="' + lim[1] + '" step="' + stepv + '" placeholder="' + ph + '" value="' + (val === null ? "" : val) + '">' +
       '<span class="u">' + unit + '</span></span></div><div class="err" id="e_' + k + '"></div>';
   }
@@ -677,11 +840,14 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
     if (st.type === "single") {
       Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (b) {
         b.addEventListener("click", function () {
+          if (state.busy) return;
           var id = b.getAttribute("data-id"), prev = a[st.key];
           a[st.key] = id;
           if (st.key === "region" && prev !== id) { a.symptoms = []; a.finding = null; }
           if ((st.key === "sex" || st.key === "age") && !needsPreg(a)) a.pregnancy = null;
-          goNext();
+          Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+          state.busy = true;
+          setTimeout(function () { state.busy = false; goNext(); }, REDUCED ? 0 : 170);
         });
       });
     } else if (st.type === "multi") {
@@ -720,7 +886,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
       });
     } else if (st.type === "nrs") {
       var r = $("nrs");
-      var upd = function () { a.nrs = parseInt(r.value, 10); $("nrsVal").textContent = a.nrs; $("nrsLab").textContent = nrsLabel(a.nrs); $("nrsFace").textContent = ["😀","🙂","🙂","😐","😐","😕","😣","😣","😖","😫","😭"][a.nrs]; };
+      var upd = function () { a.nrs = parseInt(r.value, 10); $("nrsVal").textContent = a.nrs; $("nrsLab").textContent = nrsLabel(a.nrs); var f = $("nrsFace"), em = ["😀","🙂","🙂","😐","😐","😕","😣","😣","😖","😫","😭"][a.nrs]; if (f.textContent !== em) { f.textContent = em; f.classList.remove("pop"); void f.offsetWidth; f.classList.add("pop"); } };
       r.addEventListener("input", upd); upd();
       $("btnNext").addEventListener("click", function () {
         if (a.nrs >= 9) showFlagModal([{ level: "urgent", code: "nrs", title: "NRS " + a.nrs + "점의 극심한 통증·불편", reason: "견디기 어려운 극심한 통증은 원인과 관계없이 우선 진료가 필요합니다." }]);
@@ -735,7 +901,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
         $("kwChips").innerHTML = hits.length ? hits.map(function (h) { return '<span class="chip">' + esc(h.word) + '</span>'; }).join(" ") : '<span class="chip off">아직 없음</span>';
       };
       ta.addEventListener("input", upd2); upd2();
-      $("btnSubmit").addEventListener("click", submit);
+      $("btnSubmit").addEventListener("click", startDeep);
     }
   }
 
@@ -772,6 +938,93 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
       var id = state.trail.pop(), st = stepById(id);
       if (!st.show || st.show(state.answers)) { state.cur = id; renderStep(); return; }
     }
+  }
+
+  // ---------------- 정밀 문진 (맞춤 질문) ----------------
+  function runScan(title, sub, steps, ms) {
+    $("app").innerHTML = stagesHtml("deep") + '<section class="card scan fade"><div class="scanner" aria-hidden="true"><i></i><i></i><i></i><b>🔬</b></div>' +
+      '<h2 tabindex="-1" id="scanTitle">' + esc(title) + '</h2><p class="q-help">' + esc(sub) + '</p><ul class="scan-steps">' +
+      steps.map(function (t) { return '<li><i></i>' + esc(t) + '</li>'; }).join("") + '</ul></section>';
+    window.scrollTo(0, 0);
+    var lis = document.querySelectorAll(".scan-steps li"), per = REDUCED ? 0 : ms / steps.length;
+    return new Promise(function (resolve) {
+      var i = 0;
+      (function tick() {
+        if (i > 0) { lis[i - 1].className = "ok"; lis[i - 1].querySelector("i").textContent = "✓"; }
+        if (i >= lis.length) { setTimeout(resolve, REDUCED ? 0 : 200); return; }
+        lis[i].className = "on"; i++;
+        setTimeout(tick, per);
+      })();
+    });
+  }
+  function startDeep() {
+    var a = finalAnswers();
+    a.followups = {};
+    var errs = ENGINE.validate(a);
+    if (errs.length) { toast("입력값을 확인해 주세요: " + errs.join(", ")); return; }
+    state.answers.followups = {}; state.fuTrail = []; state.leaders = {};
+    var pre = ENGINE.diagnose(a, nowStr());
+    if (pre.triage.level === "emergency" || !ENGINE.nextQuestion(a)) { submit(); return; }
+    state.view = "deep";
+    runScan("답변을 분석하고 있어요", "가능성 있는 질환을 추려서 꼭 필요한 질문만 골라요.", ["증상 패턴 비교", "위험 신호 확인", "맞춤 질문 고르기"], 1500).then(renderDeep);
+  }
+  function animateNum(el, from, to, ms, suffix) {
+    if (REDUCED || from === to) { el.textContent = to + (suffix || ""); return; }
+    var t0 = null;
+    (function step(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3), v = Math.round(from + (to - from) * e);
+      el.textContent = v + (suffix || "");
+      if (k < 1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+  function renderDeep() {
+    var a = finalAnswers(), q = ENGINE.nextQuestion(a);
+    if (!q) { submit(); return; }
+    state.view = "deep";
+    var n = state.fuTrail.length, pct = Math.round(85 + 15 * n / q.max);
+    var html = stagesHtml("deep") +
+      '<div class="navrow"><button class="btn ghost" id="btnPrev" type="button">← 이전 질문</button><span>맞춤 질문 <b>' + (n + 1) + '</b></span>' +
+      '<button class="btn ghost" id="btnSkipDeep" type="button">결과 바로 보기 →</button></div>' +
+      '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + pct + '%"></i></div>' +
+      '<section class="card fade" aria-labelledby="qTitle"><div class="deep-tag">🔬 정밀 문진 · 후보를 좁히는 중</div>' +
+      '<div class="ask"><div class="doc" aria-hidden="true">👩‍⚕️</div><div class="bubble"><div class="who">AI 문진 간호사</div>' +
+      '<h2 class="q-title" id="qTitle" tabindex="-1" aria-label="' + esc(q.q) + '">' + titleHtml(q.q) + '</h2>' + (q.hint ? '<p class="q-help">' + esc(q.hint) + '</p>' : "") + '</div></div>' +
+      '<div class="yn stagger" role="group" aria-labelledby="qTitle">' +
+      '<button type="button" class="opt yes" style="--i:0" data-ans="yes"><span class="ico" aria-hidden="true">⭕</span><span class="t">네, 그래요</span></button>' +
+      '<button type="button" class="opt no" style="--i:1" data-ans="no"><span class="ico" aria-hidden="true">✖️</span><span class="t">아니요</span></button>' +
+      '<button type="button" class="opt unsure" style="--i:2" data-ans="unsure"><span class="t">잘 모르겠어요</span></button></div>' +
+      '<div class="leaders" aria-label="지금까지의 분석"><h3><i></i>실시간 분석 · 가능성 높은 순</h3>' +
+      q.leaders.map(function (l) {
+        var prev = state.leaders[l.id] || 0;
+        return '<div class="lead"><span>' + esc(l.name) + '</span><b class="num" data-from="' + prev + '" data-to="' + l.pct + '">' + prev + '%</b>' +
+          '<div class="track"><i style="width:' + prev + '%" data-w="' + l.pct + '"></i></div></div>';
+      }).join("") + '</div></section>';
+    $("app").innerHTML = html;
+    var next = {};
+    q.leaders.forEach(function (l) { next[l.id] = l.pct; });
+    state.leaders = next;
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".lead .track i"), function (i) { i.style.width = i.getAttribute("data-w") + "%"; });
+      Array.prototype.forEach.call(document.querySelectorAll(".lead b"), function (b) { animateNum(b, +b.getAttribute("data-from"), +b.getAttribute("data-to"), 800, "%"); });
+    }); });
+    Array.prototype.forEach.call(document.querySelectorAll(".yn .opt"), function (b) {
+      b.addEventListener("click", function () {
+        if (state.busy) return;
+        state.answers.followups[q.id] = b.getAttribute("data-ans");
+        state.fuTrail.push(q.id);
+        b.setAttribute("aria-pressed", "true");
+        state.busy = true;
+        setTimeout(function () { state.busy = false; renderDeep(); }, REDUCED ? 0 : 170);
+      });
+    });
+    $("btnPrev").addEventListener("click", function () {
+      if (state.fuTrail.length) { delete state.answers.followups[state.fuTrail.pop()]; renderDeep(); }
+      else { state.view = "wizard"; state.answers.followups = {}; renderStep(); }
+    });
+    $("btnSkipDeep").addEventListener("click", submit);
+    var t = $("qTitle"); if (t) t.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
   }
 
   // ---------------- Modals ----------------
@@ -827,24 +1080,24 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
   function submit() {
     var a = finalAnswers(), errs = ENGINE.validate(a);
     if (errs.length) { toast("입력값을 확인해 주세요: " + errs.join(", ")); return; }
-    var btn = $("btnSubmit"); btn.disabled = true; btn.textContent = "결과지 작성 중…";
-    var uid = userId();
+    var uid = userId(), nfu = Object.keys(a.followups || {}).length;
+    var scan = runScan("결과지를 만들고 있어요", (nfu ? "맞춤 질문 " + nfu + "개까지 " : "") + "모든 답변을 모아 가능성을 계산해요.", ["답변 모으기", "질환별 가능성 계산", "진료과 · 검사 정리"], 1300);
+    var finish = function (rec, note) { scan.then(function () { if (note) toast(note); showResult(rec); }); };
     var local = function (note) {
       var result = ENGINE.diagnose(a, nowStr());
       var rec = { session_id: "local-" + deviceKey().slice(0, 4) + Date.now().toString(36), ts: Date.now(), user_id: uid, created_at: result.created_at, source: "local", answers: a, result: result };
       saveLocal(rec);
-      if (note) toast(note);
-      showResult(rec);
+      finish(rec, note);
     };
     if (!state.server) { local(); return; }
     fetchJSON("api/diagnose", { method: "POST", headers: { "Content-Type": "application/json", "X-MediNavi-Key": deviceKey() }, body: JSON.stringify({ user_id: uid, answers: a }) }, 8000)
       .then(function (j) {
         var rec = { session_id: j.session_id, ts: Date.now(), user_id: uid, created_at: j.result.created_at, source: "server", answers: a, result: j.result };
         saveLocal(rec);
-        showResult(rec);
+        finish(rec);
       })
       .catch(function (e) {
-        if (e.status === 422 || e.status === 400) { btn.disabled = false; btn.textContent = "📋 결과지 받기"; toast("서버가 입력값을 거부했습니다: " + (e.body && e.body.details ? e.body.details.join(", ") : e.message)); return; }
+        if (e.status === 422 || e.status === 400) { scan.then(function () { state.view = "wizard"; renderStep(); toast("서버가 입력값을 거부했습니다: " + (e.body && e.body.details ? e.body.details.join(", ") : e.message)); }); return; }
         state.server = false; setStatus();
         local("서버에 연결할 수 없어 이 기기에서 분석하고 저장했습니다.");
       });
@@ -862,19 +1115,20 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
       '<span>통증 <b>' + s.nrs + '/10</b></span>' + (vit.length ? '<span><b>' + esc(vit.join("  ")) + '</b></span>' : "") + '</div><div class="sheet-body">';
     html += '<section class="triage ' + t.level + '" role="alert"><span class="ti" aria-hidden="true">' + TI[t.level] + '</span><div><h2>' + esc(t.title) + '</h2><p>' + esc(t.message) + '</p>' +
       flagsHtml + (t.level === "emergency" ? callButtons(r.red_flags) : "") + '</div></section>';
-    html += '<h2 class="sec-title">🔎 의심해 볼 수 있는 질환 <small>잘 맞는 순서</small></h2>';
+    var nfu = (s.followups || []).length;
+    html += '<h2 class="sec-title">🔎 가능성 높은 질환 <small>후보끼리 비교한 비율</small>' + (nfu ? '<span class="chip">🔬 맞춤 질문 ' + nfu + '개 반영</span>' : "") + '</h2>';
     if (!r.candidates.length) {
       html += '<div class="cand">입력한 내용만으로는 질환을 좁히기 어려워요. 증상이 계속되면 가정의학과·내과 진찰을 받아 보세요.</div>';
     } else {
-      html += '<div class="cands">' + r.candidates.map(function (c, i) {
-        return '<div class="cand' + (i === 0 ? " first" : "") + '"><div class="head"><div class="ring" style="--p:' + c.pct + '" aria-label="적합도 ' + c.pct + '%"><b>' + c.pct + '%</b></div>' +
+      html += '<div class="cands stagger">' + r.candidates.map(function (c, i) {
+        return '<div class="cand' + (i === 0 ? " first" : "") + '" style="--i:' + i + '"><div class="head"><div class="ring" style="--p:' + (REDUCED ? c.pct : 0) + '" data-p="' + c.pct + '" aria-label="가능성 ' + c.pct + '%"><b class="num">' + (REDUCED ? c.pct : 0) + '%</b></div>' +
           '<h3><span class="rank">' + (i + 1) + '순위</span>' + esc(c.name) + '</h3></div>' +
           '<p>' + esc(c.desc) + '</p>' +
           '<div class="kvl">가 볼 진료과</div><div class="pills"><span class="pill dept">' + esc(c.dept) + '</span></div>' +
           '<div class="kvl">병원에서 할 수 있는 검사</div><div class="pills">' + c.tests.map(function (x) { return '<span class="pill">' + esc(x) + '</span>'; }).join("") + '</div>' +
           '<details><summary>왜 이렇게 봤나요?</summary><ul>' + c.reasons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></details></div>';
       }).join("") + '</div>';
-      html += '<p class="disc">%는 입력한 증상이 각 질환의 전형적인 모습과 얼마나 비슷한지를 뜻해요. 실제로 걸렸을 확률은 아니에요.</p>';
+      html += '<p class="disc">%는 후보 질환끼리 비교한 상대적인 가능성이에요. 실제로 그 병에 걸렸을 확률은 아니에요.</p>';
     }
     html += '<h2 class="sec-title">🗒️ 의사에게 보여줄 요약지</h2>' +
       '<pre class="note" id="noteText">' + esc(r.note) + '</pre>' +
@@ -882,6 +1136,19 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
       '<p class="disc">' + esc(r.disclaimer) + '</p></div></article>' +
       '<div class="actions no-print"><button class="btn" type="button" id="btnHist2">🗂 기록함</button><button class="btn primary" type="button" id="btnNew">새로 접수하기</button></div>';
     $("app").innerHTML = html;
+    Array.prototype.forEach.call(document.querySelectorAll(".ring[data-p]"), function (ring, i) {
+      var to = +ring.getAttribute("data-p"), b = ring.querySelector("b");
+      if (REDUCED) return;
+      setTimeout(function () {
+        var t0 = null;
+        (function step(t) {
+          if (t0 === null) t0 = t;
+          var k = Math.min(1, (t - t0) / 1000), v = Math.round(to * (1 - Math.pow(1 - k, 3)));
+          ring.style.setProperty("--p", v); b.textContent = v + "%";
+          if (k < 1) requestAnimationFrame(step);
+        })(performance.now());
+      }, 250 + i * 120);
+    });
     $("btnCopy").addEventListener("click", function () { copyText(r.note); });
     if ($("btnPrint")) $("btnPrint").addEventListener("click", function () { Array.prototype.forEach.call(document.querySelectorAll("details"), function (d) { d.open = true; }); window.print(); });
     $("btnNew").addEventListener("click", startWizard);
@@ -962,6 +1229,20 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:0 16px 28px
     var p = (state.server && /^[0-9a-f]{32}$/.test(id)) ? fetchJSON("api/history/" + id, { method: "DELETE", headers: { "X-MediNavi-Key": deviceKey() } }, 6000).catch(function (e) { if (e.status !== 404) toast("서버 기록 삭제에 실패했습니다."); }) : Promise.resolve();
     p.then(function () { toast("삭제했습니다."); openHistory(); });
   }
+
+  // ---------------- Ripple ----------------
+  document.addEventListener("pointerdown", function (e) {
+    if (REDUCED) return;
+    var b = e.target.closest && e.target.closest(".btn,.opt,.hbtn");
+    if (!b || b.disabled) return;
+    var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height), sp = document.createElement("span");
+    sp.className = "ripple";
+    sp.style.width = sp.style.height = d + "px";
+    sp.style.left = (e.clientX - r.left - d / 2) + "px";
+    sp.style.top = (e.clientY - r.top - d / 2) + "px";
+    b.appendChild(sp);
+    setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 650);
+  });
 
   // ---------------- Boot ----------------
   function setStatus() {

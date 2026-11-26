@@ -62,6 +62,8 @@ TRIAGE = {
     "routine": ("경과 관찰 · 필요 시 외래", "증상이 가볍다면 휴식하며 경과를 지켜보세요. 악화되거나 새로운 증상이 생기면 진료를 받으세요."),
 }
 DISCLAIMER = "본 결과는 의학적 진단이 아니라 진료 전 참고용 정보입니다. 최종 진단과 치료는 반드시 의료진의 진찰을 통해 결정하세요."
+FU_ANS = ("yes", "no", "unsure")
+FU_KO = {"yes": "예", "no": "아니오", "unsure": "잘 모르겠어요"}
 NEG_RE = re.compile(r"[^.,!?\n]{0,6}?(없|아니|않|안 )")
 
 
@@ -91,6 +93,9 @@ class Engine:
                 self.sym_label[s["id"]] = s["label"]
                 if s.get("flag"):
                     self.sym_flag[s["id"]] = s
+        self.fu = kb.get("followups", [])
+        self.fu_by_id = {q["id"]: q for q in self.fu}
+        self.fuc = kb.get("fuConfig") or {"min": 3, "max": 7, "temp": 3, "topK": 5, "minGain": 0.5, "stopShare": 92}
 
     # helpers -------------------------------------------------------------------------
     @staticmethod
@@ -182,9 +187,19 @@ class Engine:
             lo, hi = kb["vitalLimits"][k]
             if not _num(x) or x < lo or x > hi:
                 errs.append("vitals." + k)
+        fu = a.get("followups")
+        if fu is not None:
+            if not isinstance(fu, dict) or len(fu) > 20 or any(k not in self.fu_by_id or v not in FU_ANS for k, v in fu.items()):
+                errs.append("followups")
         return errs
 
-    def diagnose(self, a, now):
+    def _answers_of(self, a):
+        fu = a.get("followups")
+        if not isinstance(fu, dict):
+            return {}
+        return {k: v for k, v in fu.items() if k in self.fu_by_id and isinstance(v, str) and v in FU_ANS}
+
+    def analyze(self, a):
         kb = self.kb
         lab = self._lab
         v = a.get("vitals") or {}
@@ -263,6 +278,7 @@ class Engine:
             return all(any(x in ctx[k] for x in vals) for k, vals in cond.items())
 
         text = (a.get("text") or "").lower()
+        fua = self._answers_of(a)
         cands = []
         for idx, c in enumerate(kb["conditions"]):
             if c.get("sexOnly") and c["sexOnly"] != a["sex"]:
@@ -310,6 +326,14 @@ class Engine:
                 if self._text_has(text, word):
                     score += w
                     reasons.append("자유 서술 키워드: '%s'" % word)
+            for qid, w in (c.get("fu") or {}).items():
+                ans = fua.get(qid)
+                if ans == "yes":
+                    score += w
+                    reasons.append("정밀 문진: " + self.fu_by_id[qid]["q"] + " → 예" + (" (불일치 · 감점)" if w < 0 else ""))
+                elif ans == "no" and w > 0:
+                    score -= w * 0.5
+                    reasons.append("정밀 문진: " + self.fu_by_id[qid]["q"] + " → 아니오 (감점)")
             if c["region"] == a["region"]:
                 score += 1
             for r in kb["adjust"]:
@@ -324,21 +348,82 @@ class Engine:
             score = _round2(score)
             if score <= 0:
                 continue
-            cands.append({"idx": idx, "id": c["id"], "name": c["name"], "score": score,
-                          "pct": int(math.floor(95 * (1 - math.exp(-score / 9)) + 0.5)),
-                          "desc": c["desc"], "dept": c["dept"], "tests": list(c["tests"]),
-                          "reasons": reasons, "urgency": c["urgency"]})
+            cands.append({"idx": idx, "c": c, "score": score, "reasons": reasons})
         cands.sort(key=lambda x: (-x["score"], x["idx"]))
-        cands = cands[:4]
-        for c in cands:
-            del c["idx"]
+        es, total = self._exp_shares(cands)
+        for x, e in zip(cands, es):
+            x["e"] = e
+            x["pct"] = int(math.floor(100 * e / total + 0.5))
+        return {"sym": sym, "text_sym": text_sym, "finding": finding, "risks": risks, "auto_risks": auto_risks,
+                "hits": hits, "flags": flags, "temp": temp, "hr": hr, "spo2": spo2, "fua": fua, "scored": cands,
+                "nrs": nrs, "pregnancy": pregnancy, "chronics": chronics}
+
+    def _exp_shares(self, lst):
+        if not lst:
+            return [], 1
+        mx = lst[0]["score"]
+        es, total = [], 0
+        for x in lst:
+            v = math.exp((x["score"] - mx) / self.fuc["temp"])
+            es.append(v)
+            total += v
+        return es, total
+
+    def next_question(self, a):
+        an = self.analyze(a)
+        lst, asked, cfg = an["scored"], len(an["fua"]), self.fuc
+        if not lst or asked >= cfg["max"] or (asked >= cfg["min"] and lst[0]["pct"] >= cfg["stopShare"]):
+            return None
+        top = lst[:cfg["topK"]]
+        tsum = 0
+        for x in top:
+            tsum += x["e"]
+        best, best_gain = None, 0
+        for q in self.fu:
+            if q["id"] in an["fua"]:
+                continue
+            if q.get("sex") and q["sex"] != a["sex"]:
+                continue
+            ws = [(x["c"].get("fu") or {}).get(q["id"], 0) for x in top]
+            if not any(w != 0 for w in ws):
+                continue
+            mean = 0
+            for x, w in zip(top, ws):
+                mean += x["e"] / tsum * w
+            gain = 0
+            for x, w in zip(top, ws):
+                gain += x["e"] / tsum * abs(w - mean)
+            gain = math.floor(gain * 10000 + 0.5) / 10000
+            if gain > best_gain:
+                best_gain, best = gain, q
+        if not best or best_gain < cfg["minGain"]:
+            return None
+        return {"id": best["id"], "q": best["q"], "hint": best.get("hint"), "asked": asked, "max": cfg["max"],
+                "leaders": [{"id": x["c"]["id"], "name": x["c"]["name"], "pct": x["pct"]} for x in top[:3]]}
+
+    def diagnose(self, a, now):
+        kb = self.kb
+        lab = self._lab
+        an = self.analyze(a)
+        sym, text_sym, finding, risks, auto_risks = an["sym"], an["text_sym"], an["finding"], an["risks"], an["auto_risks"]
+        hits, flags, temp, hr, spo2 = an["hits"], an["flags"], an["temp"], an["hr"], an["spo2"]
+        nrs, pregnancy, chronics = an["nrs"], an["pregnancy"], an["chronics"]
+        cands = []
+        for i, x in enumerate(an["scored"][:4]):
+            if i > 0 and x["pct"] < 5:
+                continue
+            c = x["c"]
+            cands.append({"id": c["id"], "name": c["name"], "score": x["score"], "pct": x["pct"],
+                          "fit": int(math.floor(95 * (1 - math.exp(-x["score"] / 9)) + 0.5)),
+                          "desc": c["desc"], "dept": c["dept"], "tests": list(c["tests"]),
+                          "reasons": x["reasons"], "urgency": c["urgency"]})
 
         # ---- Triage ----
         level = "routine"
         for f in flags:
             if LEVEL_RANK[f["level"]] > LEVEL_RANK[level]:
                 level = f["level"]
-        if cands and cands[0]["pct"] >= 60:  # the leading candidate's urgency (emergency → urgent; true emergencies come from red flags)
+        if cands and cands[0]["fit"] >= 60:  # the leading candidate's urgency (emergency → urgent; true emergencies come from red flags)
             u = "urgent" if cands[0]["urgency"] == "emergency" else cands[0]["urgency"]
             if LEVEL_RANK[u] > LEVEL_RANK[level]:
                 level = u
@@ -358,6 +443,7 @@ class Engine:
             "pregnancy": lab(kb["pregnancy"], pregnancy) if pregnancy else None,
             "vitals": {"temp": temp, "hr": hr, "spo2": spo2},
             "nrs": nrs, "text": a.get("text") or "", "keywords": [h["word"] for h in hits],
+            "followups": [{"q": q["q"], "a": FU_KO[an["fua"][q["id"]]]} for q in self.fu if q["id"] in an["fua"]],
         }
         result = {"kb_version": self.version, "created_at": now, "triage": triage, "red_flags": flags,
                   "candidates": cands, "summary": summary, "disclaimer": DISCLAIMER}
@@ -388,6 +474,10 @@ class Engine:
         L.append("■ 동반 위험 인자: " + lst(s["risks"]))
         L.append("■ 기저질환 · 복용약: " + lst(s["chronics"]))
         L.append("■ 추가 서술: " + (s["text"] if s["text"] else "없음"))
+        if s.get("followups"):
+            L.append("■ 정밀 문진:")
+            for f in s["followups"]:
+                L.append("  - " + f["q"] + " → " + f["a"])
         L.append("")
         if r["red_flags"]:
             fl = "; ".join("[%s] %s" % ("응급" if f["level"] == "emergency" else "우선", f["title"]) for f in r["red_flags"])
@@ -397,7 +487,7 @@ class Engine:
         L.append("■ 권장 대응: " + r["triage"]["title"])
         if r["candidates"]:
             c = r["candidates"][0]
-            L.append("■ 1순위 감별 후보: %s (적합도 %d%%)" % (c["name"], c["pct"]))
+            L.append("■ 1순위 감별 후보: %s (상대 가능성 %d%%)" % (c["name"], c["pct"]))
             L.append("■ 권장 진료과: " + c["dept"])
             L.append("■ 참고 검사: " + ", ".join(c["tests"]))
             if len(r["candidates"]) > 1:
