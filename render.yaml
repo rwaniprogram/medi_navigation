@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: medinavi
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python server.py"
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: MEDINAVI_RETENTION_DAYS
+        value: "180"
